@@ -97,6 +97,12 @@ footer.site { border-top: 1px solid var(--rule); background: #fff; }
 .sign { margin-top: 28px; display: flex; justify-content: space-between; gap: 24px; align-items: end; }
 .sign .line { border-bottom: 1px solid var(--ink); min-width: 220px; height: 36px; }
 .side .group { margin: 16px 14px 6px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); font-weight: 700; }
+.gate { min-height: 100dvh; display: grid; place-items: center; padding: 32px 16px; background: var(--ink); }
+.gate-card { width: min(440px, 100%); background: #fff; color: var(--ink); border-radius: 22px; padding: 36px 32px; }
+.gate-card .logo { display: block; }
+.plans-gate { width: min(860px, 100%); }
+.plans-gate .card { display: flex; flex-direction: column; }
+.plans-gate .btn { margin-top: auto; }
 .stage { min-height: 100dvh; display: grid; place-items: center; padding: 40px 20px; background: var(--ink); color: #fff; }
 .stage .card { width: min(560px, 100%); }
 .build { width: min(460px, 100%); text-align: left; }

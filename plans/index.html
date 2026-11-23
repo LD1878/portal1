@@ -3,14 +3,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="/portal1/site.css">
-</head><body>
-<script src="/portal1/chrome.js"></script>
-<script>document.write(chromeNav("plans"))</script>
-<main class="page">
-<p class="kicker">Services</p>
-<h1 style="font-size:clamp(36px,6vw,54px);margin-top:8px;max-width:820px">The desk, the checker, and what happens when the file is ready.</h1>
-<p class="lede">Monthly is consular only — no UGE-CE. Prepaid opens both doors. Firms who outsource cases take Whitelabel. Translation and lodging are add-ons after 100%.</p>
-<div class="grid2 plans" style="margin-top:28px">
+</head><body class="gate">
+<main class="plans-gate">
+<p style="text-align:center"><img class="logo" src="/portal1/logo.png" alt="JUROSpain" style="height:42px;background:#fff;padding:4px 8px;border-radius:8px"></p>
+<p class="kicker" style="text-align:center;margin-top:18px">Payment</p>
+<h1 style="font-size:clamp(36px,6vw,54px);margin-top:8px;text-align:center;color:#fff">Choose the desk.</h1>
+<p class="lede" style="text-align:center;margin:0 auto 8px;color:#d6d3d1">Monthly is consular only. Prepaid includes UGE-CE. Translation and lodging come later, from inside the file.</p>
+<div class="grid2" style="margin-top:28px;grid-template-columns:1fr 1fr">
   <article class="card">
     <p class="kicker">Billed monthly</p>
     <h2 style="font-size:32px;margin:8px 0">Monthly desk</h2>
@@ -22,7 +21,7 @@
     <p class="tick"><i>✓</i> AI checker: names, dates, apostille, formula</p>
     <p class="tick no"><i>×</i> UGE-CE in-Spain residence is not on this plan</p>
     <p class="tick no"><i>×</i> We do not lodge the file</p>
-    <a class="btn ghost" href="/portal1/checkout/?offer=monthly">Continue to payment</a>
+    <a class="btn ghost" style="width:100%;margin-top:8px" href="/portal1/checkout/?offer=monthly">Continue to payment</a>
   </article>
   <article class="card">
     <p class="kicker">Prepaid · recommended</p>
@@ -34,95 +33,9 @@
     <p class="tick"><i>✓</i> Consular visa and UGE-CE residence</p>
     <p class="tick"><i>✓</i> Non-lucrative from origin</p>
     <p class="tick"><i>✓</i> AI checker on every upload</p>
-    <a class="btn" href="/portal1/checkout/?offer=prepaid">Continue to payment</a>
-  </article>
-  <article class="card ink">
-    <p class="gold" style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600">For firms</p>
-    <h2 style="font-size:32px;margin:8px 0;color:#fff">Whitelabel</h2>
-    <p style="font-family:Oswald,sans-serif;font-size:52px;color:var(--gold);margin:0">€2.000</p>
-    <p style="opacity:.7">a month</p>
-    <p>Unlimited cases for a practice that outsources the desk. Your logo in place of JUROSpain. Not built out yet — this is the place in the list.</p>
-    <p class="tick"><i>✓</i> Unlimited cases for your clients</p>
-    <p class="tick"><i>✓</i> Your logo instead of JUROSpain</p>
-    <p class="tick"><i>✓</i> AI checker on every file</p>
-    <a class="btn gold" href="/portal1/checkout/?offer=prepaid">Continue to checkout</a>
-    <p style="opacity:.7;font-size:14px">The form is not live yet. This opens the same checkout so you can click through.</p>
-  </article>
-</div>
-<h2 style="font-size:32px;margin:48px 0 8px">Talk to someone first</h2>
-<div class="grid2" style="margin-top:16px;grid-template-columns:1fr 1fr">
-  <article class="card">
-    <p class="kicker">Paid consult</p>
-    <h2 style="font-size:32px;margin:8px 0">Video call</h2>
-    <p style="font-family:Oswald,sans-serif;font-size:48px;color:var(--red);margin:0">€100</p>
-    <p class="muted">one hour, on a video call</p>
-    <p>One hour on your case. Which visa, which documents, and what the consulate will actually ask for. It is a conversation, not a filing and not an approval.</p>
-    <p class="tick"><i>✓</i> One hour, scheduled after you pay</p>
-    <p class="tick"><i>✓</i> Your file open on the call</p>
-    <p class="tick no"><i>×</i> Does not lodge anything</p>
-    <a class="btn" href="/portal1/checkout/?offer=consult">Book the hour</a>
-  </article>
-  <article class="card">
-    <p class="kicker">Before you spend the hour</p>
-    <h2 style="font-size:32px;margin:8px 0">Bring the file</h2>
-    <p>Open the desk for your visa first, even if nothing is uploaded. The call is more useful when the person can see which items are still open.</p>
-    <p class="muted">€100 is the call only. Review, apostille, translation, and lodging are separate.</p>
-    <a class="btn ghost" href="/portal1/desk/">Open the desk</a>
-  </article>
-</div>
-<h2 style="font-size:32px;margin:48px 0 8px">Around the filing</h2>
-<p class="muted">Book these on their own. They do not require the monthly desk, and none of them is an approval.</p>
-<div class="grid2" style="margin-top:16px;grid-template-columns:1fr 1fr 1fr">
-  <article class="card">
-    <p class="kicker">One hour</p>
-    <h2 style="font-size:28px;margin:8px 0">File review</h2>
-    <p style="font-family:Oswald,sans-serif;font-size:40px;margin:0">€150</p>
-    <p class="muted">once, before you lodge</p>
-    <p>A person reads the assembled file against the packet and writes what is still missing. The checker does not do this.</p>
-    <a class="btn ghost" href="/portal1/checkout/?offer=review">Continue to payment</a>
-  </article>
-  <article class="card">
-    <p class="kicker">Per document</p>
-    <h2 style="font-size:28px;margin:8px 0">Apostille</h2>
-    <p style="font-family:Oswald,sans-serif;font-size:40px;margin:0">€40</p>
-    <p class="muted">per foreign public document</p>
-    <p>We arrange the Hague apostille, or the consular legalisation where the country is outside the Convention. The sworn translation is separate.</p>
-    <a class="btn ghost" href="/portal1/checkout/?offer=apostille">Continue to payment</a>
-  </article>
-  <article class="card">
-    <p class="kicker">After you land</p>
-    <h2 style="font-size:28px;margin:8px 0">TIE appointment</h2>
-    <p style="font-family:Oswald,sans-serif;font-size:40px;margin:0">€75</p>
-    <p class="muted">once, the police card</p>
-    <p>We book the cita and list what to take. Digital nomad: only if the grant exceeds six months. Non-lucrative: within a month of entry.</p>
-    <a class="btn ghost" href="/portal1/checkout/?offer=tie">Continue to payment</a>
-  </article>
-</div>
-<h2 style="font-size:32px;margin:48px 0 8px">When the file is ready</h2>
-<p class="muted">Translation and lodging open after every item looks aligned. Filing needs the sworn translations first.</p>
-<div class="grid2" style="margin-top:16px;grid-template-columns:1fr 1fr">
-  <article class="card">
-    <p class="kicker">When the file is 100%</p>
-    <h2 style="font-size:32px;margin:8px 0">Sworn translations</h2>
-    <p style="font-family:Oswald,sans-serif;font-size:48px;margin:0">€1.000</p>
-    <p class="muted">once, all documents in the case</p>
-    <p>English into Spanish, sworn (traducción jurada), for every document already on this file.</p>
-    <p class="tick"><i>✓</i> EN → ES sworn, the whole case</p>
-    <p class="tick"><i>✓</i> One price, not per page</p>
-    <a class="btn ghost" href="/portal1/checkout/?offer=translation">Continue to payment</a>
-  </article>
-  <article class="card">
-    <p class="kicker">After 100% and translation</p>
-    <h2 style="font-size:32px;margin:8px 0">We submit the file</h2>
-    <p style="font-family:Oswald,sans-serif;font-size:48px;margin:0">€200</p>
-    <p class="muted">once, when the packet is ready</p>
-    <p>We lodge the assembled file. Opens only when the case is 100% checked and the sworn translations are on it.</p>
-    <p class="tick"><i>✓</i> Lodging after the packet is complete</p>
-    <p class="tick"><i>✓</i> Requires the €1.000 translation first</p>
-    <a class="btn ghost" href="/portal1/checkout/?offer=filing">Continue to payment</a>
+    <a class="btn" style="width:100%;margin-top:8px" href="/portal1/checkout/?offer=prepaid">Continue to payment</a>
   </article>
 </div>
 </main>
-<script>document.write(chromeFoot())</script>
 <script src="/portal1/app.js"></script>
 </body></html>

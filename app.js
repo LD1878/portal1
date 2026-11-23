@@ -74,13 +74,11 @@ function bootPay() {
   var price = picked.price;
   var name = picked.name;
   var line = picked.line;
-  checkout.innerHTML = '<div class="grid2" style="grid-template-columns:1.1fr .9fr"><form class="card" id="pay"><p class="kicker">Checkout</p><h1 style="font-size:40px;margin:8px 0">' + name + '</h1><p class="muted">' + line + '</p>'
+  checkout.innerHTML = '<div><form id="pay"><p class="kicker" style="text-align:center">Checkout</p><h1 style="font-size:36px;margin:8px 0;text-align:center">' + name + '</h1><p class="muted" style="text-align:center">' + line + '</p><p class="gold" style="font-family:Oswald,sans-serif;font-size:32px;text-align:center;margin:8px 0 4px">' + price + '</p>'
     + field("Name on card", "text", "cc-name") + field("Email for the receipt", "email", "email") + field("Card number", "text", "cc-number")
     + '<div class="grid2" style="grid-template-columns:1fr 1fr">' + field("Expiry", "text", "cc-exp") + field("CVC", "text", "cc-csc") + '</div>'
-    + '<button class="btn" style="margin-top:8px;width:100%">Pay ' + price + '</button>'
-    + skipRow(BASE + "/welcome/?next=intake", "Continue without paying")
-    + '<p class="muted">Stripe is not connected. This card is not charged. The fields stay so the real payment can drop in later.</p></form>'
-    + '<aside class="ink"><p class="gold" style="font-family:Oswald,sans-serif;letter-spacing:.14em;font-size:12px">ORDER</p><h2 style="font-size:30px">' + name + '</h2><p class="gold" style="font-family:Oswald,sans-serif;font-size:28px">Due today ' + price + '</p><p style="opacity:.75">Both visas. Your name, the route, and where you will live, then the file.</p></aside></div>';
+    + '<button class="btn" style="margin-top:16px;width:100%">Pay ' + price + '</button>'
+    + '<p class="muted" style="text-align:center;font-size:13px">Stripe is not connected. This card is not charged. The fields stay for when it is.</p></form></div>';
   document.getElementById("pay").onsubmit = function (e) {
     e.preventDefault();
     var email = checkout.querySelector("input[autocomplete=email]");
@@ -194,7 +192,7 @@ function bootDesk() {
     + '<div><p class="kicker">🇪🇸 Spain · ' + routeName(f) + '</p>'
     + '<h1 style="font-size:42px;margin:6px 0">' + (f.name || "Your file") + '</h1>'
     + '<p class="muted">Documents. ' + attached + ' of ' + items.length + ' attached. Nothing has been sent.' + (f.family === "yes" ? " Family is on this file." : "") + '</p>'
-    + '<p class="no-print"><a href="' + BASE + '/app/">This is the ' + (f.track === "non-lucrative" ? "non-lucrative" : "digital nomad") + ' file. Start the other residence separately.</a></p>'
+    + '<p class="muted">One residence per file. The other one is a new file, started from sign-in.</p>'
     + phases(f, attached, items.length)
     + '<div class="folders">' + groups.map(function (g) { return folderRow(g, saved, g.id === open.id); }).join("") + '</div>'
     + '<section class="card" style="margin-top:18px"><p class="kicker">' + open.label + '</p><h2 style="font-size:28px;margin:4px 0">' + open.note + '</h2>'

@@ -1,82 +1,24 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sign in · JUROSpain</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600&family=Oswald:wght@500;700&display=swap">
-<style>
-:root { --ink:#232323; --muted:#78716c; --red:#e30613; --gold:#ffc400; --paper:#fcfcfc; --rule:#e2e8f0; }
-* { box-sizing: border-box; }
-body { margin:0; font-family: Barlow, "Segoe UI", sans-serif; color:var(--ink); background:var(--paper);
-  background-image: linear-gradient(rgb(0 0 0 / .03) 1px, transparent 1px), linear-gradient(90deg, rgb(0 0 0 / .03) 1px, transparent 1px);
-  background-size: 50px 50px; }
-h1,h2,h3 { font-family: Oswald, "Arial Narrow", sans-serif; letter-spacing:-.02em; margin:0; }
-a { color: var(--red); }
-header { position:sticky; top:0; z-index:5; background:#fff; border-bottom:1px solid var(--rule); }
-.bar { max-width:1100px; margin:0 auto; height:64px; display:flex; align-items:center; gap:18px; padding:0 20px; }
-.logo { height:32px; }
-nav { display:flex; gap:14px; font-family:Oswald,sans-serif; font-size:15px; letter-spacing:.04em; text-transform:uppercase; }
-nav a { color:var(--ink); text-decoration:none; }
-nav a:hover, nav .here { color:var(--red); }
-.drop { position:relative; }
-.drop div { display:none; position:absolute; top:100%; left:0; min-width:180px; background:#fff; border:1px solid var(--rule); border-radius:8px; padding:6px 0; }
-.drop:hover div { display:block; }
-.drop div a { display:block; padding:10px 16px; text-transform:none; letter-spacing:0; font-family:Barlow,sans-serif; }
-.cta { margin-left:auto; background:var(--red); color:#fff; text-decoration:none; font-family:Oswald,sans-serif; letter-spacing:.04em; text-transform:uppercase; padding:10px 16px; border-radius:6px; font-weight:700; }
-main { max-width:1100px; margin:0 auto; padding:48px 20px 80px; }
-.kicker { font-family:Oswald,sans-serif; color:var(--red); letter-spacing:.16em; text-transform:uppercase; font-size:13px; }
-.lede { max-width:640px; font-size:18px; color:#3f3f46; line-height:1.6; }
-.grid { display:grid; gap:16px; }
-.card { background:#fff; border:1px solid var(--rule); border-radius:10px; padding:24px; box-shadow:0 2px 6px rgb(0 0 0 / .06); }
-.btn { display:inline-flex; align-items:center; min-height:44px; padding:0 20px; background:var(--red); color:#fff; border:0; border-radius:6px; font-family:Oswald,sans-serif; letter-spacing:.04em; text-transform:uppercase; font-weight:700; text-decoration:none; cursor:pointer; }
-.btn.ghost { background:transparent; color:var(--red); border:2px solid var(--red); }
-input,textarea { width:100%; border:1px solid var(--rule); border-radius:6px; padding:10px 12px; font:inherit; }
-label span { display:block; font-family:Oswald,sans-serif; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:#a8a29e; margin-bottom:6px; }
-.gold { color:var(--gold); }
-.ink { background:#232323; color:#fff; border-radius:10px; padding:20px; }
-footer { border-top:1px solid var(--rule); padding:32px 20px; color:var(--muted); font-size:13px; max-width:1100px; margin:0 auto; }
-.pill { border-radius:999px; padding:4px 10px; font-family:Oswald,sans-serif; font-size:11px; letter-spacing:.1em; text-transform:uppercase; background:#f4f4f5; }
-</style></head><body>
-
-<header><div class="bar">
-  <a href="/portal1/"><img class="logo" src="/portal1/logo.png" alt="JUROSpain"></a>
-  <nav>
-    <a class="" href="/portal1/">Home</a>
-    <a class="" href="/portal1/desk/">Desk</a>
-    <a class="" href="/portal1/templates/">Templates</a>
-    <span class="drop"><a href="/portal1/digital-nomad/">Digital nomad</a><div>
-      <a href="/portal1/digital-nomad/">Overview</a>
-      <a href="/portal1/digital-nomad/consulate/">Consular visa</a>
-      <a href="/portal1/digital-nomad/uge/">UGE-CE</a>
-      <a href="/portal1/digital-nomad/family/">Family</a>
-    </div></span>
-    <span class="drop"><a href="/portal1/non-lucrative/">Non-lucrative</a><div>
-      <a href="/portal1/non-lucrative/">Overview</a>
-      <a href="/portal1/non-lucrative/consulate/">Consular visa</a>
-      <a href="/portal1/non-lucrative/family/">Family</a>
-    </div></span>
-    <span class="drop"><a href="/portal1/sources/">Law</a><div>
-      <a href="/portal1/formulas/">Formulas</a>
-      <a href="/portal1/sources/">Sources</a>
-    </div></span>
-  </nav>
-  <a class="cta" href="/portal1/plans/">Payment</a>
-</div></header><main>
-<p class="kicker">Your file</p>
-<h1 style="font-size:52px;margin-top:8px">Sign in, then payment.</h1>
-<form id="login" class="card" style="max-width:420px;margin-top:20px">
-  <button type="button" id="google" class="btn ghost" style="width:100%">Continue with Google</button>
-  <p style="text-align:center;letter-spacing:.14em;text-transform:uppercase;font-size:11px;color:#a8a29e">or email</p>
-  <label><span>Email</span><input name="email" type="email"></label>
-  <label style="display:block;margin-top:10px"><span>Password</span><input name="password" type="password" minlength="8"></label>
-  <button class="btn" style="width:100%;margin-top:16px;justify-content:center">Continue</button>
-  <p style="margin:14px 0 0"><a class="btn ghost" id="skip-login" href="/portal1/plans/" style="width:100%">Continue to payment</a></p>
-  <p style="color:#78716c;font-size:14px">The fields stay. Sign-in is not connected yet, so neither button asks you to fill them.</p>
-</form></main><footer>JUROSpain file desk. The sources stay under Law. The desk checks what you upload and does not lodge the file. Not legal advice.</footer>
-<script src="/portal1/app.js"></script>
+<title>Sign in · JUROSpain</title><link rel="icon" href="/portal1/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="/portal1/site.css">
+</head><body class="gate">
+<main class="gate-card">
+  <img class="logo" src="/portal1/logo.png" alt="JUROSpain" style="height:42px;margin:0 auto 22px">
+  <p class="kicker" style="text-align:center">Access</p>
+  <h1 style="font-size:40px;text-align:center;margin:6px 0 18px">Sign in</h1>
+  <form id="login">
+    <button type="button" id="google" class="btn ghost" style="width:100%">Continue with Google</button>
+    <p style="text-align:center;letter-spacing:.14em;text-transform:uppercase;font-size:11px;color:var(--faint);margin:14px 0">or email</p>
+    <label><span class="lbl">Email</span><input name="email" type="email" autocomplete="email"></label>
+    <label style="display:block;margin-top:10px"><span class="lbl">Password</span><input name="password" type="password" autocomplete="current-password"></label>
+    <button class="btn" style="width:100%;margin-top:16px">Continue to payment</button>
+  </form>
+  <p class="muted" style="text-align:center;font-size:13px;margin-top:16px">Sign-in is not connected yet. Continuing opens payment. Nothing is charged.</p>
+</main>
 <script>
-var next = new URLSearchParams(location.search).get("next");
-if (next === "intake") document.getElementById("skip-login").href = "/portal1/profile/?intake=1";
-document.getElementById("login").onsubmit = function (e) {
-  e.preventDefault();
-  location.href = "/portal1/plans/";
-};
+document.getElementById("login").onsubmit = function (e) { e.preventDefault(); location.href = "/portal1/plans/"; };
+document.getElementById("google").onclick = function () { location.href = "/portal1/plans/"; };
 </script>
 </body></html>
