@@ -1,88 +1,25 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>JUROSpain</title><link rel="icon" href="/portal1/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap">
-<style>
-:root { --ink:#232323; --soft:#3f3f46; --muted:#78716c; --faint:#a8a29e; --red:#e30613; --red-deep:#c40410; --gold:#ffc400; --paper:#f7f4ef; --rule:#e4ddd2; }
-* { box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body { margin:0; font-family:Barlow,"Segoe UI",sans-serif; color:var(--ink); background:var(--paper);
-  background-image:linear-gradient(rgb(35 35 35 / .035) 1px, transparent 1px), linear-gradient(90deg, rgb(35 35 35 / .035) 1px, transparent 1px);
-  background-size:48px 48px; line-height:1.6; }
-h1,h2,h3 { font-family:Oswald,"Arial Narrow",sans-serif; letter-spacing:-.02em; margin:0; line-height:1.08; }
-a { color:var(--red); }
-header { position:sticky; top:0; z-index:20; background:rgb(247 244 239 / .94); border-bottom:1px solid var(--rule); backdrop-filter:blur(14px); }
-.bar { max-width:1140px; margin:0 auto; height:68px; display:flex; align-items:center; gap:20px; padding:0 22px; }
-.logo { height:34px; }
-nav { display:flex; gap:18px; align-items:center; font-family:Oswald,sans-serif; font-size:15px; letter-spacing:.05em; text-transform:uppercase; }
-nav a { color:var(--ink); text-decoration:none; }
-nav a:hover, nav .here { color:var(--red); }
-.drop { position:relative; padding:20px 0; }
-.drop > div { display:none; position:absolute; top:100%; left:0; min-width:210px; background:#fff; border:1px solid var(--rule); border-radius:10px; padding:6px 0; box-shadow:0 12px 28px rgb(0 0 0 / .1); }
-.drop:hover > div, .drop:focus-within > div { display:block; }
-.drop div a { display:block; padding:11px 16px; text-transform:none; letter-spacing:0; font-family:Barlow,sans-serif; }
-.cta { margin-left:auto; background:var(--red); color:#fff !important; text-decoration:none; font-family:Oswald,sans-serif; letter-spacing:.05em; text-transform:uppercase; padding:11px 18px; border-radius:8px; font-weight:700; }
-main { max-width:1140px; margin:0 auto; padding:40px 22px 100px; }
-.kicker { font-family:Oswald,sans-serif; color:var(--red); letter-spacing:.16em; text-transform:uppercase; font-size:13px; font-weight:600; }
-.lede { max-width:680px; font-size:18px; color:var(--soft); }
-.card { background:#fff; border:1px solid var(--rule); border-radius:14px; padding:24px; box-shadow:0 1px 0 rgb(255 255 255 / .8), 0 8px 24px rgb(35 35 35 / .04); }
-.btn { display:inline-flex; align-items:center; justify-content:center; min-height:46px; padding:0 18px; background:var(--red); color:#fff; border:2px solid var(--red); border-radius:8px; font-family:Oswald,sans-serif; letter-spacing:.04em; text-transform:uppercase; font-weight:700; text-decoration:none; cursor:pointer; }
-.btn:hover { background:var(--red-deep); border-color:var(--red-deep); }
-.btn.ghost { background:#fff; color:var(--ink); border-color:var(--ink); }
-.btn.ghost:hover { background:var(--ink); color:#fff; }
-.btn.gold { background:var(--gold); color:var(--ink); border-color:var(--gold); }
-.btn.gold:hover { background:#e0ac00; }
-.btn.on { background:var(--ink); color:#fff; border-color:var(--ink); }
-input,textarea,select { width:100%; border:1px solid var(--rule); border-radius:8px; padding:12px 14px; font:inherit; background:#fff; color:var(--ink); }
-label .lbl { display:block; font-family:Oswald,sans-serif; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); margin-bottom:6px; }
-.ink { background:#1c1c1c; color:#f7f4ef; border-radius:14px; padding:22px; }
-.gold { color:var(--gold); }
-.muted { color:var(--muted); }
-.grid2 { display:grid; gap:16px; grid-template-columns:1.4fr .8fr; align-items:start; }
-@media (max-width:900px) { .grid2 { grid-template-columns:1fr; } .rail { position:static !important; } }
-footer { border-top:1px solid var(--rule); color:var(--muted); font-size:13px; max-width:1140px; margin:0 auto; padding:28px 22px 48px; }
-.rail { position:sticky; top:84px; display:flex; flex-direction:column; gap:12px; }
-.person { background:#fff; border:1px solid var(--rule); border-radius:14px; padding:18px 18px 8px; }
-.person dt { font-family:Oswald,sans-serif; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); }
-.person dd { margin:2px 0 12px; font-size:16px; }
-.pill { border-radius:999px; padding:4px 10px; font-family:Oswald,sans-serif; font-size:11px; letter-spacing:.08em; text-transform:uppercase; background:#f3eee6; color:var(--ink); }
-.miss { color:var(--red); font-weight:600; }
-.ok { color:#1c1c1c; }
-</style></head><body>
-<header><div class="bar">
-  <a href="/portal1/"><img class="logo" src="/portal1/logo.png" alt="JUROSpain"></a>
-  <nav>
-    <a class="here" href="/portal1/">Home</a>
-    <a class="" href="/portal1/plans/">Plans</a>
-    <a class="" href="/portal1/decide/">Decide</a>
-    <span class="drop"><a href="/portal1/digital-nomad/">Digital nomad</a><div>
-      <a href="/portal1/digital-nomad/">What it is</a>
-      <a href="/portal1/digital-nomad/consulate/">From abroad</a>
-      <a href="/portal1/digital-nomad/uge/">Already in Spain</a>
-    </div></span>
-    <span class="drop"><a href="/portal1/non-lucrative/">Non-lucrative</a><div>
-      <a href="/portal1/non-lucrative/">What it is</a>
-      <a href="/portal1/non-lucrative/consulate/">The consular file</a>
-    </div></span>
-    <span class="drop"><a href="/portal1/sources/">Law</a><div>
-      <a href="/portal1/formulas/">Formulas</a>
-      <a href="/portal1/sources/">Sources</a>
-    </div></span>
-  </nav>
-  <a class="cta" href="/portal1/plans/">Start a file</a>
-</div></header>
-<main>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="/portal1/site.css">
+</head><body>
+<script src="/portal1/chrome.js"></script>
+<script>document.write(chromeNav("home"))</script>
+<main class="page">
 <p class="kicker">Immigration, recoded.</p>
-<h1 style="font-size:64px;max-width:780px;margin-top:10px">The smarter way to move to <span style="color:var(--red)">Spain.</span></h1>
-<p class="lede">Two residencies. A price you see first. Then your name, the visa, and where you are filing. Then the file, one document at a time, with the instruction beside the check.</p>
+<h1 style="font-size:clamp(40px,7vw,64px);max-width:780px;margin-top:10px">The smarter way to move to <span style="color:var(--red)">Spain.</span></h1>
+<p class="lede">One desk for the digital nomad visa and the non-lucrative visa. You upload each document, the AI checker reads it, and nothing is submitted for you.</p>
 <p style="display:flex;gap:10px;flex-wrap:wrap">
-  <a class="btn" href="/portal1/plans/">See the price</a>
+  <a class="btn" href="/portal1/desk/">Open the desk</a>
   <a class="btn ghost" href="/portal1/decide/">Which visa is mine</a>
 </p>
+<p class="muted">Desk from €300 a month. UGE-CE is on prepaid, not monthly. <a href="/portal1/plans/">See services</a>.</p>
 <div class="grid2" style="margin-top:32px;grid-template-columns:1fr 1fr">
-  <a class="card" href="/portal1/digital-nomad/" style="text-decoration:none;color:inherit"><p class="kicker">Ley 14/2013</p><h2 style="font-size:30px;margin:8px 0">Digital nomad</h2><p>Remote work for companies outside Spain. Consular visa from abroad, up to one year. UGE-CE residence if you are already lawfully in Spain, up to three years.</p></a>
-  <a class="card" href="/portal1/non-lucrative/" style="text-decoration:none;color:inherit"><p class="kicker">RD 1155/2024</p><h2 style="font-size:30px;margin:8px 0">Non-lucrative</h2><p>Live without working. Filed from your country of origin. Means are 400% of IPREM a month, times the months you ask for.</p></a>
-</div></main>
-<footer>JUROSpain file desk. The sources stay under Law. A check is a reading of what you typed, not a filing and not an approval. The consulate, UGE-CE or extranjería decides.</footer>
+  <a class="card" href="/portal1/digital-nomad/" style="text-decoration:none;color:inherit"><p class="kicker">Ley 14/2013</p><h2 style="font-size:30px;margin:8px 0">International telework</h2><p>Remote work for companies outside Spain. Consular visa from abroad. UGE-CE if you are already lawfully in Spain.</p></a>
+  <a class="card" href="/portal1/non-lucrative/" style="text-decoration:none;color:inherit"><p class="kicker">RD 1155/2024</p><h2 style="font-size:30px;margin:8px 0">Non-lucrative residence</h2><p>Live without working. Filed from origin. Means are 400% of IPREM a month, not a frozen euro figure.</p></a>
+</div>
+</main>
+<script>document.write(chromeFoot())</script>
 <script src="/portal1/app.js"></script>
 </body></html>
