@@ -6,6 +6,7 @@
 
 </head><body>
 <div class="shell">
+<div class="topbar"><a href="/portal1/desk/"><img class="logo" src="/portal1/logo.png" alt="JUROSpain"></a><button class="menu-btn" type="button" aria-expanded="false">Menu</button></div>
 <aside class="side">
 <a href="/portal1/desk/"><img class="logo" src="/portal1/logo.png" alt="JUROSpain"></a>
 <p class="group">Your case</p>
@@ -35,4 +36,5 @@
 
 <script src="/portal1/app.js"></script>
 </div></div>
+<script>document.querySelectorAll(".menu-btn").forEach(function (b) {b.onclick = function () { var open = document.body.classList.toggle("nav-open");b.setAttribute("aria-expanded", open ? "true" : "false"); b.textContent = open ? "Close" : "Menu"; }; });</script>
 </body></html>

@@ -171,17 +171,19 @@ function bootDecide() {
 function bootProfile() {
   var f = file() || { track: "digital-nomad", route: "consulate", name: "", email: "", city: "", country: "" };
   var intake = new URLSearchParams(location.search).get("intake") === "1";
-  profile.innerHTML = '<p class="kicker">' + (intake ? "Your file is ready" : "After the price · before the file") + '</p>'
-    + '<h1 style="font-size:50px;margin-top:8px">' + (intake ? "Tell us who this file is for." : "Who is moving, and where.") + '</h1>'
-    + '<p class="lede">' + (intake ? "Five answers and the folders open. You can change any of them later." : "This sits above the file. The desk uses it so every check knows whose documents these are. You can change it later.") + '</p>'
-    + '<form class="card" id="who" style="max-width:640px;margin-top:18px">'
-    + '<p class="kicker">' + routeName(f) + '</p>'
+  profile.innerHTML = '<div class="intake">'
+    + '<div class="intake-head"><p class="gold" style="letter-spacing:.16em;font-size:12px;font-weight:700">' + (intake ? "YOUR FILE IS READY" : "YOUR DETAILS") + '</p>'
+    + '<h1>' + (intake ? "Tell us who this file is for." : "Who is moving, and where.") + '</h1>'
+    + '<p>' + (intake ? "Five answers and the folders open. You can change any of them later." : "The desk uses this so every check knows whose documents these are.") + '</p></div>'
+    + '<form class="intake-card" id="who">'
+    + '<div class="intake-route"><span class="spark">✦</span><div><b>' + routeName(f) + '</b><small>One residence per file. The other one is a new file, started from sign-in.</small></div></div>'
+    + '<ol class="intake-steps"><li class="on">Visa</li><li class="on">Payment</li><li class="now">You</li><li>File</li></ol>'
     + field("Your name", "text", "name") + field("Email", "email", "email")
     + '<div class="grid2" style="grid-template-columns:1fr 1fr">' + field("City you are heading to", "text", "address-level2") + field("Country you are filing from", "text", "country-name") + '</div>'
     + (intake ? '<label style="display:block;margin:10px 0"><span class="lbl">Family coming with you</span><select data-k="family"><option value="no">Just me</option><option value="yes">Yes, family members</option></select></label>' : "")
-    + '<button class="btn" style="margin-top:6px">' + (intake ? "Open my file" : "Save") + '</button>'
-    + skipRow(BASE + "/desk/", "Skip and open the file")
-    + '<p class="muted">The fields stay. You can fill them now or come back. Skipping does not delete what you already typed.</p></form>';
+    + '<button class="btn" style="margin-top:10px;width:100%">' + (intake ? "Open my file" : "Save") + '</button>'
+    + '<p class="intake-skip"><a href="' + BASE + '/desk/">Skip and open the file</a> · the fields stay, and skipping does not delete what you already typed.</p>'
+    + '</form></div>';
   var inputs = profile.querySelectorAll("input");
   inputs[0].value = f.name || "";
   inputs[1].value = f.email || localStorage.getItem("jurospain-email") || "";
@@ -210,16 +212,16 @@ function bootDesk() {
   var attached = items.filter(function (i) { return saved[i.id] && saved[i.id].fileName; }).length;
   var openId = new URLSearchParams(location.search).get("folder") || groups[0].id;
   var open = groups.filter(function (g) { return g.id === openId; })[0] || groups[0];
-  desk.innerHTML = '<div class="grid2" style="grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start">'
+  desk.innerHTML = '<div class="desk">'
     + '<div><p class="kicker">🇪🇸 Spain · ' + routeName(f) + '</p>'
     + '<h1 style="font-size:42px;margin:6px 0">' + (f.name || "Your file") + '</h1>'
-    + '<p class="muted">Documents. ' + attached + ' of ' + items.length + ' attached. Nothing has been sent.' + (f.family === "yes" ? " Family is on this file." : "") + '</p>'
+    + '<p style="font-weight:600">Documents. ' + attached + ' of ' + items.length + ' attached. Nothing has been sent.' + (f.family === "yes" ? " Family is on this file." : "") + '</p>'
     + '<p class="muted">One residence per file. The other one is a new file, started from sign-in.</p>'
     + phases(f, attached, items.length)
     + '<div class="folders">' + groups.map(function (g) { return folderRow(g, saved, g.id === open.id); }).join("") + '</div>'
     + '<section class="card" style="margin-top:18px"><p class="kicker">' + open.label + '</p><h2 style="font-size:28px;margin:4px 0">' + open.note + '</h2>'
     + '<ol style="list-style:none;padding:0">' + open.items.map(function (item, n) { return card(n, item, saved[item.id]); }).join("") + '</ol></section></div>'
-    + '<aside class="rail-ink">'
+    + '<aside class="desk-rail"><div class="rail-ink">'
     + '<p class="gold" style="letter-spacing:.16em;font-size:11px;font-weight:700">WHERE THIS FILE IS</p>'
     + '<p class="gold" style="font-family:Oswald,sans-serif;font-size:56px;line-height:1;margin:6px 0">' + attached + '<span style="font-size:22px;color:#fff">/' + items.length + '</span></p>'
     + '<p>attached. Nothing has been sent.</p>'
@@ -230,10 +232,10 @@ function bootDesk() {
     + '<p style="font-size:13px;opacity:.6">It reads what you typed, not the scan. A vision key is not connected.</p>'
     + '<p class="gold" style="letter-spacing:.16em;font-size:11px;font-weight:700;margin-top:22px">DO THIS NEXT</p>'
     + '<ol class="guide">' + guideFor(f, open).map(function (line) { return '<li>' + line + '</li>'; }).join("") + '</ol>'
-    + '<button class="btn gold" id="ai-report" style="width:100%;margin-top:18px">AI check this file</button>'
+    + '<button class="btn ink-btn" id="ai-report" style="width:100%;margin-top:18px"><span class="spark">✦</span> AI check this file</button>'
     + '<div id="ai-out" hidden style="margin-top:14px"></div>'
     + '<p style="font-size:13px;opacity:.6;margin-top:14px">Kept here: your typed notes and the file name. Not kept yet: the scan. Sent to no one until you buy lodging.</p>'
-    + '</aside></div>'
+    + '</div></aside></div>'
     + '<section style="grid-column:1 / -1;margin-top:8px"><p class="kicker">Add to this file</p><h2 style="font-size:28px;margin:4px 0 12px">Add-ons, when you want them</h2><div class="grid2" style="grid-template-columns:repeat(4,1fr)">' + serviceCards() + '</div></section></div>';
   fillNav(f);
   var report = document.getElementById("ai-report");
@@ -378,18 +380,18 @@ function card(n, item, saved) {
     return '<li class="' + (l.hit ? "ok" : "miss") + '">' + (l.hit ? "Found" : "Missing") + " — " + l.label + "</li>";
   }).join("");
   return '<li><article class="card" id="item-' + item.id + '" data-id="' + item.id + '" style="margin-top:14px">'
-    + '<div style="display:flex;justify-content:space-between;gap:12px"><span class="muted" style="font-family:monospace">' + String(n + 1).padStart(2, "0") + '</span><span class="pill">' + statusOf(saved) + '</span></div>'
+    + '<div style="display:flex;justify-content:space-between;gap:12px"><span style="font-family:Oswald,sans-serif;font-weight:700;letter-spacing:.08em;color:var(--red)">' + String(n + 1).padStart(2, "0") + '</span><span class="pill">' + statusOf(saved) + '</span></div>'
     + '<h2 style="font-size:26px;margin-top:4px">' + item.label + '</h2>'
-    + '<p>' + item.what + '</p>'
-    + '<p><b>File this.</b> ' + item.file + '</p>'
+    + '<p style="font-weight:500">' + item.what + '</p>'
+    + '<p style="border-left:3px solid var(--gold);padding-left:12px"><b>File this.</b> ' + item.file + '</p>'
     + (item.good ? '<p class="good"><b>A good scan shows</b> ' + item.good + '</p>' : "")
     + (item.id === "passport" ? '<p class="trust">This scan stays in your file. It is not sent to a consulate, UGE-CE, or anyone else until you buy lodging. You can delete it.</p>' : "")
     + '<label class="upload" style="display:flex;align-items:center;gap:10px;margin-top:10px"><input data-file type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/*" style="position:absolute;width:1px;height:1px;opacity:0"><span class="btn ghost">Upload document</span><span class="file-name muted">' + ((saved && saved.fileName) || "No file chosen") + '</span></label>'
-    + '<p class="muted" style="font-size:13px;margin:6px 0 0">The name is kept. The scan itself is not saved yet, and nothing is sent.</p>'
+    + '<p style="font-size:13px;margin:6px 0 0;color:var(--soft)"><b>The name is kept.</b> The scan itself is not saved yet, and nothing is sent.</p>'
     + '<label style="display:block;margin-top:8px"><span class="lbl">What is on the document</span><textarea rows="3" placeholder="' + item.ph + '">' + ((saved && saved.text) || "") + '</textarea></label>'
     + '<div class="scan ink" hidden style="margin-top:10px"><div style="display:flex;justify-content:space-between"><b class="gold" style="font-family:Oswald,sans-serif;letter-spacing:.12em;font-size:12px">✦ AI CHECKER</b><b class="gold pct">8%</b></div><div style="height:6px;background:rgba(255,255,255,.15);border-radius:99px;margin-top:8px"><div class="bar" style="height:100%;width:8%;background:var(--gold)"></div></div><p class="looking" style="opacity:.8;font-size:14px"></p></div>'
-    + '<button data-check class="btn" style="margin-top:10px">Run AI reading</button>'
-    + '<p class="muted" style="font-size:13px">Dummy. It reads what you typed, not the scan, until a vision key is connected.</p>'
+    + '<button data-check class="btn ink-btn" style="margin-top:10px"><span class="spark">✦</span> Run AI reading</button>'
+    + '<p style="font-size:13px;color:var(--soft)">Dummy. It reads what you typed, not the scan, until a vision key is connected.</p>'
     + (found ? '<ul style="margin:10px 0 0;padding-left:18px">' + found + '</ul>' : "")
     + '</article></li>';
 }
