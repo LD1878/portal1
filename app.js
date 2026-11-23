@@ -21,6 +21,8 @@ var app = document.getElementById("app");
 if (app) bootApp();
 var welcome = document.getElementById("welcome");
 if (welcome) bootWelcome();
+var service = document.getElementById("service");
+if (service) bootService();
 
 function bootApp() {
   var params = new URLSearchParams(location.search);
@@ -58,6 +60,21 @@ function bootWelcome() {
 function stage(kicker, title, body) {
   return '<div class="stage"><div class="card"><p class="kicker">' + kicker + '</p><h1 style="font-size:36px;margin:8px 0 16px">' + title + '</h1>' + body + '</div></div>';
 }
+function bootService() {
+  var id = new URLSearchParams(location.search).get("service") || "consult";
+  var pages = {
+    consult: ["Video consult", "€100", "One hour, on a video call.", "You bring the file, even if nothing is uploaded. The person on the call walks the route you picked: which door, which documents, and what the consulate or UGE-CE will actually ask for. It is a conversation. Nothing is lodged, and it is not an approval.", ["Scheduled after you pay.", "Your file open on the call.", "Does not include translation, apostille, or lodging."]],
+    review: ["File review", "€150", "A person reads the assembled file.", "Before you lodge, someone reads every item against the packet and writes what is still missing, in the order a post would notice it. The AI reading does not do this. A review is a list, not a grant.", ["One pass over the file you have built.", "Written notes on what is missing.", "You still lodge it yourself, unless you add lodging."]],
+    apostille: ["Apostille", "€40", "Per foreign public document.", "A foreign public document needs an apostille under the Hague Convention, or a consular legalisation where the country is outside it, before the sworn translation. This arranges that step. It does not translate the document, and it does not decide whether your country is in the Convention.", ["One document per €40.", "The sworn translation is a separate €1.000 for the case.", "Filed behind the document it belongs to."]],
+    tie: ["TIE appointment", "€75", "The police card, after you land.", "The visa is not the TIE. Digital nomad: the card is due only if the authorisation lasts more than six months. Non-lucrative: within a month of entry. This books the cita and lists what to take. It does not attend for you.", ["The appointment, booked.", "The list of what the police unit asks for.", "You attend in person."]]
+  };
+  var page = pages[id] || pages.consult;
+  service.innerHTML = '<p class="kicker">Add to this file</p><h1 style="font-size:48px;margin:6px 0">' + page[0] + '</h1>'
+    + '<p style="font-family:Oswald,sans-serif;font-size:42px;color:var(--red);margin:0">' + page[1] + '</p><p class="muted">' + page[2] + '</p>'
+    + '<p style="max-width:640px">' + page[3] + '</p>'
+    + '<ul>' + page[4].map(function (line) { return '<li>' + line + '</li>'; }).join("") + '</ul>'
+    + '<p><a class="btn" href="' + BASE + '/checkout/?offer=' + id + '">Continue to payment</a> <a class="btn ghost" href="' + BASE + '/desk/">Back to the file</a></p>';
+}
 function bootPay() {
   var offer = new URLSearchParams(location.search).get("offer");
   var catalog = {
@@ -68,7 +85,8 @@ function bootPay() {
     consult: { price: "€100.00", name: "Video consult", line: "One hour on a video call. A conversation about your case. Nothing is lodged." },
     review: { price: "€150.00", name: "File review", line: "One hour. A person reads the assembled file and writes what is missing." },
     apostille: { price: "€40.00", name: "Apostille", line: "Per foreign public document. Legalisation where the Hague Convention does not apply." },
-    tie: { price: "€75.00", name: "TIE appointment", line: "The police card, booked after you land. Not the visa." }
+    tie: { price: "€75.00", name: "TIE appointment", line: "The police card, booked after you land. Not the visa." },
+    whitelabel: { price: "€2.000,00", name: "Whitelabel", line: "A month, for a firm offering the desk to its own clients. Your logo, unlimited cases." }
   };
   var picked = catalog[offer] || catalog.prepaid;
   var price = picked.price;
@@ -208,12 +226,11 @@ function bootDesk() {
     + '<p style="font-size:13px;opacity:.6">It reads what you typed, not the scan. A vision key is not connected.</p>'
     + '<p class="gold" style="letter-spacing:.16em;font-size:11px;font-weight:700;margin-top:22px">DO THIS NEXT</p>'
     + '<ol class="guide">' + guideFor(f, open).map(function (line) { return '<li>' + line + '</li>'; }).join("") + '</ol>'
-    + '<p class="gold" style="letter-spacing:.16em;font-size:11px;font-weight:700;margin-top:22px">ADD TO THIS FILE</p>'
-    + servicesFor(f)
     + '<button class="btn gold" id="ai-report" style="width:100%;margin-top:18px">AI check this file</button>'
     + '<div id="ai-out" hidden style="margin-top:14px"></div>'
     + '<p style="font-size:13px;opacity:.6;margin-top:14px">Kept here: your typed notes and the file name. Not kept yet: the scan. Sent to no one until you buy lodging.</p>'
-    + '</aside></div>';
+    + '</aside></div>'
+    + '<section style="grid-column:1 / -1;margin-top:8px"><p class="kicker">Add to this file</p><h2 style="font-size:28px;margin:4px 0 12px">Services, when you want them</h2><div class="grid2" style="grid-template-columns:repeat(4,1fr)">' + serviceCards() + '</div></section></div>';
   fillNav(f);
   var report = document.getElementById("ai-report");
   if (report) report.onclick = function () { runReport(f, groups, saved); };
@@ -303,6 +320,16 @@ function guideFor(f, open) {
     ? { means: ["400% of IPREM for you, 100% more for each family member, times the months."], record: ["Five years. A declaration does not replace the certificates."] }
     : { work: ["The register date must be at least a year ago.", "The letter needs the role, the pay, and permission to work from Spain."], record: ["Two years of certificates, plus a separate declaration covering five."] };
   return (extra[open.id] || []).concat(shared[open.id] || ["Work the open folder. The next one waits."]);
+}
+function serviceCards() {
+  return [
+    ["consult", "Video consult", "€100", "One hour on a call, before you spend money on documents."],
+    ["review", "File review", "€150", "A person reads the assembled file and writes what is missing."],
+    ["apostille", "Apostille", "€40", "Per foreign public document, arranged before the sworn translation."],
+    ["tie", "TIE appointment", "€75", "The police card, booked after you land."]
+  ].map(function (r) {
+    return '<a class="card" href="' + BASE + '/services/?service=' + r[0] + '" style="text-decoration:none;color:inherit"><p class="kicker">' + r[2] + '</p><h3 style="font-size:22px;margin:6px 0">' + r[1] + '</h3><p class="muted">' + r[3] + '</p></a>';
+  }).join("");
 }
 function servicesFor(f) {
   var rows = [

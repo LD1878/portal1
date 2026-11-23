@@ -51,33 +51,38 @@ footer { border-top:1px solid var(--rule); color:var(--muted); font-size:13px; m
 .miss { color:var(--red); font-weight:600; }
 .ok { color:#1c1c1c; }
 </style></head><body>
-<header><div class="bar">
-  <a href="/portal1/"><img class="logo" src="/portal1/logo.png" alt="JUROSpain"></a>
-  <nav>
-    <a class="" href="/portal1/">Home</a>
-    <a class="" href="/portal1/plans/">Services</a>
-    <a class="" href="/portal1/templates/">Templates</a>
-    <span class="drop"><a href="/portal1/digital-nomad/">Digital nomad</a><div>
-      <a href="/portal1/digital-nomad/">What it is</a>
-      <a href="/portal1/digital-nomad/consulate/">From abroad</a>
-      <a href="/portal1/digital-nomad/uge/">Already in Spain</a>
-    </div></span>
-    <span class="drop"><a href="/portal1/non-lucrative/">Non-lucrative</a><div>
-      <a href="/portal1/non-lucrative/">What it is</a>
-      <a href="/portal1/non-lucrative/consulate/">The consular file</a>
-    </div></span>
-    <span class="drop"><a href="/portal1/sources/">Law</a><div>
-      <a href="/portal1/formulas/">Formulas</a>
-      <a href="/portal1/sources/">Sources</a>
-    </div></span>
-  </nav>
-  <a class="cta" href="/portal1/desk/">Open the desk</a>
-</div></header>
+<div class="shell">
+<aside class="side">
+<a href="/portal1/desk/"><img class="logo" src="/portal1/logo.png" alt="JUROSpain"></a>
+<p class="group">Your case</p>
+<nav style="display:flex;flex-direction:column;gap:2px">
+<a href="/portal1/desk/">Overview</a>
+<a href="/portal1/desk/?folder=identity">Identity</a>
+<a href="/portal1/desk/?folder=means">Means</a>
+<a href="/portal1/desk/?folder=record">Clean record</a>
+<a href="/portal1/desk/?folder=cover">Cover</a>
+<a href="/portal1/desk/?folder=fees">Fees</a>
+</nav>
+<p class="group">Prepare</p>
+<nav style="display:flex;flex-direction:column;gap:2px">
+<a href="/portal1/templates/">Templates</a>
+<a href="/portal1/formulas/">Formulas</a>
+<a href="/portal1/sources/">Sources</a>
+</nav>
+<p class="group">Account</p>
+<nav style="display:flex;flex-direction:column;gap:2px">
+<a href="/portal1/plans/">Services</a>
+<a href="/portal1/profile/">Your details</a>
+</nav>
+</aside>
+<div class="work">
+
 <main>
 <p class="kicker">Money is a formula</p>
 <h1 style="font-size:46px;margin-top:8px">A percentage of an index. Not a frozen euro number.</h1>
 <div class="card" style="margin-top:16px"><h2>Non-lucrative</h2><p>400% of monthly IPREM for you, plus 100% for each family member, times the months you apply for. At €600 IPREM, a holder alone illustrates at €2,400 a month. When the index moves, the illustration moves. The article does not.</p></div>
 <div class="card" style="margin-top:12px"><h2>Digital nomad</h2><p>200% of SMI for you, 75% for the first family member, 25% for each person after. Gazette monthly SMI is €1,221, so a holder illustrates at €2,442. A second official reading divides the annual floor by twelve. Both exist because the sources disagree.</p></div></main>
-<footer>JUROSpain file desk. The sources stay under Law. A check is a reading of what you typed, not a filing and not an approval. The consulate, UGE-CE or extranjería decides.</footer>
+
 <script src="/portal1/app.js"></script>
+</div></div>
 </body></html>

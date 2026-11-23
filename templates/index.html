@@ -4,14 +4,37 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="/portal1/site.css">
 </head><body>
-<script src="/portal1/chrome.js"></script>
-<script>document.write(chromeNav("templates"))</script>
+<div class="shell">
+<aside class="side">
+<a href="/portal1/desk/"><img class="logo" src="/portal1/logo.png" alt="JUROSpain"></a>
+<p class="group">Your case</p>
+<nav style="display:flex;flex-direction:column;gap:2px">
+<a href="/portal1/desk/">Overview</a>
+<a href="/portal1/desk/?folder=identity">Identity</a>
+<a href="/portal1/desk/?folder=means">Means</a>
+<a href="/portal1/desk/?folder=record">Clean record</a>
+<a href="/portal1/desk/?folder=cover">Cover</a>
+<a href="/portal1/desk/?folder=fees">Fees</a>
+</nav>
+<p class="group">Prepare</p>
+<nav style="display:flex;flex-direction:column;gap:2px">
+<a href="/portal1/templates/">Templates</a>
+<a href="/portal1/formulas/">Formulas</a>
+<a href="/portal1/sources/">Sources</a>
+</nav>
+<p class="group">Account</p>
+<nav style="display:flex;flex-direction:column;gap:2px">
+<a href="/portal1/plans/">Services</a>
+<a href="/portal1/profile/">Your details</a>
+</nav>
+</aside>
+<div class="work">
 <main class="page">
 <p class="kicker">Templates</p>
 <h1 style="font-size:clamp(36px,6vw,52px);margin-top:8px">Fill it here. Save it to the case. Print it.</h1>
 <p class="lede">These are working copies of the forms a file needs. The official PDF is linked on each one, and that is what the consulate or UGE-CE accepts. Nothing here is lodged.</p>
 <div id="templates"></div>
 </main>
-<script>document.write(chromeFoot())</script>
 <script src="/portal1/app.js"></script>
+</div></div>
 </body></html>
