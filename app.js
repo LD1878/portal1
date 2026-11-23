@@ -15,6 +15,8 @@ var profile = document.getElementById("profile");
 if (profile) bootProfile();
 var desk = document.getElementById("desk");
 if (desk) bootDesk();
+var templates = document.getElementById("templates");
+if (templates) bootTemplates();
 
 function bootPay() {
   var offer = new URLSearchParams(location.search).get("offer");
@@ -22,7 +24,11 @@ function bootPay() {
     monthly: { price: "€300.00", name: "Monthly desk", line: "Consular only. No UGE-CE. Three months minimum." },
     prepaid: { price: "€600.00", name: "Three months", line: "Paid once. Includes UGE-CE if you are already in Spain." },
     translation: { price: "€1.000,00", name: "Sworn translations", line: "EN → ES, every document in the case, once the packet is 100%." },
-    filing: { price: "€200.00", name: "We submit the file", line: "Lodging after translation is on the case." }
+    filing: { price: "€200.00", name: "We submit the file", line: "Lodging after translation is on the case." },
+    consult: { price: "€100.00", name: "Video consult", line: "One hour on a video call. A conversation about your case. Nothing is lodged." },
+    review: { price: "€150.00", name: "File review", line: "One hour. A person reads the assembled file and writes what is missing." },
+    apostille: { price: "€40.00", name: "Apostille", line: "Per foreign public document. Legalisation where the Hague Convention does not apply." },
+    tie: { price: "€75.00", name: "TIE appointment", line: "The police card, booked after you land. Not the visa." }
   };
   var picked = catalog[offer] || catalog.prepaid;
   var price = picked.price;
@@ -126,38 +132,32 @@ function bootProfile() {
 }
 
 function bootDesk() {
-  var f = file() || { track: "digital-nomad", route: "consulate", name: "", email: "", city: "", country: "" };
+  var f = ensureCase();
   var who = document.getElementById("who");
   if (who) who.textContent = f.name || "Not filled in yet";
-  var items = packet(f);
+  var groups = packet(f);
+  var items = flat(groups);
   var saved = answers();
-  var aligned = items.filter(function (i) { return saved[i.id] && saved[i.id].verdict === "looks-aligned"; }).length;
-  var checked = items.filter(function (i) { return saved[i.id]; }).length;
-  var pct = items.length ? Math.round(aligned / items.length * 100) : 0;
-  var complete = pct === 100;
-  desk.innerHTML = '<div class="grid2" style="grid-template-columns:minmax(0,1fr) 320px;gap:0">'
-    + '<div style="padding-right:20px"><p class="kicker">🇪🇸 Spain · ' + routeName(f) + ' · Main applicant</p>'
+  var attached = items.filter(function (i) { return saved[i.id] && saved[i.id].fileName; }).length;
+  var openId = new URLSearchParams(location.search).get("folder") || groups[0].id;
+  var open = groups.filter(function (g) { return g.id === openId; })[0] || groups[0];
+  desk.innerHTML = '<div class="grid2" style="grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start">'
+    + '<div><p class="kicker">🇪🇸 Spain · ' + routeName(f) + '</p>'
     + '<h1 style="font-size:42px;margin:6px 0">' + (f.name || "Your file") + '</h1>'
-    + (f.name ? "" : '<p><a href="' + BASE + '/profile/">Add your name and where you are filing from</a>. The file is already open.</p>')
-    + '<p class="muted">Upload each scan. The AI checker reads it against the packet note — names, dates, apostille, formula. It does not lodge the file.</p>'
-    + '<ol style="list-style:none;padding:0">' + items.map(function (item, n) { return card(n, item, saved[item.id]); }).join("") + '</ol></div>'
-    + '<aside class="ink" style="border-radius:0;min-height:100%">'
-    + '<p class="gold" style="letter-spacing:.16em;font-size:11px;font-weight:700">STATUS</p>'
-    + '<p class="gold" style="font-family:Oswald,sans-serif;font-size:48px;margin:4px 0">' + pct + '%</p>'
-    + '<div style="height:8px;background:rgba(255,255,255,.12);border-radius:99px"><div style="height:100%;width:' + pct + '%;background:var(--gold);border-radius:99px"></div></div>'
-    + '<p style="opacity:.7;font-size:13px">' + aligned + ' aligned · ' + checked + ' checked · ' + (items.length - aligned) + ' open</p>'
-    + '<p class="gold" style="letter-spacing:.16em;font-size:11px;font-weight:700;margin-top:22px">✦ AI CHECKER</p>'
-    + '<p style="opacity:.8;font-size:14px">First pass in about a second. Dummy until a vision key is connected.</p>'
-    + '<ol style="padding-left:18px;font-size:14px;opacity:.9"><li>Document type and legibility</li><li>Names and dates match the packet note</li><li>Issue date inside the validity window</li><li>Apostille or legalisation present</li><li>Sworn translation required or not</li><li>Funds against the current formula</li></ol>'
-    + '<p class="gold" style="letter-spacing:.16em;font-size:11px;font-weight:700;margin-top:22px">FILE NOTES</p>'
-    + '<p style="opacity:.8;font-size:14px">Monthly plans do not include UGE-CE. Prepaid does. Nothing is lodged until you buy the €200 submit add-on.</p>'
-    + '<div style="background:var(--gold);color:var(--ink);border-radius:16px;padding:16px;margin-top:18px">'
-    + '<p style="letter-spacing:.12em;font-size:11px;font-weight:700;margin:0">WHEN THE FILE IS 100%</p>'
-    + '<p style="margin:10px 0 4px"><b>Sworn translations · €1.000</b><br><span style="font-size:13px">EN → ES, every document in this case.</span></p>'
-    + (complete ? '<a class="btn on" href="' + BASE + '/checkout/?offer=translation">Add to this file</a>' : '<p style="font-size:13px;margin:0">Finish every item first.</p>')
-    + '<p style="margin:14px 0 4px"><b>We submit the file · €200</b><br><span style="font-size:13px">Lodging after translation is on the case.</span></p>'
-    + (complete ? '<a class="btn on" href="' + BASE + '/checkout/?offer=filing">Add to this file</a>' : '<p style="font-size:13px;margin:0">Needs the €1.000 translation first.</p>')
-    + '</div></aside></div>';
+    + '<p class="muted">Documents. ' + attached + ' of ' + items.length + ' attached. Nothing has been sent.</p>'
+    + '<p class="no-print" style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn ' + (f.track === "digital-nomad" ? "on" : "ghost") + '" href="' + BASE + '/desk/?track=digital-nomad">Digital nomad</a><a class="btn ' + (f.track === "non-lucrative" ? "on" : "ghost") + '" href="' + BASE + '/desk/?track=non-lucrative">Non-lucrative</a></p>'
+    + phases(f, attached, items.length)
+    + '<div class="folders">' + groups.map(function (g) { return folderRow(g, saved, g.id === open.id); }).join("") + '</div>'
+    + '<section class="card" style="margin-top:18px"><p class="kicker">' + open.label + '</p><h2 style="font-size:28px;margin:4px 0">' + open.note + '</h2>'
+    + '<ol style="list-style:none;padding:0">' + open.items.map(function (item, n) { return card(n, item, saved[item.id]); }).join("") + '</ol></section></div>'
+    + '<aside class="card ink" style="position:sticky;top:84px">'
+    + '<p class="kicker" style="color:var(--gold)">WHERE THIS FILE IS</p>'
+    + '<h2 style="font-size:26px;color:#fff;margin:6px 0">Documents</h2>'
+    + '<p>' + attached + ' of ' + items.length + ' attached. The next action is the open folder.</p>'
+    + '<p style="opacity:.75;font-size:14px">' + datesFor(f) + '</p>'
+    + '<p style="opacity:.75;font-size:14px">Typed notes and the file name are kept in this browser. The scan itself is not saved yet, and nothing is sent until you buy lodging.</p>'
+    + '<p style="margin-top:16px"><a class="btn gold" href="' + BASE + '/plans/">Services</a></p>'
+    + '</aside></div>';
   desk.querySelectorAll("[data-check]").forEach(function (b) { b.onclick = function () { run(b); }; });
   desk.querySelectorAll("[data-file]").forEach(function (input) {
     input.onchange = function () {
@@ -174,6 +174,30 @@ function bootDesk() {
     };
   });
 }
+function phases(f, attached, total) {
+  var steps = ["Eligibility", "Documents", "Payment", "Lodging", "Decision"];
+  return '<ol class="phases">' + steps.map(function (step, i) {
+    var state = i === 1 ? "now" : i === 0 ? "done" : "";
+    return '<li class="' + state + '"><b>' + (i + 1) + '</b><span>' + step + '</span></li>';
+  }).join("") + '</ol>';
+}
+function folderRow(group, saved, isOpen) {
+  var got = group.items.filter(function (i) { return saved[i.id] && saved[i.id].fileName; }).length;
+  var count = group.items.length === 1 ? "1 document" : group.items.length + " documents";
+  return '<a class="folder' + (isOpen ? " open" : "") + '" href="' + BASE + '/desk/?folder=' + group.id + '"><span><b>' + group.label + '</b><small>' + count + '</small></span><span class="count">' + got + '/' + group.items.length + '</span></a>';
+}
+function datesFor(f) {
+  if (f.track === "non-lucrative") return "No answer within a month of the consulate writing to extranjería is a refusal. Collect the visa within a month of being told it is ready, or the file is archived. Enter within the visa’s validity, never more than three months, then the TIE within a month of entry.";
+  if (f.route === "uge") return "UGE-CE has twenty days from the electronic filing. No answer in that time is a grant. The TIE is due only if the authorisation lasts more than six months.";
+  return "The consulate sets its own time. The visa is for a maximum of one year. Sixty days before it expires, apply for the three-year residence if you want to stay. Collect it within the month you are given, or the post archives the file.";
+}
+function statusOf(saved) {
+  if (!saved || !saved.fileName) return "Not attached";
+  if (!saved.lines) return "Attached, not read";
+  if (saved.verdict === "looks-aligned") return "Names found";
+  if (saved.verdict === "check") return "Part missing";
+  return "Does not match";
+}
 function row(k, v) { return "<dt>" + k + "</dt><dd>" + v + "</dd>"; }
 function card(n, item, saved) {
   var lines = (saved && saved.lines) || [];
@@ -181,12 +205,14 @@ function card(n, item, saved) {
     return '<li class="' + (l.hit ? "ok" : "miss") + '">' + (l.hit ? "Found" : "Missing") + " — " + l.label + "</li>";
   }).join("");
   return '<li><article class="card" id="item-' + item.id + '" data-id="' + item.id + '" style="margin-top:14px">'
-    + '<div style="display:flex;justify-content:space-between"><span class="muted" style="font-family:monospace">' + String(n + 1).padStart(2, "0") + '</span><span class="pill">' + (saved ? saved.pill : "Not checked") + '</span></div>'
+    + '<div style="display:flex;justify-content:space-between;gap:12px"><span class="muted" style="font-family:monospace">' + String(n + 1).padStart(2, "0") + '</span><span class="pill">' + statusOf(saved) + '</span></div>'
     + '<h2 style="font-size:26px;margin-top:4px">' + item.label + '</h2>'
     + '<p>' + item.what + '</p>'
     + '<p><b>File this.</b> ' + item.file + '</p>'
-    + '<p class="muted"><b>The check looks for</b> ' + item.looks.map(function (l) { return l.label.toLowerCase(); }).join(", ") + '.</p>'
-    + '<label class="upload" style="display:flex;align-items:center;gap:10px;margin-top:10px"><input data-file type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/*" style="position:absolute;width:1px;height:1px;opacity:0"><span class="btn ghost">Upload document</span><span class="file-name muted">' + ((saved && saved.fileName) || "PDF or photo. Nothing is sent yet.") + '</span></label>'
+    + (item.good ? '<p class="good"><b>A good scan shows</b> ' + item.good + '</p>' : "")
+    + (item.id === "passport" ? '<p class="trust">This scan stays in your file. It is not sent to a consulate, UGE-CE, or anyone else until you buy lodging. You can delete it.</p>' : "")
+    + '<label class="upload" style="display:flex;align-items:center;gap:10px;margin-top:10px"><input data-file type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/*" style="position:absolute;width:1px;height:1px;opacity:0"><span class="btn ghost">Upload document</span><span class="file-name muted">' + ((saved && saved.fileName) || "No file chosen") + '</span></label>'
+    + '<p class="muted" style="font-size:13px;margin:6px 0 0">The name is kept. The scan itself is not saved yet, and nothing is sent.</p>'
     + '<label style="display:block;margin-top:8px"><span class="lbl">What is on the document</span><textarea rows="3" placeholder="' + item.ph + '">' + ((saved && saved.text) || "") + '</textarea></label>'
     + '<div class="scan ink" hidden style="margin-top:10px"><div style="display:flex;justify-content:space-between"><b class="gold" style="font-family:Oswald,sans-serif;letter-spacing:.12em;font-size:12px">✦ AI CHECKER</b><b class="gold pct">8%</b></div><div style="height:6px;background:rgba(255,255,255,.15);border-radius:99px;margin-top:8px"><div class="bar" style="height:100%;width:8%;background:var(--gold)"></div></div><p class="looking" style="opacity:.8;font-size:14px"></p></div>'
     + '<button data-check class="btn" style="margin-top:10px">Run AI checker</button>'
@@ -196,7 +222,7 @@ function card(n, item, saved) {
 function run(btn) {
   var cardEl = btn.closest("article");
   var id = cardEl.getAttribute("data-id");
-  var item = packet(file()).find(function (i) { return i.id === id; });
+  var item = flat(packet(file())).find(function (i) { return i.id === id; });
   var scan = cardEl.querySelector(".scan");
   var looking = cardEl.querySelector(".looking");
   scan.hidden = false;
@@ -217,7 +243,7 @@ function run(btn) {
     var hits = lines.filter(function (l) { return l.hit; }).length;
     var weight = hits;
     var verdict = hits === lines.length ? "looks-aligned" : hits ? "check" : "missing";
-    var pill = verdict === "looks-aligned" ? "Looks aligned" : verdict === "check" ? "Part missing" : "Does not match";
+    var pill = verdict === "looks-aligned" ? "Names found" : verdict === "check" ? "Part missing" : "Does not match";
     var all = answers();
     var prev = all[id] || {};
     all[id] = { text: cardEl.querySelector("textarea").value, verdict: verdict, pill: pill, weight: weight, lines: lines, fileName: prev.fileName || "" };
@@ -228,65 +254,186 @@ function run(btn) {
   }, 1500);
 }
 
+var FORMS = "jurospain-forms-v1";
+function forms() { return read(FORMS) || {}; }
+function formList() {
+  return [
+    { id: "ex-01", visa: "Non-lucrative", name: "EX-01", official: "https://www.inclusion.gob.es/web/migraciones/modelos-generales", note: "The residence application. Download the official model from the modelos page and copy these answers across. The consulate accepts the official form, not this page.", fields: [
+      ["surname", "Surname"], ["given", "Given names"], ["passport", "Passport number"], ["nationality", "Nationality"], ["birth", "Date of birth"], ["birthplace", "Place of birth"], ["address", "Address in your country"], ["spain", "Address in Spain, if known"], ["email", "Email"], ["phone", "Phone"]
+    ], body: "I apply for the initial temporary non-lucrative residence authorisation, to reside in Spain without carrying out labour or professional activity." },
+    { id: "visa-form", visa: "Digital nomad · from abroad", name: "National visa form", official: "https://www.exteriores.gob.es/es/ServiciosAlCiudadano/Paginas/Formularios.aspx", note: "The consulate’s own form, signed by the person who will telework. Take the current PDF from the ministry page. EX-01 belongs to the other visa.", fields: [
+      ["surname", "Surname"], ["given", "Given names"], ["passport", "Passport number"], ["nationality", "Nationality"], ["birth", "Date of birth"], ["consulate", "Consulate where you will file"], ["employer", "Company or client outside Spain"], ["role", "Role"], ["email", "Email"], ["phone", "Phone"]
+    ], body: "I apply for the national visa for international telework, to carry out my activity at a distance for companies established outside Spain." },
+    { id: "mi-t", visa: "Digital nomad · already in Spain", name: "MI-T", official: "https://sede.inclusion.gob.es/documents/387478/0/Modelo+de+solicitud+de+autorizaci%c3%b3n+residencia+titulares.+MI-T+.pdf/1d2562eb-63ad-a317-b605-bd412dd5c914", note: "The holder’s form for the electronic residence on Plataforma ONE. Family members use MI-F, one each.", fields: [
+      ["surname", "Surname"], ["given", "Given names"], ["passport", "Passport number"], ["nie", "NIE, if you have one"], ["nationality", "Nationality"], ["employer", "Company or client outside Spain"], ["role", "Role"], ["spain", "Address in Spain"], ["email", "Email"], ["phone", "Phone"]
+    ], body: "I apply for the residence authorisation for international telework, being already lawfully in Spain." },
+    { id: "criminal-declaration", visa: "Digital nomad", name: "Five-year criminal declaration", official: "", note: "A sworn declaration covering five years. It does not replace the two-year certificates. Do not use this on a non-lucrative file.", fields: [
+      ["name", "Full name"], ["passport", "Passport number"], ["nationality", "Nationality"], ["countries", "Countries of residence, last five years"]
+    ], body: "I declare that I have no criminal record, in Spain or abroad, for offences under Spanish law, during the last five years." },
+    { id: "remote-letter", visa: "Digital nomad", name: "Remote-work letter", official: "", note: "For the employer or the client to sign. It has to state seniority of at least three months, the role, the pay, and permission to do the work from Spain.", fields: [
+      ["company", "Company"], ["applicant", "Applicant"], ["role", "Role"], ["since", "Employed or contracted since"], ["pay", "Salary or fees"], ["country", "Company’s country"]
+    ], body: "The company permits the applicant to carry out this work remotely from Spain, exclusively by computer and telecommunication means. The relationship has existed for at least three months." },
+    { id: "cover", visa: "Both", name: "Cover note", official: "", note: "The first page of the file. It lists who is applying, which residence, and what is enclosed. It is not a form the administration publishes.", fields: [
+      ["name", "Applicant"], ["visa", "Residence applied for"], ["consulate", "Consulate or office"], ["enclosed", "Documents enclosed"]
+    ], body: "I enclose the documents in the order of the file, and I ask that the application be considered." }
+  ];
+}
+function bootTemplates() {
+  var params = new URLSearchParams(location.search);
+  var open = params.get("form");
+  var list = formList();
+  var current = list.filter(function (f) { return f.id === open; })[0];
+  if (!current) {
+    templates.innerHTML = '<div class="grid2" style="margin-top:24px;grid-template-columns:1fr 1fr 1fr">' + list.map(function (f) {
+      var saved = forms()[f.id];
+      return '<a class="card" href="' + BASE + '/templates/?form=' + f.id + '" style="text-decoration:none;color:inherit"><p class="kicker">' + f.visa + '</p><h2 style="font-size:26px;margin:8px 0">' + f.name + '</h2><p class="muted">' + (saved ? "Saved to this case" : "Not filled in") + '</p></a>';
+    }).join("") + '</div>';
+    return;
+  }
+  var saved = forms()[current.id] || {};
+  var inputs = current.fields.map(function (pair) {
+    return '<label style="display:block;margin:10px 0"><span class="lbl">' + pair[1] + '</span><input data-k="' + pair[0] + '"></label>';
+  }).join("");
+  templates.innerHTML = '<p class="no-print" style="margin-top:18px"><a href="' + BASE + '/templates/">All templates</a></p>'
+    + '<div class="sheet" id="sheet"><p class="kicker">' + current.visa + '</p><h1 style="font-size:40px;margin:6px 0 8px">' + current.name + '</h1>'
+    + '<p class="muted">' + current.note + '</p>'
+    + '<div class="row2">' + inputs + '</div>'
+    + '<h2>Statement</h2><p>' + current.body + '</p>'
+    + '<div class="sign"><div><p class="lbl">Place and date</p><div class="line"></div></div><div><p class="lbl">Signature</p><div class="line"></div></div></div></div>'
+    + '<p class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px"><button class="btn" id="save-form">Save to this case</button><button class="btn ghost" id="print-form" type="button">Print</button>'
+    + (current.official ? '<a class="btn ghost" href="' + current.official + '" target="_blank" rel="noopener">Official form</a>' : '')
+    + '</p><p class="muted no-print" id="form-status">Saved answers stay on this case, in this browser.</p>';
+  templates.querySelectorAll("[data-k]").forEach(function (input) {
+    var key = input.getAttribute("data-k");
+    if (saved[key]) input.setAttribute("value", saved[key]);
+  });
+  document.getElementById("save-form").onclick = function () {
+    var all = forms();
+    var data = {};
+    templates.querySelectorAll("[data-k]").forEach(function (input) { data[input.getAttribute("data-k")] = input.value; });
+    all[current.id] = data;
+    localStorage.setItem(FORMS, JSON.stringify(all));
+    document.getElementById("form-status").textContent = "Saved to this case.";
+  };
+  document.getElementById("print-form").onclick = function () { window.print(); };
+}
+function esc(value) {
+  return String(value).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+}
+function ensureCase() {
+  var f = file() || { track: "digital-nomad", route: "consulate", name: "", email: "", city: "", country: "" };
+  var track = new URLSearchParams(location.search).get("track");
+  if (track === "digital-nomad" || track === "non-lucrative") {
+    if (f.track !== track) {
+      f.track = track;
+      f.route = "consulate";
+      localStorage.setItem(CASE, JSON.stringify(f));
+    }
+    history.replaceState(null, "", location.pathname);
+  }
+  return f;
+}
 function routeName(f) {
   if (f.track === "non-lucrative") return "Non-lucrative · from origin";
   return f.route === "uge" ? "Digital nomad · already in Spain" : "Digital nomad · from abroad";
 }
 function look(label, words) { return { label: label, words: words }; }
-function doc(id, label, what, fileThis, ph, looks) { return { id: id, label: label, what: what, file: fileThis, ph: ph, looks: looks }; }
+function doc(id, label, what, fileThis, ph, looks, good) { return { id: id, label: label, what: what, file: fileThis, ph: ph, looks: looks, good: good }; }
 
 function packet(f) {
-  var shared = [
-    doc("passport", "Passport", "The identity the whole file hangs on. A copy of every page, and the original at the appointment.", "A full colour copy. For non-lucrative, at least one year of validity must remain.", "Passport, British, expiry 14 June 2030",
-      [look("the word passport", ["passport", "pasaporte"]), look("an expiry date", ["expiry", "expires", "caduc"]), look("a nationality", ["british", "american", "nationality", "nacionalidad"])]),
-    doc("funds", "Means", f.track === "non-lucrative" ? "Enough to live on without working. 400% of IPREM a month for you, 100% more for each family member, times the months you ask for." : "Remote income at 200% of SMI for you, 75% for the first family member, 25% after that. The euro figure is an illustration.", "The contract or the bank evidence that shows the amount, and that you can actually use it.", "Balance €40,000, covers twelve months",
-      [look("a bank or a salary", ["bank", "banco", "salary", "salario", "income"]), look("an amount", ["€", "eur", "euro"]), look("the period it covers", ["month", "meses", "twelve", "12"])]),
-  ];
+  var passport = doc("passport", "Passport", "The identity the whole file hangs on. A copy of every page, and the original at the appointment.", "A full colour copy. For non-lucrative, at least one year of validity must remain.", "Passport, British, expiry 14 June 2030",
+      [look("the word passport", ["passport", "pasaporte"]), look("an expiry date", ["expiry", "expires", "caduc"]), look("a nationality", ["british", "american", "nationality", "nacionalidad"])],
+      "All four corners, every page, in colour, no glare. A photo of the photo page alone is not enough.");
+  var funds = doc("funds", "Means", f.track === "non-lucrative" ? "Enough to live on without working. 400% of IPREM a month for you, 100% more for each family member, times the months you ask for." : "Remote income at 200% of SMI for you, 75% for the first family member, 25% after that. The euro figure is an illustration.", "The contract or the bank evidence that shows the amount, and that you can actually use it.", "Balance €40,000, covers twelve months",
+      [look("a bank or a salary", ["bank", "banco", "salary", "salario", "income"]), look("an amount", ["€", "eur", "euro"]), look("the period it covers", ["month", "meses", "twelve", "12"])],
+      "The amount and the period it covers, on the bank’s or the employer’s paper. An app screenshot is not enough.");
   if (f.track === "non-lucrative") return [
-    doc("form", "EX-01, signed", "The official application. Download it only from the modelos page.", "EX-01, completed and signed by you.", "EX-01 completed and signed",
-      [look("the form name", ["ex-01", "ex01"]), look("a signature", ["signed", "firmado"])]),
-    shared[0],
-    doc("criminal", "Criminal record, five years", "No record, for offences under Spanish law, in the countries you lived in for the last five years. This is a different packet from the digital nomad one.", "Certificates covering those five years, from every country of residence.", "Criminal record, last five years, UK",
-      [look("a criminal-record certificate", ["criminal", "antecedentes"]), look("five years of cover", ["five", "5 year", "cinco"])]),
-    shared[1],
-    doc("bank", "Foreign bank letter", "A foreign account has to be identified. A screenshot of an app is not enough.", "Bank name and address, full account number, opening date, the 31 December balance, and last year’s average.", "Bank letter, 31 December balance, average balance",
-      [look("the bank’s name", ["bank", "banco"]), look("the 31 December balance", ["31 december", "31 de diciembre", "december"]), look("the average balance", ["average", "media"])]),
-    doc("insurance", "Sickness insurance", "Cover for illness with an insurer allowed to operate in Spain, or public cover.", "A certificate naming you. Travel insurance does not count.", "Adeslas sickness policy, no copay",
-      [look("an insurer", ["insurance", "seguro", "policy"]), look("sickness cover, not travel", ["sickness", "enfermedad", "health"])]),
-    doc("medical", "Medical certificate", "A doctor’s statement that you have no disease with serious public-health consequences under the International Health Regulations 2005.", "That certificate, recent enough for the consulate.", "Medical certificate, International Health Regulations",
-      [look("a medical certificate", ["medical", "médico", "medico"]), look("the health regulations", ["health", "ihr", "regulations"])]),
-    doc("fee", "Fees", "Two payments: the residence fee, and the consulate’s own visa fee.", "Modelo 790 code 052, heading 2.1.1, plus the consular receipt. Read the live amount on the day you pay.", "790-052 paid, plus visa fee receipt",
-      [look("modelo 790 code 052", ["790", "052"]), look("a receipt", ["receipt", "recibo", "paid"])]),
-    doc("translation", "Sworn translation", "A foreign public document is translated into Spanish by a sworn translator. The apostille, if the document needs one, is the consulate’s step — this desk does not weigh it.", "The sworn translation, filed behind the document it translates.", "Sworn Spanish translation attached",
-      [look("a sworn translation", ["sworn", "jurada"]), look("Spanish as the language", ["spanish", "español", "espanol"])]),
+    folder("identity", "Identity", "Who is applying. The passport needs a year of validity left.", [
+      doc("form", "EX-01, signed", "The official application. Download it only from the modelos page.", "EX-01, completed and signed by you.", "EX-01 completed and signed",
+        [look("the form name", ["ex-01", "ex01"]), look("a signature", ["signed", "firmado"])],
+        "Every field filled, signed in ink, the same name as the passport."),
+      passport
+    ]),
+    folder("means", "Means", "400% of IPREM a month for you, 100% more for each family member, times the months you ask for.", [
+      funds,
+      doc("bank", "Foreign bank letter", "A foreign account has to be identified. A screenshot of an app is not enough.", "Bank name and address, full account number, opening date, the 31 December balance, and last year’s average.", "Bank letter, 31 December balance, average balance",
+        [look("the bank’s name", ["bank", "banco"]), look("the 31 December balance", ["31 december", "31 de diciembre", "december"]), look("the average balance", ["average", "media"])],
+        "The bank’s name and address, the account number, the opening date, the 31 December balance, and last year’s average. Not a screenshot.")
+    ]),
+    folder("record", "Clean record", "Five years, from every country you lived in. This is not the digital nomad packet.", [
+      doc("criminal", "Criminal record, five years", "No record, for offences under Spanish law, in the countries you lived in for the last five years.", "Certificates covering those five years, from every country of residence.", "Criminal record, last five years, UK",
+        [look("a criminal-record certificate", ["criminal", "antecedentes"]), look("five years of cover", ["five", "5 year", "cinco"])],
+        "A certificate from each country of the last five years. A declaration does not replace it on this visa.")
+    ]),
+    folder("cover", "Cover", "Insurance and the medical certificate. Travel insurance does not count.", [
+      doc("insurance", "Sickness insurance", "Cover for illness with an insurer allowed to operate in Spain, or public cover.", "A certificate naming you. Travel insurance does not count.", "Adeslas sickness policy, no copay",
+        [look("an insurer", ["insurance", "seguro", "policy"]), look("sickness cover, not travel", ["sickness", "enfermedad", "health"])],
+        "Your name on a sickness policy from an insurer allowed in Spain. Not travel insurance."),
+      doc("medical", "Medical certificate", "A doctor’s statement that you have no disease with serious public-health consequences under the International Health Regulations 2005.", "That certificate, recent enough for the consulate.", "Medical certificate, International Health Regulations",
+        [look("a medical certificate", ["medical", "médico", "medico"]), look("the health regulations", ["health", "ihr", "regulations"])],
+        "A recent certificate naming the International Health Regulations 2005. A fit-to-travel note is not this.")
+    ]),
+    folder("fees", "Fees and translations", "Two payments, then the sworn translation behind each foreign public document.", [
+      doc("fee", "Fees", "Two payments: the residence fee, and the consulate’s own visa fee.", "Modelo 790 code 052, heading 2.1.1, plus the consular receipt. Read the live amount on the day you pay.", "790-052 paid, plus visa fee receipt",
+        [look("modelo 790 code 052", ["790", "052"]), look("a receipt", ["receipt", "recibo", "paid"])],
+        "The 790-052 receipt and the consulate’s own receipt. Read the amount on the day you pay."),
+      doc("translation", "Sworn translation", "A foreign public document is translated into Spanish by a sworn translator.", "The sworn translation, filed behind the document it translates.", "Sworn Spanish translation attached",
+        [look("a sworn translation", ["sworn", "jurada"]), look("Spanish as the language", ["spanish", "español", "espanol"])],
+        "A traducción jurada, in Spanish, filed behind the document it translates.")
+    ])
   ];
   var abroad = f.route !== "uge";
   return [
-    abroad
-      ? doc("form", "National visa form, signed", "The consulate’s own visa form, signed by the person who will telework. EX-01 belongs to the other visa.", "The current national visa form, completed and signed.", "National visa form, signed 12 March 2026",
-          [look("a visa form", ["visa", "visado"]), look("a signature", ["signed", "firmado"])])
-      : doc("form", "MI-T, signed", "The holder’s form for the electronic residence. Family members use MI-F, one each.", "MI-T from Plataforma ONE, completed and signed.", "MI-T signed 4 May 2026",
-          [look("form MI-T", ["mi-t", "mit"]), look("a signature", ["signed", "firmado"])]),
-    shared[0],
-    doc("company", "The company has traded for a year", "The foreign company has been really active for at least a year.", "A companies-register certificate with the incorporation date and the activity.", "Register certificate, incorporated 2019",
-      [look("a register certificate", ["register", "registro", "company"]), look("at least a year of activity", ["year", "2019", "2020", "2021", "2022", "2023", "2024"])]),
-    doc("remote", "Three months, and permission to work from Spain", "The job or the client relationship is at least three months old, and they allow the work from Spain.", "Employed: a letter with seniority, salary and remote permission. Freelance: contracts or invoices covering three months.", "Employer letter, remote from Spain, three months",
-      [look("remote permission", ["remote", "remoto"]), look("three months", ["three", "3 month", "tres"])]),
-    doc("degree", "Qualification, or three years doing the work", "A recognised degree, or three years in the same kind of role.", "The diploma, or evidence of the three years.", "University degree, three years as an engineer",
-      [look("a qualification or experience", ["degree", "university", "experience", "years"])]),
-    shared[1],
-    doc("criminal", "Criminal record, two years, plus a declaration", "Certificates for the countries of the last two years, and a sworn declaration covering five. Do not use the non-lucrative five-year packet here.", "The certificates and the declaration.", "Criminal record certificate plus five-year declaration",
-      [look("a criminal-record certificate", ["criminal", "antecedentes"]), look("the five-year declaration", ["declaration", "five"])]),
-    doc("insurance", "Sickness insurance that actually covers you", "Public cover, or a private policy with an insurer allowed in Spain. Travel insurance, reimbursement-only, a waiting period and a co-pay all fail.", "The certificate of cover.", "Sanitas sickness policy, no copay, no waiting period",
-      [look("an insurer", ["insurance", "seguro", "policy"]), look("full sickness cover", ["sickness", "no copay", "no waiting"])]),
-    doc("ss", "Social Security", "Either you stay covered at home under a bilateral agreement, or the foreign employer will register in Spanish Social Security before the work starts.", "An A1 or coverage certificate, or the alta commitment.", "A1 coverage certificate",
-      [look("social security cover", ["social security", "seguridad social", "a1"])]),
-    abroad
-      ? doc("fee", "Consular visa fee", "The fee that post charges on the day you file. Do not copy a number from an old PDF.", "The consulate’s receipt.", "Visa fee receipt, paid 2 April 2026",
-          [look("a receipt", ["receipt", "recibo", "paid", "fee"])])
-      : doc("fee", "Tasa 038, with the NRC", "Paid before the electronic file is opened. The NRC is what you type into the upload.", "Proof of payment and the Número de Referencia Completo.", "Tasa 038 paid, NRC kept",
-          [look("tasa 038", ["038"]), look("the NRC", ["nrc"])]),
-    doc("translation", "Sworn translation", "Foreign public documents are translated into Spanish by a sworn translator. Whether a document also needs an apostille is the consulate’s step, and this desk does not weigh it.", "The sworn translation, filed behind its document.", "Sworn Spanish translation attached",
-      [look("a sworn translation", ["sworn", "jurada"]), look("Spanish as the language", ["spanish", "español"])]),
+    folder("identity", "Identity", "Who is applying, and the form for this door.", [
+      abroad
+        ? doc("form", "National visa form, signed", "The consulate’s own visa form, signed by the person who will telework. EX-01 belongs to the other visa.", "The current national visa form, completed and signed.", "National visa form, signed 12 March 2026",
+            [look("a visa form", ["visa", "visado"]), look("a signature", ["signed", "firmado"])],
+            "The current national visa form, signed. Not EX-01.")
+        : doc("form", "MI-T, signed", "The holder’s form for the electronic residence. Family members use MI-F, one each.", "MI-T from Plataforma ONE, completed and signed.", "MI-T signed 4 May 2026",
+            [look("form MI-T", ["mi-t", "mit"]), look("a signature", ["signed", "firmado"])],
+            "MI-T, signed. Family members each have their own MI-F."),
+      passport
+    ]),
+    folder("work", "The remote work", "The company, the three months, and proof the work can be done from Spain. This folder does not exist on the other visa.", [
+      doc("company", "The company has traded for a year", "The foreign company has been really active for at least a year.", "A companies-register certificate with the incorporation date and the activity.", "Register certificate, incorporated 2019",
+        [look("a register certificate", ["register", "registro", "company"]), look("at least a year of activity", ["year", "2019", "2020", "2021", "2022", "2023", "2024"])],
+        "A register certificate with the incorporation date and the activity. The date has to be at least a year ago."),
+      doc("remote", "Three months, and permission to work from Spain", "The job or the client relationship is at least three months old, and they allow the work from Spain.", "Employed: a letter with seniority, salary and remote permission. Freelance: contracts or invoices covering three months.", "Employer letter, remote from Spain, three months",
+        [look("remote permission", ["remote", "remoto"]), look("three months", ["three", "3 month", "tres"])],
+        "A letter naming the role, the pay, three months of seniority, and permission to work from Spain."),
+      doc("degree", "Qualification, or three years doing the work", "A recognised degree, or three years in the same kind of role.", "The diploma, or evidence of the three years.", "University degree, three years as an engineer",
+        [look("a qualification or experience", ["degree", "university", "experience", "years"])],
+        "The diploma, or three years of evidence in the same kind of role. One or the other.")
+    ]),
+    folder("means", "Means", "200% of SMI for you. The euro figure is an illustration, because the sources disagree on the monthly conversion.", [
+      funds
+    ]),
+    folder("record", "Clean record", "Two years of certificates, plus a declaration covering five. Do not use the non-lucrative five-year packet.", [
+      doc("criminal", "Criminal record, two years, plus a declaration", "Certificates for the countries of the last two years, and a sworn declaration covering five.", "The certificates and the declaration.", "Criminal record certificate plus five-year declaration",
+        [look("a criminal-record certificate", ["criminal", "antecedentes"]), look("the five-year declaration", ["declaration", "five"])],
+        "Certificates for the last two years, and a separate declaration covering five. Both.")
+    ]),
+    folder("cover", "Cover", "Insurance that actually covers you, and Social Security. This visa asks for both.", [
+      doc("insurance", "Sickness insurance that actually covers you", "Public cover, or a private policy with an insurer allowed in Spain. Travel insurance, reimbursement-only, a waiting period and a co-pay all fail.", "The certificate of cover.", "Sanitas sickness policy, no copay, no waiting period",
+        [look("an insurer", ["insurance", "seguro", "policy"]), look("full sickness cover", ["sickness", "no copay", "no waiting"])],
+        "Full sickness cover. No travel insurance, no reimbursement-only policy, no waiting period, no co-pay."),
+      doc("ss", "Social Security", "Either you stay covered at home under a bilateral agreement, or the foreign employer will register in Spanish Social Security before the work starts.", "An A1 or coverage certificate, or the alta commitment.", "A1 coverage certificate",
+        [look("social security cover", ["social security", "seguridad social", "a1"])],
+        "An A1 or coverage certificate, or the employer’s commitment to register before the work starts.")
+    ]),
+    folder("fees", "Fees and translations", abroad ? "The consulate’s fee, read on the day, then the sworn translation." : "Tasa 038 paid before the file is opened, then the sworn translation.", [
+      abroad
+        ? doc("fee", "Consular visa fee", "The fee that post charges on the day you file. Do not copy a number from an old PDF.", "The consulate’s receipt.", "Visa fee receipt, paid 2 April 2026",
+            [look("a receipt", ["receipt", "recibo", "paid", "fee"])],
+            "The receipt from the day you pay. Do not copy a figure from an old PDF.")
+        : doc("fee", "Tasa 038, with the NRC", "Paid before the electronic file is opened. The NRC is what you type into the upload.", "Proof of payment and the Número de Referencia Completo.", "Tasa 038 paid, NRC kept",
+            [look("tasa 038", ["038"]), look("the NRC", ["nrc"])],
+            "Proof of payment and the NRC, kept. You type the NRC into the upload."),
+      doc("translation", "Sworn translation", "Foreign public documents are translated into Spanish by a sworn translator.", "The sworn translation, filed behind its document.", "Sworn Spanish translation attached",
+        [look("a sworn translation", ["sworn", "jurada"]), look("Spanish as the language", ["spanish", "español"])],
+        "A traducción jurada, in Spanish, filed behind the document it translates.")
+    ])
   ];
 }
+function folder(id, label, note, items) { return { id: id, label: label, note: note, items: items }; }
+function flat(groups) { return groups.reduce(function (all, g) { return all.concat(g.items); }, []); }

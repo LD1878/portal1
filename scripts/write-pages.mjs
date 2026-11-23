@@ -15,7 +15,7 @@ body { margin:0; font-family:Barlow,"Segoe UI",sans-serif; color:var(--ink); bac
   background-size:48px 48px; line-height:1.6; }
 h1,h2,h3 { font-family:Oswald,"Arial Narrow",sans-serif; letter-spacing:-.02em; margin:0; line-height:1.08; }
 a { color:var(--red); }
-header { position:sticky; top:0; z-index:20; background:rgb(247 244 239 / .94); border-bottom:1px solid var(--rule); backdrop-filter:blur(14px); }
+header { position:sticky; top:0; z-index:20; background:#fff; border-bottom:1px solid var(--rule); }
 .bar { max-width:1140px; margin:0 auto; height:68px; display:flex; align-items:center; gap:20px; padding:0 22px; }
 .logo { height:34px; }
 nav { display:flex; gap:18px; align-items:center; font-family:Oswald,sans-serif; font-size:15px; letter-spacing:.05em; text-transform:uppercase; }
@@ -66,7 +66,7 @@ function shell(path, title, body) {
   <nav>
     <a class="${here("/")}" href="${B}/">Home</a>
     <a class="${here("/plans")}" href="${B}/plans/">Plans</a>
-    <a class="${here("/decide")}" href="${B}/decide/">Decide</a>
+    <a class="${here("/templates")}" href="${B}/templates/">Templates</a>
     <span class="drop"><a href="${B}/digital-nomad/">Digital nomad</a><div>
       <a href="${B}/digital-nomad/">What it is</a>
       <a href="${B}/digital-nomad/consulate/">From abroad</a>
@@ -100,7 +100,7 @@ write("/", "JUROSpain", `
 <p class="lede">Two residencies. A price you see first. Then your name, the visa, and where you are filing. Then the file, one document at a time, with the instruction beside the check.</p>
 <p style="display:flex;gap:10px;flex-wrap:wrap">
   <a class="btn" href="${B}/plans/">See the price</a>
-  <a class="btn ghost" href="${B}/decide/">Which visa is mine</a>
+  <a class="btn ghost" href="${B}/desk/?track=non-lucrative">Non-lucrative</a>
 </p>
 <div class="grid2" style="margin-top:32px;grid-template-columns:1fr 1fr">
   <a class="card" href="${B}/digital-nomad/" style="text-decoration:none;color:inherit"><p class="kicker">Ley 14/2013</p><h2 style="font-size:30px;margin:8px 0">Digital nomad</h2><p>Remote work for companies outside Spain. Consular visa from abroad, up to one year. UGE-CE residence if you are already lawfully in Spain, up to three years.</p></a>
@@ -115,14 +115,14 @@ write("/plans", "Plans · JUROSpain", `
   <article class="card"><p class="kicker">Billed monthly</p><h2 style="font-size:52px;color:var(--red);margin:8px 0">€300</h2><p class="muted">a month, three months minimum · €900 in the first quarter</p><p>Both visas, holder and family, every document explained, then checked. Cancel after month three.</p><a class="btn" href="${B}/checkout/?offer=monthly">Continue with monthly</a></article>
   <article class="card" style="outline:2px solid var(--gold)"><p class="kicker">Prepaid</p><h2 style="font-size:52px;color:var(--red);margin:8px 0">€600</h2><p class="muted">paid once, for three months · €200 a month</p><p>The same desk. Access ends after three months unless you renew. Nothing is filed for you.</p><a class="btn gold" href="${B}/checkout/?offer=prepaid">Continue with €600</a></article>
 </div>
-<p style="margin-top:22px"><a class="btn ghost" href="${B}/decide/">Look through the desk first</a></p>`);
+<p style="margin-top:22px"><a class="btn ghost" href="${B}/desk/">Open the desk</a></p>`);
 
 write("/checkout", "Checkout · JUROSpain", `<div id="checkout"></div>`);
 write("/decide", "Which visa · JUROSpain", `
 <p class="kicker">Your route</p>
-<h1 style="font-size:48px;margin-top:8px">Which of the two visas, from where.</h1>
-<p class="lede">Three questions. The answer opens your details, then the packet in file order.</p>
-<div id="decide" class="card" style="margin-top:18px;max-width:740px"></div>`);
+<h1 style="font-size:48px;margin-top:8px">Pick the visa. No questions first.</h1>
+<p class="lede">Open the file for the residence you are applying for.</p>
+<p><a class="btn" href="${B}/desk/?track=digital-nomad">Digital nomad</a> <a class="btn ghost" href="${B}/desk/?track=non-lucrative">Non-lucrative</a></p>`);
 write("/profile", "Your details · JUROSpain", `<div id="profile"></div>`);
 write("/desk", "File desk · JUROSpain", `<div id="desk"></div>`);
 write("/formulas", "Formulas · JUROSpain", `
