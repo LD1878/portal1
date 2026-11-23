@@ -1,0 +1,174 @@
+[
+  {
+    "id": "uge-teletrabajadores",
+    "url": "https://www.inclusion.gob.es/web/unidadgrandesempresas/teletrabajadores",
+    "owner": "Ministerio de Inclusión, Seguridad Social y Migraciones — UGE-CE",
+    "allowedFields": ["office", "route", "faq-pointer"],
+    "lastSeen": "2026-09-22",
+    "lastSeenHash": "seed:uge-teletrabajadores:2026-09-22",
+    "status": "live"
+  },
+  {
+    "id": "uge-autorizaciones",
+    "url": "https://www.inclusion.gob.es/web/unidadgrandesempresas/autorizaciones-y-requisitos",
+    "owner": "UGE-CE",
+    "allowedFields": ["office", "scope"],
+    "lastSeen": "2026-09-22",
+    "lastSeenHash": "seed:uge-autorizaciones:2026-09-22",
+    "status": "live"
+  },
+  {
+    "id": "uge-sede-ley14",
+    "url": "https://expinterweb.inclusion.gob.es/iley11/inicio/showTramites.action?procedimientoSel=200&proc=1",
+    "owner": "UGE-CE sede electrónica",
+    "allowedFields": ["office", "form-channel"],
+    "lastSeen": "2026-09-22",
+    "lastSeenHash": "seed:uge-sede-ley14:2026-09-22",
+    "status": "live"
+  },
+  {
+    "id": "one-dn-residence",
+    "url": "https://www.one.gob.es/en/procedures/residence-application-digital-nomads",
+    "owner": "Plataforma ONE",
+    "allowedFields": ["form-number", "fee-code", "deadline", "office", "duration"],
+    "lastSeen": "2026-09-22",
+    "lastSeenHash": "seed:one-dn-residence:2026-09-22",
+    "status": "live"
+  },
+  {
+    "id": "one-dn-visa",
+    "url": "https://one.gob.es/es/tramites/solicitud-del-visado-de-nomada-digital",
+    "owner": "Plataforma ONE",
+    "allowedFields": ["form-number", "fee-code", "duration", "funds-formula"],
+    "lastSeen": "2026-09-22",
+    "lastSeenHash": "seed:one-dn-visa:2026-09-22",
+    "status": "live"
+  },
+  {
+    "id": "dn-faq-en",
+    "url": "https://www.inclusion.gob.es/documents/d/unidadgrandesempresas/digital-nomad-faqs-english",
+    "owner": "UGE-CE",
+    "allowedFields": ["funds-formula", "route", "insurance", "criminal-record", "fee-code"],
+    "lastSeen": "2026-09-22",
+    "lastSeenHash": "seed:dn-faq-en:2026-09-22",
+    "status": "live"
+  },
+  {
+    "id": "dn-faq-es",
+    "url": "https://www.inclusion.gob.es/documents/d/unidadgrandesempresas/nomadas-digitales-faqs-espanol",
+    "owner": "UGE-CE",
+    "allowedFields": ["funds-formula", "route", "insurance", "criminal-record", "fee-code"],
+    "lastSeen": "2026-09-22",
+    "lastSeenHash": "seed:dn-faq-es:2026-09-22",
+    "status": "live"
+  },
+  {
+    "id": "instruccion-conjunta-teletrabajo",
+    "url": "https://www.inclusion.gob.es/documents/410169/0/report_report_2301%2BInstrucci%25C3%25B3n%2Bconjunta%2BTeletrabajadores%2Bde%2Bcar%25C3%25A1cter%2Binternacional_rev13_FIRMADAS.pdf",
+    "owner": "Ministerio de Inclusión and Ministerio de Asuntos Exteriores — instrucción conjunta",
+    "allowedFields": ["funds-formula", "criminal-record", "forms", "document-list", "insurance"],
+    "lastSeen": "2026-09-22",
+    "lastSeenHash": "seed:instruccion-conjunta-teletrabajo:2026-09-22",
+    "status": "live"
+  },
+  {
+    "id": "nlv-hoja-6",
+    "url": "https://www.inclusion.gob.es/web/migraciones/w/autorizacion-inicial-de-residencia-temporal-no-lucrativa",
+    "owner": "Ministerio de Inclusión — Migraciones",
+    "allowedFields": ["form-number", "fee-code", "deadline", "office", "funds-formula", "document-list"],
+    "lastSeen": "2026-09-22",
+    "lastSeenHash": "seed:nlv-hoja-6:2026-09-22",
+    "status": "live"
+  },
+  {
+    "id": "ex-01",
+    "url": "https://www.inclusion.gob.es/web/migraciones/modelos-generales",
+    "owner": "Ministerio de Inclusión — Migraciones",
+    "allowedFields": ["form-number"],
+    "lastSeen": "2026-09-22",
+    "lastSeenHash": "seed:ex-01:2026-09-22",
+    "status": "live"
+  },
+  {
+    "id": "mi-t",
+    "url": "https://sede.inclusion.gob.es/documents/387478/0/Modelo+de+solicitud+de+autorizaci%c3%b3n+residencia+titulares.+MI-T+.pdf/1d2562eb-63ad-a317-b605-bd412dd5c914",
+    "owner": "UGE-CE",
+    "allowedFields": ["form-number"],
+    "lastSeen": "2026-09-22",
+    "lastSeenHash": "seed:mi-t:2026-09-22",
+    "status": "live"
+  },
+  {
+    "id": "mi-f",
+    "url": "https://sede.inclusion.gob.es/documents/387478/0/Modelo+de+solicitud+de+autorizaci%c3%b3n+de+familiares.+MI-F+.pdf/b522b728-7195-130d-cd63-9a1020b61036",
+    "owner": "UGE-CE",
+    "allowedFields": ["form-number"],
+    "lastSeen": "2026-09-22",
+    "lastSeenHash": "seed:mi-f:2026-09-22",
+    "status": "live"
+  },
+  {
+    "id": "tasa-038",
+    "url": "https://expinterweb.inclusion.gob.es/Tasa038/login.htm",
+    "owner": "Ministerio de Inclusión",
+    "allowedFields": ["fee-code"],
+    "lastSeen": "2026-09-22",
+    "lastSeenHash": "seed:tasa-038:2026-09-22",
+    "status": "live"
+  },
+  {
+    "id": "tasa-052",
+    "url": "https://sede.administracionespublicas.gob.es/procedimientos/index/categoria/33",
+    "owner": "Administración General del Estado",
+    "allowedFields": ["fee-code"],
+    "lastSeen": "2026-09-22",
+    "lastSeenHash": "seed:tasa-052:2026-09-22",
+    "status": "live"
+  },
+  {
+    "id": "tie-cita",
+    "url": "https://sede.administracionespublicas.gob.es/procedimientos/index/categoria/34",
+    "owner": "Policía Nacional / AGE",
+    "allowedFields": ["office", "deadline", "form-number"],
+    "lastSeen": "2026-09-22",
+    "lastSeenHash": "seed:tie-cita:2026-09-22",
+    "status": "live"
+  },
+  {
+    "id": "legalizacion-traduccion",
+    "url": "https://www.inclusion.gob.es/web/migraciones/w/61.-legalizacion-y-traduccion-de-documentos-para-la-tramitacion-de-procedimientos-en-materia-de-extranjeria-e-inmigracion",
+    "owner": "Ministerio de Inclusión — Migraciones",
+    "allowedFields": ["apostille", "translation"],
+    "lastSeen": "2026-09-22",
+    "lastSeenHash": "seed:legalizacion-traduccion:2026-09-22",
+    "status": "live"
+  },
+  {
+    "id": "mae-istanbul-dn-visa",
+    "url": "https://www.exteriores.gob.es/Consulados/estambul/es/Comunicacion/Noticias/Paginas/Articulos/Requisitos-Visado-Teletrabajo.aspx",
+    "owner": "Consulado de España en Estambul — MAE",
+    "allowedFields": ["office", "local-consular-addenda"],
+    "lastSeen": "2026-09-22",
+    "lastSeenHash": "seed:mae-istanbul-dn-visa:2026-09-22",
+    "status": "live",
+    "note": "Local post page. May not supply national eligibility rules. See conflict consular-local-addenda."
+  },
+  {
+    "id": "mae-mexico-dn-visa",
+    "url": "https://www.exteriores.gob.es/Consulados/mexico/es/ServiciosConsulares/Paginas/index.aspx?scca=Visados&scco=M%C3%A9xico&scd=195&scs=Visados+Nacionales+-+Visado+de+residencia+para+teletrabajo+(n%C3%B3mada+digital)",
+    "owner": "Consulado de España en México — MAE",
+    "allowedFields": ["document-list", "funds-formula", "office"],
+    "lastSeen": "2026-09-22",
+    "lastSeenHash": "seed:mae-mexico-dn-visa:2026-09-22",
+    "status": "live"
+  },
+  {
+    "id": "national-visa-form",
+    "url": "https://www.exteriores.gob.es/es/ServiciosAlCiudadano/Paginas/Formularios.aspx",
+    "owner": "Ministerio de Asuntos Exteriores",
+    "allowedFields": ["form-number"],
+    "lastSeen": "2026-09-22",
+    "lastSeenHash": "seed:national-visa-form:2026-09-22",
+    "status": "live"
+  }
+]

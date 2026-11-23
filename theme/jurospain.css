@@ -1,0 +1,32 @@
+/* JUROSpain Ferrari brand tokens — site chrome for the Living Visa Codex. */
+
+:root {
+  --juro-paper: #fcfcfc;
+  --juro-paper-elev: #ffffff;
+  --juro-rule: #e2e8f0;
+  --juro-ink: #232323;
+  --juro-ink-soft: #3f3f46;
+  --juro-muted: #78716c;
+  --juro-oxblood: #e30613;
+  --juro-oxblood-deep: #c40410;
+  --juro-stamp: #e30613;
+  --juro-gold: #ffc400;
+}
+
+.juro-rule {
+  height: 3px;
+  background: var(--juro-gold);
+}
+
+.juro-stamp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--juro-oxblood);
+  color: var(--juro-oxblood);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}

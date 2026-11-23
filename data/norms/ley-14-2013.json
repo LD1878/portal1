@@ -1,0 +1,42 @@
+{
+  "id": "ley-14-2013",
+  "boeId": "BOE-A-2013-10074",
+  "eli": "https://www.boe.es/eli/es/l/2013/09/27/14/con",
+  "title": "Ley 14/2013, de 27 de septiembre, de apoyo a los emprendedores y su internacionalización",
+  "rank": "ley",
+  "department": "Jefatura del Estado",
+  "published": "2013-09-28",
+  "inForceFrom": "2013-09-29",
+  "inForceTo": null,
+  "status": "in-force",
+  "urlHtml": "https://www.boe.es/buscar/act.php?id=BOE-A-2013-10074",
+  "urlPdf": "https://www.boe.es/buscar/pdf/2013/BOE-A-2013-10074-consolidado.pdf",
+  "urlGazette": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2013-10074",
+  "consolidationUrl": "https://www.boe.es/buscar/act.php?id=BOE-A-2013-10074",
+  "lastConsolidationNote": "Última actualización publicada el 09/04/2025",
+  "lastSeen": "2026-09-22",
+  "lastSeenHash": "seed:BOE-A-2013-10074:2026-09-22",
+  "watchedArticles": [
+    "61",
+    "62",
+    "74 bis",
+    "74 ter",
+    "74 quater",
+    "74 quinquies",
+    "76"
+  ],
+  "amendments": [
+    {
+      "byBoeId": "BOE-A-2022-21739",
+      "note": "Ley 28/2022 disposición final quinta adds Capítulo V bis (arts. 74 bis–quinquies) and amends arts. 61 and 62."
+    },
+    {
+      "byBoeId": "BOE-A-2023-11022",
+      "note": "Ley 11/2023 art. 32 amends art. 62.4 family circle and art. 76 procedure."
+    },
+    {
+      "byBoeId": "BOE-A-2025-76",
+      "note": "Ley Orgánica 1/2025 repeals the investor (golden visa) articles 63–67 with effect 3 April 2025. Those articles are out of this codex."
+    }
+  ]
+}

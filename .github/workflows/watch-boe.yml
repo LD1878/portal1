@@ -1,0 +1,32 @@
+name: Watch BOE and official pages
+
+on:
+  schedule:
+    # Weekdays 06:15 UTC
+    - cron: "15 6 * * 1-5"
+  workflow_dispatch:
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Fetch and hash official URLs
+        run: node scripts/watch-boe.mjs
+      - name: Open metadata PR if hashes moved
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore(watch): update official source hashes"
+          title: "chore(watch): official source hashes"
+          body: |
+            Automated weekday watcher.
+
+            Safe metadata (dates, hashes) may be merged.
+            Guide English is **not** rewritten by this workflow. If a source vanished or two official pages now disagree, a human must resolve the conflict banner before the section is settled.
+          branch: watch/official-sources

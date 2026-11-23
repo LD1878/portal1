@@ -1,0 +1,21 @@
+name: Sample BOE amendment (CI demonstration)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "scripts/watch-boe.mjs"
+      - ".github/workflows/watch-boe-sample.yml"
+
+jobs:
+  sample:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run sample amendment report
+        run: node scripts/watch-boe.mjs --sample
+      - name: Validate catalog still holds
+        run: node scripts/validate-codex.mjs

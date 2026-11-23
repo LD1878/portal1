@@ -1,0 +1,177 @@
+@import "tailwindcss";
+@import "../theme/jurospain.css";
+
+@theme {
+  --color-paper: #fcfcfc;
+  --color-paper-elev: #ffffff;
+  --color-paper-inset: #f4f4f5;
+  --color-ink: #232323;
+  --color-ink-soft: #3f3f46;
+  --color-muted: #78716c;
+  --color-faint: #a8a29e;
+  --color-rule: #e2e8f0;
+  --color-rule-strong: #cbd5e1;
+  --color-oxblood: #e30613;
+  --color-oxblood-deep: #c40410;
+  --color-oxblood-soft: #fde8ea;
+  --color-on-brand: #ffffff;
+  --color-stamp: #e30613;
+  --color-gold: #ffc400;
+  --color-gold-deep: #e0ac00;
+  --color-warn-ink: #6b4a12;
+  --color-warn-paper: #fff8e6;
+  --color-warn-rule: #ffc400;
+
+  --font-display: "Oswald", "Arial Narrow", sans-serif;
+  --font-sans: "Barlow", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "Source Code Pro", ui-monospace, monospace;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+
+  --shadow-border:
+    0 2px 6px rgb(0 0 0 / 0.06);
+  --shadow-border-hover:
+    0 6px 12px rgb(0 0 0 / 0.12);
+  --shadow-elev-3:
+    0 10px 20px rgb(0 0 0 / 0.15);
+
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-paper);
+    background-image:
+      linear-gradient(rgb(0 0 0 / 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(0 0 0 / 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: center top;
+    color: var(--color-ink);
+    min-height: 100dvh;
+    line-height: 1.6;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  h1 {
+    color: var(--color-oxblood);
+  }
+
+  h3 {
+    color: var(--color-oxblood);
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  a {
+    color: var(--color-oxblood);
+  }
+
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-ink);
+  }
+}
+
+@layer utilities {
+  .paper-grain {
+    background-color: var(--color-paper);
+    background-image:
+      linear-gradient(rgb(0 0 0 / 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(0 0 0 / 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: center top;
+  }
+
+  .hairline {
+    border: 1px solid var(--color-rule);
+    box-shadow: var(--shadow-border);
+  }
+
+  .hairline-hover {
+    transition:
+      transform 0.3s var(--ease-smooth),
+      border-color 0.3s var(--ease-smooth),
+      box-shadow 0.3s var(--ease-smooth);
+  }
+
+  .hairline-hover:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-gold);
+    box-shadow: var(--shadow-border-hover);
+  }
+
+  .gold-rule {
+    border-bottom: 3px solid var(--color-gold);
+    padding-bottom: 0.5rem;
+  }
+
+  .skip-link {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .skip-link:focus-visible {
+    position: fixed;
+    left: 12px;
+    top: 100px;
+    z-index: 60;
+    width: auto;
+    height: auto;
+    margin: 0;
+    clip: auto;
+    overflow: visible;
+    white-space: normal;
+    background: var(--color-oxblood);
+    color: var(--color-on-brand);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

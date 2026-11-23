@@ -1,0 +1,98 @@
+[
+  {
+    "id": "dn-consulate",
+    "track": "digital-nomad",
+    "route": "consulate",
+    "actor": "principal",
+    "title": "Digital nomad — consular visa packet",
+    "subtitle": "File order for the international-telework visa (Ley 14/2013 art. 74 quater).",
+    "items": [
+      { "order": 1, "requirementId": "dn-forms-visa", "label": "National visa form, signed" },
+      { "order": 2, "requirementId": "dn-fee-visa", "label": "Consular visa-fee receipt (live tariff)" },
+      { "order": 3, "requirementId": "dn-passport", "label": "Complete passport copy + original" },
+      { "order": 4, "requirementId": "dn-company-one-year", "label": "Companies-register certificate (≥ 1 year of activity)" },
+      { "order": 5, "requirementId": "dn-three-months-labour", "label": "Employed: 3-month relationship + remote-work letter" },
+      { "order": 6, "requirementId": "dn-three-months-professional", "label": "Professional: 3-month mercantile relationship + remote terms" },
+      { "order": 7, "requirementId": "dn-remote-capable", "label": "Evidence the role is exclusively remote" },
+      { "order": 8, "requirementId": "dn-qualifications", "label": "Degree / prestige school, or 3 years’ analogous experience" },
+      { "order": 9, "requirementId": "dn-funds", "label": "Means: 200% SMI formula (contract / offer / funds)" },
+      { "order": 10, "requirementId": "dn-criminal", "label": "Criminal record (2 years) + 5-year sworn declaration" },
+      { "order": 11, "requirementId": "dn-insurance", "label": "Authorised public or private sickness insurance" },
+      { "order": 12, "requirementId": "dn-ss", "label": "SS coverage certificate or Spanish alta commitment" },
+      { "order": 13, "requirementId": "dn-apostille", "label": "Apostille/legalisation + sworn translations" }
+    ]
+  },
+  {
+    "id": "dn-uge",
+    "track": "digital-nomad",
+    "route": "uge-ce",
+    "actor": "principal",
+    "title": "Digital nomad — UGE-CE residence packet",
+    "subtitle": "File order for the electronic residence if you are already lawfully in Spain (art. 74 quinquies).",
+    "items": [
+      { "order": 1, "requirementId": "dn-forms-uge", "label": "MI-T signed" },
+      { "order": 2, "requirementId": "dn-fee-uge", "label": "Tasa 038 paid — keep the NRC" },
+      { "order": 3, "requirementId": "dn-passport", "label": "Complete passport copy (all pages)" },
+      { "order": 4, "requirementId": "dn-company-one-year", "label": "Companies-register certificate (≥ 1 year of activity)" },
+      { "order": 5, "requirementId": "dn-three-months-labour", "label": "Employed: 3-month relationship + remote-work letter" },
+      { "order": 6, "requirementId": "dn-three-months-professional", "label": "Professional: 3-month mercantile relationship + remote terms" },
+      { "order": 7, "requirementId": "dn-qualifications", "label": "Degree / prestige school, or 3 years’ analogous experience" },
+      { "order": 8, "requirementId": "dn-funds", "label": "Means: 200% SMI formula" },
+      { "order": 9, "requirementId": "dn-criminal", "label": "Criminal record packet (waived if > 6 months’ Spanish stay/residence — FAQ)" },
+      { "order": 10, "requirementId": "dn-insurance", "label": "Authorised public or private sickness insurance" },
+      { "order": 11, "requirementId": "dn-ss", "label": "SS coverage or Spanish alta commitment" },
+      { "order": 12, "requirementId": "dn-apostille", "label": "Apostille/legalisation + sworn translations" }
+    ]
+  },
+  {
+    "id": "dn-family",
+    "track": "digital-nomad",
+    "route": "consulate",
+    "actor": "family",
+    "title": "Digital nomad — family annex",
+    "subtitle": "Attach behind the holder. Same annex structure for the UGE-CE file, swapping visa forms for MI-F.",
+    "items": [
+      { "order": 1, "requirementId": "dn-fam-form", "label": "MI-F (UGE) or national visa form (consulate) per person" },
+      { "order": 2, "requirementId": "dn-fam-who", "label": "Civil-status evidence placing them inside art. 62.4" },
+      { "order": 3, "requirementId": "dn-fam-funds", "label": "Household means: +75% SMI first member, +25% each additional" },
+      { "order": 4, "requirementId": "dn-fam-insurance", "label": "Insurance naming each family member" },
+      { "order": 5, "requirementId": "dn-fam-criminal", "label": "Adults: 2-year certificates + 5-year declaration" },
+      { "order": 6, "requirementId": "dn-fam-how-attached", "label": "Labelled family annex behind the holder’s packet" }
+    ]
+  },
+  {
+    "id": "nlv-consulate",
+    "track": "non-lucrative",
+    "route": "consulate",
+    "actor": "principal",
+    "title": "Non-lucrative — consular visa packet",
+    "subtitle": "File order for the initial non-lucrative visa + authorisation (RD 1155/2024 arts. 61–63).",
+    "items": [
+      { "order": 1, "requirementId": "nlv-form", "label": "EX-01 completed and signed" },
+      { "order": 2, "requirementId": "nlv-passport", "label": "Passport copy, ≥ 1 year validity, + original" },
+      { "order": 3, "requirementId": "nlv-criminal", "label": "Criminal-record certificates, last 5 years" },
+      { "order": 4, "requirementId": "nlv-funds", "label": "Means: 400% IPREM × months (holder)" },
+      { "order": 5, "requirementId": "nlv-funds-proof", "label": "Bank letter with 31 Dec balance + last-year average (foreign accounts)" },
+      { "order": 6, "requirementId": "nlv-insurance", "label": "Sickness insurance, insurer authorised in Spain" },
+      { "order": 7, "requirementId": "nlv-medical", "label": "IHR 2005 medical certificate" },
+      { "order": 8, "requirementId": "nlv-fee", "label": "790-052 heading 2.1.1 + consular visa fee" },
+      { "order": 9, "requirementId": "nlv-apostille", "label": "Apostille/legalisation + sworn translations" }
+    ]
+  },
+  {
+    "id": "nlv-family",
+    "track": "non-lucrative",
+    "route": "consulate",
+    "actor": "family",
+    "title": "Non-lucrative — family annex",
+    "subtitle": "Each family member files from origin with the holder. Family circle is art. 61.3, not Ley 14/2013.",
+    "items": [
+      { "order": 1, "requirementId": "nlv-fam-how-attached", "label": "EX-01 / visa form per family member" },
+      { "order": 2, "requirementId": "nlv-fam-who", "label": "Civil-status evidence inside art. 61.3" },
+      { "order": 3, "requirementId": "nlv-fam-funds", "label": "Household means: +100% IPREM per member × months" },
+      { "order": 4, "requirementId": "nlv-fam-insurance", "label": "Insurance naming each family member" },
+      { "order": 5, "requirementId": "nlv-fam-criminal", "label": "Adults: 5-year criminal-record certificates" },
+      { "order": 6, "requirementId": "nlv-medical", "label": "IHR 2005 medical certificate per person" }
+    ]
+  }
+]

@@ -1,0 +1,37 @@
+{
+  "iprem": {
+    "id": "iprem",
+    "name": "Indicador Público de Renta de Efectos Múltiples",
+    "role": "index-not-statute",
+    "disclaimer": "The non-lucrative rule is 400% IPREM (principal) and 100% IPREM (each family member) per month, times the authorised period. The euro figures below are the current index, not the visa statute.",
+    "normId": "ley-31-2022-iprem",
+    "boeId": "BOE-A-2022-22128",
+    "article": "disposición adicional nonagésima",
+    "periodLabel": "2023 figure, still the in-force index while budgets are prorogued",
+    "values": {
+      "daily": 20,
+      "monthly": 600,
+      "annual12": 7200,
+      "annual14": 8400
+    },
+    "currency": "EUR",
+    "lastSeen": "2026-09-22"
+  },
+  "smi": {
+    "id": "smi",
+    "name": "Salario Mínimo Interprofesional",
+    "role": "index-not-statute",
+    "disclaimer": "The international-telework rule is 200% SMI per month for the holder (joint instruction applying Ley 14/2013 art. 62.3.f). How that monthly percentage maps onto the gazette’s 14-payment monthly figure versus the annual figure is not settled in the visa statute — see conflict smi-monthly-conversion.",
+    "normId": "rd-126-2026-smi",
+    "boeId": "BOE-A-2026-3815",
+    "article": "arts. 1 and 3",
+    "periodLabel": "SMI 2026 (RD 126/2026)",
+    "values": {
+      "daily": 40.7,
+      "monthly14": 1221,
+      "annual": 17094
+    },
+    "currency": "EUR",
+    "lastSeen": "2026-09-22"
+  }
+}

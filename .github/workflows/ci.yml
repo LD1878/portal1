@@ -1,0 +1,21 @@
+name: Codex CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate citations and official URLs
+        run: node scripts/validate-codex.mjs
+      - name: Regenerate guides (must be committed)
+        run: node scripts/generate-guides.mjs
+      - name: Guides in sync
+        run: git diff --exit-code -- guides

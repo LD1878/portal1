@@ -1,0 +1,365 @@
+[
+  {
+    "id": "nlv-scope",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "eligibility",
+    "title": "Who this residence is",
+    "rule": "Temporary non-lucrative residence is the situation of a foreigner, and of their family members, authorised to reside in Spain without carrying out labour or professional activities.",
+    "citations": [{ "boeId": "BOE-A-2024-24099", "article": "61.1" }],
+    "status": "in-force",
+    "journey": "eligibility",
+    "fileOrder": 0
+  },
+  {
+    "id": "nlv-not-eu",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "eligibility",
+    "title": "Not a Union citizen",
+    "rule": "The official ministry sheet requires that the applicant not be a citizen of the EU, the EEA or Switzerland, nor a family member of such citizens to whom Union-citizen rules apply. Those persons are under a different regime, outside this codex.",
+    "citations": [{ "processPageId": "nlv-hoja-6" }],
+    "status": "in-force",
+    "journey": "eligibility",
+    "fileOrder": 0
+  },
+  {
+    "id": "nlv-no-work",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "prohibitions",
+    "title": "No labour or professional activity",
+    "rule": "The authorisation is to reside without carrying out labour or professional activities. Means must be shown without any need to develop a labour or professional activity (art. 61.2.a). This codex does not convert that prohibition into unofficial ‘what consulates usually allow’ for remote work. The statute is the prohibition.",
+    "citations": [
+      { "boeId": "BOE-A-2024-24099", "article": "61.1" },
+      { "boeId": "BOE-A-2024-24099", "article": "61.2.a" }
+    ],
+    "status": "in-force",
+    "journey": "eligibility",
+    "fileOrder": 0
+  },
+  {
+    "id": "nlv-initial-reqs",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "eligibility",
+    "title": "Specific requirements for the initial authorisation",
+    "rule": "For the initial authorisation: sufficient means for the holder and family during the intended stay, without needing to work (this chapter); sickness insurance; not being inside a voluntary-return non-return commitment; not representing a threat to public order, public security or public health (no Spanish criminal record plus a police report); and payment of the fee.",
+    "citations": [{ "boeId": "BOE-A-2024-24099", "article": "61.2" }],
+    "status": "in-force",
+    "journey": "eligibility",
+    "fileOrder": 0
+  },
+  {
+    "id": "nlv-duration",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "duration",
+    "title": "Initial authorisation lasts one year",
+    "rule": "The initial temporary non-lucrative residence authorisation lasts one year. The ministry sheet: validity begins on the date of entry into Spain.",
+    "citations": [
+      { "boeId": "BOE-A-2024-24099", "article": "61.4" },
+      { "processPageId": "nlv-hoja-6" }
+    ],
+    "status": "in-force",
+    "journey": "approval",
+    "fileOrder": 0
+  },
+  {
+    "id": "nlv-funds",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "funds-formula",
+    "title": "Means: 400% IPREM holder, 100% IPREM each family member, times the period",
+    "rule": "Minimum amounts, referred to the moment of the visa application or of renewal: (a) for the holder’s support, a monthly euro amount representing 400% of IPREM, or its legal equivalent in foreign currency; (b) for each dependent family member, an additional monthly amount representing 100% of IPREM. The global amount must be that monthly figure multiplied by the validity of the authorisation sought. This is a formula. The current IPREM index is published under Ley 31/2022 and is not itself the visa article.",
+    "legalFormula": "holder = 400% × IPREM (monthly) × months of validity; each family member = 100% × IPREM (monthly) × months of validity",
+    "citations": [
+      { "boeId": "BOE-A-2024-24099", "article": "62.1" },
+      { "boeId": "BOE-A-2024-24099", "article": "62.2" },
+      { "boeId": "BOE-A-2022-22128", "article": "disposición adicional nonagésima" }
+    ],
+    "status": "in-force",
+    "journey": "eligibility",
+    "fileOrder": 4,
+    "packetItem": "Bank, instrument or income evidence covering 400% IPREM per month for the holder and 100% IPREM per month per family member, multiplied by the period applied for."
+  },
+  {
+    "id": "nlv-funds-proof",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "funds-formula",
+    "title": "How means are proved — including foreign accounts",
+    "rule": "Availability may be proved by any means admitted in law, including property titles, certified cheques or credit cards accompanied by a bank certificate of the available credit. Foreign accounts or financial instruments must include: the institution’s full name and address; full account identification; opening/closing dates (or grant/revocation of the mandate); balances at 31 December of the year before filing; and the average balance for the last year. If the means come from shares in companies established in Spain, certify that the applicant performs no labour activity in those companies, plus a responsible declaration to that effect.",
+    "citations": [{ "boeId": "BOE-A-2024-24099", "article": "62.3" }],
+    "status": "in-force",
+    "journey": "documents",
+    "fileOrder": 4,
+    "packetItem": "For foreign accounts: bank letter with legal name, address, account IDs, opening date, 31 December prior-year balance, and last-year average balance. Cards: bank certificate of available credit. Spanish-company shares: certificate of no labour activity + responsible declaration."
+  },
+  {
+    "id": "nlv-insurance",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "insurance",
+    "title": "Sickness insurance",
+    "rule": "Art. 61.2.b requires sickness insurance. The ministry sheet: public or private sickness insurance contracted with an insurer authorised to operate in Spain.",
+    "citations": [
+      { "boeId": "BOE-A-2024-24099", "article": "61.2.b" },
+      { "processPageId": "nlv-hoja-6" }
+    ],
+    "status": "in-force",
+    "journey": "documents",
+    "fileOrder": 5,
+    "packetItem": "Certificate of public or private sickness insurance with an insurer authorised in Spain, covering the holder (and family if they file)."
+  },
+  {
+    "id": "nlv-criminal",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "criminal-record",
+    "title": "Criminal record: last five years of residence",
+    "rule": "Art. 38.e (visa requirements): adults must have no criminal record in the countries of residence during the last five years for offences under Spanish law. The ministry sheet restates: no criminal record in Spain or in countries of residence in the last five years. File the certificates from the country of origin or of residence covering those five years. This is a different packet from the Ley 14/2013 two-year-plus-declaration model — do not mix them.",
+    "citations": [
+      { "boeId": "BOE-A-2024-24099", "article": "38.e" },
+      { "processPageId": "nlv-hoja-6" }
+    ],
+    "status": "in-force",
+    "journey": "documents",
+    "fileOrder": 3,
+    "packetItem": "Criminal-record certificates covering the last five years in the country of origin and any other country of residence, apostilled or legalised, with sworn translation."
+  },
+  {
+    "id": "nlv-medical",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "eligibility",
+    "title": "Medical certificate — International Health Regulations 2005",
+    "rule": "Art. 38.i: a medical certificate that the applicant does not suffer from any disease that may have serious public-health repercussions under the International Health Regulations 2005. The ministry sheet lists the same certificate.",
+    "citations": [
+      { "boeId": "BOE-A-2024-24099", "article": "38.i" },
+      { "processPageId": "nlv-hoja-6" }
+    ],
+    "status": "in-force",
+    "journey": "documents",
+    "fileOrder": 6,
+    "packetItem": "Medical certificate confirming absence of diseases with serious public-health repercussions under the IHR 2005."
+  },
+  {
+    "id": "nlv-not-irregular",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "eligibility",
+    "title": "Not irregular in Spain; not listed as inadmissible",
+    "rule": "Visa requirements include: not being irregular in Spanish territory, and not appearing as inadmissible in the territory of countries with which Spain has signed an agreement to that effect.",
+    "citations": [
+      { "boeId": "BOE-A-2024-24099", "article": "38.b" },
+      { "boeId": "BOE-A-2024-24099", "article": "38.c" }
+    ],
+    "status": "in-force",
+    "journey": "eligibility",
+    "fileOrder": 0
+  },
+  {
+    "id": "nlv-passport",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "forms",
+    "title": "Passport valid at least one year",
+    "rule": "Art. 38.d: a valid passport or travel document recognised in Spain, with a minimum validity of one year. The ministry sheet: complete copy of that passport.",
+    "citations": [
+      { "boeId": "BOE-A-2024-24099", "article": "38.d" },
+      { "processPageId": "nlv-hoja-6" }
+    ],
+    "status": "in-force",
+    "journey": "documents",
+    "fileOrder": 2,
+    "packetItem": "Complete copy of the passport (minimum one year remaining) plus the original at the consular appointment."
+  },
+  {
+    "id": "nlv-route",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "where-to-file",
+    "title": "File the visa at the competent Spanish consulate — the visa is the authorisation",
+    "rule": "The foreigner who wishes to reside temporarily in Spain without labour or professional activities must apply for the residence visa at the competent Spanish consular office (arts. 38 and 39). The visa application entails the application for the non-lucrative residence authorisation. The ministry sheet: the person files in person (or through a legal representative / support person if a minor or a person with disability) at the Spanish consular office in whose district they reside. This is a consular route. There is no UGE-CE initial path for this residence.",
+    "citations": [
+      { "boeId": "BOE-A-2024-24099", "article": "63.1" },
+      { "boeId": "BOE-A-2024-24099", "article": "39.1" },
+      { "processPageId": "nlv-hoja-6" }
+    ],
+    "status": "in-force",
+    "journey": "route",
+    "fileOrder": 0
+  },
+  {
+    "id": "nlv-split-competence",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "where-to-file",
+    "title": "Consulate weighs visa and means/insurance; extranjería weighs the rest",
+    "rule": "The consular office assesses art. 38 visa requirements and, for non-lucrative visas, the specific requirements of art. 61.2.a and 61.2.b (means and insurance). The extranjería office assesses art. 61.2.c, d and e. Art. 63.2–3 restates that split and requires an officio Spanish criminal-record check and a police report (seven-day reports). A police-record hit is not an automatic refusal; the body must make a case-by-case assessment.",
+    "citations": [
+      { "boeId": "BOE-A-2024-24099", "article": "39.2–3" },
+      { "boeId": "BOE-A-2024-24099", "article": "63.2–3" }
+    ],
+    "status": "in-force",
+    "journey": "pending",
+    "fileOrder": 0
+  },
+  {
+    "id": "nlv-silence",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "pending",
+    "title": "Initial decision: one month from consular communication; silence is negative",
+    "rule": "The competent body decides on the residence authorisation within a maximum of one month from receiving the consular office’s communication. If that period passes without a response, the application is deemed rejected. After a favourable authorisation, the consular office decides and issues the residence visa within a maximum of one month of receiving that favourable resolution. The visa incorporates the residence authorisation.",
+    "citations": [
+      { "boeId": "BOE-A-2024-24099", "article": "63.4" },
+      { "boeId": "BOE-A-2024-24099", "article": "39.5" },
+      { "processPageId": "nlv-hoja-6" }
+    ],
+    "status": "in-force",
+    "journey": "pending",
+    "fileOrder": 0
+  },
+  {
+    "id": "nlv-collect-enter",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "approval",
+    "title": "Collect the visa in one month; enter within visa validity (maximum three months)",
+    "rule": "The ministry sheet: the foreigner has one month from notification to collect the visa in person; otherwise they are deemed to have waived it and the file is archived. After collection, enter Spain within the visa’s validity, which in no case exceeds three months.",
+    "citations": [{ "processPageId": "nlv-hoja-6" }],
+    "status": "in-force",
+    "journey": "approval",
+    "fileOrder": 0
+  },
+  {
+    "id": "nlv-form",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "forms",
+    "title": "Form EX-01",
+    "rule": "Ministry sheet: official application form EX-01, completed and signed by the foreigner. Download only from the official modelos page.",
+    "citations": [
+      { "processPageId": "nlv-hoja-6" },
+      { "processPageId": "ex-01" }
+    ],
+    "status": "in-force",
+    "journey": "forms",
+    "fileOrder": 1,
+    "packetItem": "EX-01 completed and signed."
+  },
+  {
+    "id": "nlv-fee",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "fees",
+    "title": "Fee: modelo 790 code 052, heading 2.1.1, plus the consular visa fee",
+    "rule": "Ministry sheet: the authorisation fee is modelo 790 code 052, heading 2.1.1 ‘autorización inicial de residencia temporal no lucrativa’, payable by the foreigner within ten working days of filing. The visa itself also carries the consular visa tariff (art. 38.h). Read the live 790-052 page on the day you pay — the amount is a tariff, not a statutory income threshold.",
+    "citations": [
+      { "boeId": "BOE-A-2024-24099", "article": "61.2.e" },
+      { "boeId": "BOE-A-2024-24099", "article": "38.h" },
+      { "processPageId": "nlv-hoja-6" },
+      { "processPageId": "tasa-052" }
+    ],
+    "status": "in-force",
+    "journey": "forms",
+    "fileOrder": 7,
+    "packetItem": "790-052 (heading 2.1.1) payment proof, plus the consular visa-fee receipt."
+  },
+  {
+    "id": "nlv-apostille",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "apostille",
+    "title": "Apostille or legalisation, then sworn translation",
+    "rule": "Ministry sheet: as a rule, file copies and exhibit originals. Documents from other countries must be translated into Spanish (or a co-official language of the territory of filing) by a sworn translator. Every foreign public document must be legalised by the Spanish consular office with jurisdiction over the issuing country, or by MAE, unless apostilled under the Hague Convention of 5 October 1961 or exempt by international agreement.",
+    "citations": [
+      { "processPageId": "nlv-hoja-6" },
+      { "processPageId": "legalizacion-traduccion" }
+    ],
+    "status": "in-force",
+    "journey": "apostille",
+    "fileOrder": 8,
+    "packetItem": "Each foreign public document: apostille or legalisation + sworn translation, filed behind the source document."
+  },
+  {
+    "id": "nlv-tie",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "tie",
+    "title": "TIE within one month of entry",
+    "rule": "Art. 63.5: within one month of entry into Spain, the holder must apply in person for the TIE. The ministry sheet points to the official TIE documentation list.",
+    "citations": [
+      { "boeId": "BOE-A-2024-24099", "article": "63.5" },
+      { "processPageId": "nlv-hoja-6" },
+      { "processPageId": "tie-cita" }
+    ],
+    "status": "in-force",
+    "journey": "approval",
+    "fileOrder": 0
+  },
+  {
+    "id": "nlv-renewal-window",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "renewal",
+    "title": "Renewal window: two months before expiry (or three months after, with sanction risk)",
+    "rule": "Apply to the competent extranjería office during the two months before expiry. Filing in that window extends the previous authorisation until the decision. Filing within three months after expiry also extends it until the decision, without prejudice to a sanction file for the offence in LO 4/2000 art. 52.b).",
+    "citations": [{ "boeId": "BOE-A-2024-24099", "article": "64.1" }],
+    "status": "in-force",
+    "journey": "renewal",
+    "fileOrder": 0
+  },
+  {
+    "id": "nlv-renewal-reqs",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "renewal",
+    "title": "Renewal conditions, including 183 days of real residence",
+    "rule": "Renewal requires: (a) holding a current non-lucrative authorisation, or being within three months after it lapsed; (b) sufficient means for the renewal period without needing to work, on art. 62 terms; (c) having maintained, and continuing, sickness insurance; (d) having kept compulsory-school-age minors in school during their stay in Spain; (e) having paid the fee; (f) having resided in Spain in a real and effective manner for more than one hundred and eighty-three days during the calendar year. Integration effort may be evidenced by an autonomous-community report (art. 64.6). A renewed authorisation lasts two years, unless long-term residence is due (art. 64.7).",
+    "citations": [{ "boeId": "BOE-A-2024-24099", "article": "64.2" }, { "boeId": "BOE-A-2024-24099", "article": "64.6–7" }],
+    "status": "in-force",
+    "journey": "renewal",
+    "fileOrder": 0
+  },
+  {
+    "id": "nlv-renewal-silence",
+    "track": "non-lucrative",
+    "routes": ["consulate"],
+    "actor": "principal",
+    "topic": "renewal",
+    "title": "Renewal decision: three months; silence is positive",
+    "rule": "The renewal is decided and notified within three months of filing. After that period it is deemed granted. Within one month of notification of renewal, apply in person for the new TIE.",
+    "citations": [
+      { "boeId": "BOE-A-2024-24099", "article": "64.8" },
+      { "boeId": "BOE-A-2024-24099", "article": "64.9" }
+    ],
+    "status": "in-force",
+    "journey": "renewal",
+    "fileOrder": 0
+  }
+]

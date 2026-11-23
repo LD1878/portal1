@@ -1,0 +1,114 @@
+[
+  {
+    "id": "dn-fam-who",
+    "track": "digital-nomad",
+    "routes": ["consulate", "uge-ce"],
+    "actor": "family",
+    "topic": "family",
+    "title": "Who qualifies as family of a Ley 14/2013 holder",
+    "rule": "The spouse or person with an analogous affective relationship, minor children, or adult children who are economically dependent on the holder and have not formed a family unit of their own, and dependent ascendants, who join or accompany the foreigners listed in art. 61.1, may apply jointly, simultaneously or successively for the authorisation and, where applicable, the visa. They must prove the general art. 62 requirements. If family applications are filed simultaneously with the holder’s, they are decided simultaneously.",
+    "citations": [{ "boeId": "BOE-A-2013-10074", "article": "62.4" }],
+    "status": "in-force",
+    "journey": "eligibility",
+    "fileOrder": 14,
+    "packetItem": "Civil-status evidence: marriage certificate, analogous-relationship evidence, birth certificates, and — for adult children or ascendants — evidence of economic dependence and that they have not formed their own family unit."
+  },
+  {
+    "id": "dn-fam-funds",
+    "track": "digital-nomad",
+    "routes": ["consulate", "uge-ce"],
+    "actor": "family",
+    "topic": "funds-formula",
+    "title": "Family economic formula (on top of the holder’s 200% SMI)",
+    "rule": "Joint instruction: family units of two persons counting the holder and the first accompanying family member — at least 75% of SMI for that first member. 25% of SMI for each additional member. This is added to the holder’s 200% SMI. Formula only; see conflict smi-monthly-conversion for euro arithmetic.",
+    "legalFormula": "first family member = 75% × SMI (monthly); each additional = 25% × SMI (monthly); added to holder 200% × SMI",
+    "citations": [
+      { "boeId": "BOE-A-2013-10074", "article": "62.3.f" },
+      { "processPageId": "instruccion-conjunta-teletrabajo" },
+      { "processPageId": "one-dn-visa" }
+    ],
+    "status": "conflict",
+    "conflictId": "smi-monthly-conversion",
+    "journey": "eligibility",
+    "fileOrder": 9
+  },
+  {
+    "id": "dn-fam-insurance",
+    "track": "digital-nomad",
+    "routes": ["consulate", "uge-ce"],
+    "actor": "family",
+    "topic": "insurance",
+    "title": "Each family member needs cover",
+    "rule": "Art. 62.3.e applies to family applications. Plataforma ONE: public or private health insurance contracted with an insurer authorised in Spain, unless the activity confers insured status under the National Health System.",
+    "citations": [
+      { "boeId": "BOE-A-2013-10074", "article": "62.3.e" },
+      { "processPageId": "one-dn-residence" }
+    ],
+    "status": "in-force",
+    "journey": "documents",
+    "fileOrder": 11,
+    "packetItem": "Insurance certificate naming each family member, or evidence of SNS cover through the holder’s Social Security alta."
+  },
+  {
+    "id": "dn-fam-criminal",
+    "track": "digital-nomad",
+    "routes": ["consulate", "uge-ce"],
+    "actor": "family",
+    "topic": "criminal-record",
+    "title": "Adult family members: same criminal-record packet as the holder",
+    "rule": "Family members must prove the art. 62 requirements, including the criminal-record rule of art. 62.3.c (two-year certificates plus five-year sworn declaration) where they are of criminal-liability age.",
+    "citations": [
+      { "boeId": "BOE-A-2013-10074", "article": "62.3.c" },
+      { "boeId": "BOE-A-2013-10074", "article": "62.4" }
+    ],
+    "status": "in-force",
+    "journey": "documents",
+    "fileOrder": 10,
+    "packetItem": "For each adult family member: criminal-record certificates (two years of residence) + five-year sworn declaration, apostilled/legalised and translated."
+  },
+  {
+    "id": "dn-fam-work",
+    "track": "digital-nomad",
+    "routes": ["consulate", "uge-ce"],
+    "actor": "family",
+    "topic": "family",
+    "title": "Family authorisations permit residence and work",
+    "rule": "Plataforma ONE states that the residence authorisations allow family members to reside and to work, both as employees and as self-employed. That work permission is an official process-page field for this route; it is not a tax-advice product.",
+    "citations": [{ "processPageId": "one-dn-residence" }],
+    "status": "in-force",
+    "journey": "approval",
+    "fileOrder": 0
+  },
+  {
+    "id": "dn-fam-form",
+    "track": "digital-nomad",
+    "routes": ["uge-ce"],
+    "actor": "family",
+    "topic": "forms",
+    "title": "Attach each family member with MI-F; pay their tasa 038",
+    "rule": "Plataforma ONE: complete MI-F for each family member and file jointly. The official FAQ: the initial fee is payable for the holder and for each family member, online, with an NRC for the file.",
+    "citations": [
+      { "processPageId": "one-dn-residence" },
+      { "processPageId": "mi-f" },
+      { "processPageId": "dn-faq-es" }
+    ],
+    "status": "in-force",
+    "journey": "forms",
+    "fileOrder": 1,
+    "packetItem": "MI-F signed for each family member + tasa 038 NRC for each."
+  },
+  {
+    "id": "dn-fam-how-attached",
+    "track": "digital-nomad",
+    "routes": ["consulate", "uge-ce"],
+    "actor": "family",
+    "topic": "family",
+    "title": "How the family file is attached",
+    "rule": "Art. 62.4 allows joint, simultaneous or successive applications. Simultaneous filing with the holder is decided simultaneously. In the consular visa file, each family member presents their own visa form and civil-status evidence behind the holder’s packet. In the UGE-CE file, each MI-F is uploaded with the holder’s MI-T in the same electronic submission.",
+    "citations": [{ "boeId": "BOE-A-2013-10074", "article": "62.4" }],
+    "status": "in-force",
+    "journey": "documents",
+    "fileOrder": 14,
+    "packetItem": "A labelled family annex: civil-status documents, each person’s passport copy, insurance, criminal record (adults), and the corresponding form (visa form or MI-F)."
+  }
+]

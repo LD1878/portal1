@@ -1,0 +1,56 @@
+[
+  {
+    "id": "smi-monthly-conversion",
+    "status": "conflict",
+    "topic": "funds-formula",
+    "track": "digital-nomad",
+    "title": "200% SMI is the rule. The euro conversion is not.",
+    "summary": "Ley 14/2013 art. 62.3.f requires sufficient resources. The joint instruction of the Ministries of Inclusion and Foreign Affairs fixes the amount as 200% of SMI per month for the holder, 75% of SMI for the first family member, and 25% of SMI for each additional member. RD 126/2026 publishes SMI as 1,221 €/month (14 payments) and an annual comparison floor of 17,094 €. The instruction does not say whether ‘mensualmente el 200% del SMI’ uses the gazette monthly figure or the annual figure divided by twelve. This codex therefore publishes the legal formula only, and shows both arithmetic illustrations as illustrations — never as the statute.",
+    "sources": [
+      {
+        "label": "Legal formula (settled)",
+        "boeId": null,
+        "processPageId": "instruccion-conjunta-teletrabajo",
+        "quote": "Titulares: cantidad que represente mensualmente el 200 % del salario mínimo interprofesional (SMI). Unidades familiares de dos personas: al menos el 75 % del SMI; 25 % del SMI por cada miembro adicional."
+      },
+      {
+        "label": "Gazette SMI monthly (14 payments)",
+        "boeId": "BOE-A-2026-3815",
+        "processPageId": null,
+        "quote": "Art. 1 RD 126/2026: 40,70 €/día o 1.221 €/mes."
+      },
+      {
+        "label": "Gazette SMI annual floor",
+        "boeId": "BOE-A-2026-3815",
+        "processPageId": null,
+        "quote": "Art. 3.1 RD 126/2026: cuantía anual de comparación no inferior a 17.094 €."
+      }
+    ],
+    "resolution": null,
+    "guideMust": "Show a conflict banner. Do not pick 2×1,221 or 2×(17,094/12) as the legal amount."
+  },
+  {
+    "id": "consular-local-addenda",
+    "status": "conflict",
+    "topic": "where-to-file",
+    "track": "digital-nomad",
+    "title": "Some consular pages add local filing rules that are not national eligibility law",
+    "summary": "The national file is Ley 14/2013 arts. 74 bis–quater plus the joint instruction. Individual consulates publish extra local conditions (for example a pre-visa NIE, a cash fee in local currency, or a longer passport validity). Those pages are official for that post’s filing window. They are not a national amendment of arts. 74 bis–quater. This codex does not treat them as settled Spanish eligibility law.",
+    "sources": [
+      {
+        "label": "National instruction (document list)",
+        "boeId": null,
+        "processPageId": "instruccion-conjunta-teletrabajo",
+        "quote": "Instrucción octava lists the national document set for the visa or authorisation."
+      },
+      {
+        "label": "Example of local addenda (Istanbul, 7 Jan 2025)",
+        "boeId": null,
+        "processPageId": "mae-istanbul-dn-visa",
+        "quote": "That post has required an NIE before the visa filing and a USD cash fee. That is a local filing rule of the post, not Ley 14/2013."
+      }
+    ],
+    "resolution": null,
+    "guideMust": "Banner on consular-route pages. Direct the reader to the competent consulate’s current page for local filing mechanics, without restating stale euro figures from old consular PDFs."
+  }
+]
