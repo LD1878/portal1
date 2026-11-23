@@ -36,7 +36,10 @@ function bootApp() {
   location.href = BASE + "/checkout/?offer=prepaid";
 }
 function bootWelcome() {
-  var steps = ["Reading the visa you picked", "Opening the folders for that residence", "Setting aside the forms you will fill", "Preparing your file"];
+  var nlv = file() && file().track === "non-lucrative";
+  var steps = nlv
+    ? ["Opening the non-lucrative folders", "Setting aside EX-01", "Noting the five-year criminal record", "Preparing your file"]
+    : ["Opening the digital nomad folders", "Setting aside the visa form and MI-T", "Noting the one-year company rule", "Preparing your file"];
   welcome.innerHTML = '<div class="stage"><div class="build"><p class="kicker" style="color:var(--gold)">Building your file</p><h1>One moment.</h1><div class="barline"><i id="build-bar"></i></div><ol id="build-steps" style="list-style:none;padding:0;margin:0">'
     + steps.map(function (s) { return '<li>' + s + '<span>···</span></li>'; }).join("") + '</ol></div></div>';
   var items = welcome.querySelectorAll("li");
@@ -47,7 +50,8 @@ function bootWelcome() {
     document.getElementById("build-bar").style.width = Math.min(100, n * 25) + "%";
     if (n > items.length) {
       clearInterval(timer);
-      setTimeout(function () { location.href = BASE + "/login/?next=intake"; }, 600);
+      var next = new URLSearchParams(location.search).get("next") || "desk";
+      setTimeout(function () { location.href = BASE + (next === "intake" ? "/profile/?intake=1" : "/desk/"); }, 600);
     }
   }, 700);
 }
@@ -74,14 +78,14 @@ function bootPay() {
     + field("Name on card", "text", "cc-name") + field("Email for the receipt", "email", "email") + field("Card number", "text", "cc-number")
     + '<div class="grid2" style="grid-template-columns:1fr 1fr">' + field("Expiry", "text", "cc-exp") + field("CVC", "text", "cc-csc") + '</div>'
     + '<button class="btn" style="margin-top:8px;width:100%">Pay ' + price + '</button>'
-    + skipRow(BASE + "/welcome/", "Continue without paying")
+    + skipRow(BASE + "/welcome/?next=intake", "Continue without paying")
     + '<p class="muted">Stripe is not connected. This card is not charged. The fields stay so the real payment can drop in later.</p></form>'
     + '<aside class="ink"><p class="gold" style="font-family:Oswald,sans-serif;letter-spacing:.14em;font-size:12px">ORDER</p><h2 style="font-size:30px">' + name + '</h2><p class="gold" style="font-family:Oswald,sans-serif;font-size:28px">Due today ' + price + '</p><p style="opacity:.75">Both visas. Your name, the route, and where you will live, then the file.</p></aside></div>';
   document.getElementById("pay").onsubmit = function (e) {
     e.preventDefault();
     var email = checkout.querySelector("input[autocomplete=email]");
     if (email && email.value) localStorage.setItem("jurospain-email", email.value.trim());
-    location.href = BASE + "/welcome/";
+    location.href = BASE + "/welcome/?next=intake";
   };
 }
 function field(label, type, ac) {
@@ -186,23 +190,35 @@ function bootDesk() {
   var attached = items.filter(function (i) { return saved[i.id] && saved[i.id].fileName; }).length;
   var openId = new URLSearchParams(location.search).get("folder") || groups[0].id;
   var open = groups.filter(function (g) { return g.id === openId; })[0] || groups[0];
-  desk.innerHTML = '<div class="grid2" style="grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start">'
+  desk.innerHTML = '<div class="grid2" style="grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start">'
     + '<div><p class="kicker">🇪🇸 Spain · ' + routeName(f) + '</p>'
     + '<h1 style="font-size:42px;margin:6px 0">' + (f.name || "Your file") + '</h1>'
     + '<p class="muted">Documents. ' + attached + ' of ' + items.length + ' attached. Nothing has been sent.' + (f.family === "yes" ? " Family is on this file." : "") + '</p>'
-    + '<p class="no-print" style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn ' + (f.track === "digital-nomad" ? "on" : "ghost") + '" href="' + BASE + '/desk/?track=digital-nomad">Digital nomad</a><a class="btn ' + (f.track === "non-lucrative" ? "on" : "ghost") + '" href="' + BASE + '/desk/?track=non-lucrative">Non-lucrative</a></p>'
+    + '<p class="no-print"><a href="' + BASE + '/app/">This is the ' + (f.track === "non-lucrative" ? "non-lucrative" : "digital nomad") + ' file. Start the other residence separately.</a></p>'
     + phases(f, attached, items.length)
     + '<div class="folders">' + groups.map(function (g) { return folderRow(g, saved, g.id === open.id); }).join("") + '</div>'
     + '<section class="card" style="margin-top:18px"><p class="kicker">' + open.label + '</p><h2 style="font-size:28px;margin:4px 0">' + open.note + '</h2>'
     + '<ol style="list-style:none;padding:0">' + open.items.map(function (item, n) { return card(n, item, saved[item.id]); }).join("") + '</ol></section></div>'
-    + '<aside class="card ink" style="position:sticky;top:84px">'
-    + '<p class="kicker" style="color:var(--gold)">WHERE THIS FILE IS</p>'
-    + '<h2 style="font-size:26px;color:#fff;margin:6px 0">Documents</h2>'
-    + '<p>' + attached + ' of ' + items.length + ' attached. The next action is the open folder.</p>'
-    + '<p style="opacity:.75;font-size:14px">' + datesFor(f) + '</p>'
-    + '<p style="opacity:.75;font-size:14px">Typed notes and the file name are kept in this browser. The scan itself is not saved yet, and nothing is sent until you buy lodging.</p>'
-    + '<p style="margin-top:16px"><a class="btn gold" href="' + BASE + '/plans/">Services</a></p>'
+    + '<aside class="rail-ink">'
+    + '<p class="gold" style="letter-spacing:.16em;font-size:11px;font-weight:700">WHERE THIS FILE IS</p>'
+    + '<p class="gold" style="font-family:Oswald,sans-serif;font-size:56px;line-height:1;margin:6px 0">' + attached + '<span style="font-size:22px;color:#fff">/' + items.length + '</span></p>'
+    + '<p>attached. Nothing has been sent.</p>'
+    + '<p class="gold" style="letter-spacing:.16em;font-size:11px;font-weight:700;margin-top:22px">THE CLOCK</p>'
+    + '<p style="font-size:14px;opacity:.85">' + datesFor(f) + '</p>'
+    + '<p class="gold" style="letter-spacing:.16em;font-size:11px;font-weight:700;margin-top:22px">AI READING · DUMMY</p>'
+    + '<p style="font-size:14px;opacity:.85">' + aiNote(f) + '</p>'
+    + '<p style="font-size:13px;opacity:.6">It reads what you typed, not the scan. A vision key is not connected.</p>'
+    + '<p class="gold" style="letter-spacing:.16em;font-size:11px;font-weight:700;margin-top:22px">DO THIS NEXT</p>'
+    + '<ol class="guide">' + guideFor(f, open).map(function (line) { return '<li>' + line + '</li>'; }).join("") + '</ol>'
+    + '<p class="gold" style="letter-spacing:.16em;font-size:11px;font-weight:700;margin-top:22px">ADD TO THIS FILE</p>'
+    + servicesFor(f)
+    + '<button class="btn gold" id="ai-report" style="width:100%;margin-top:18px">AI check this file</button>'
+    + '<div id="ai-out" hidden style="margin-top:14px"></div>'
+    + '<p style="font-size:13px;opacity:.6;margin-top:14px">Kept here: your typed notes and the file name. Not kept yet: the scan. Sent to no one until you buy lodging.</p>'
     + '</aside></div>';
+  fillNav(f);
+  var report = document.getElementById("ai-report");
+  if (report) report.onclick = function () { runReport(f, groups, saved); };
   desk.querySelectorAll("[data-check]").forEach(function (b) { b.onclick = function () { run(b); }; });
   desk.querySelectorAll("[data-file]").forEach(function (input) {
     input.onchange = function () {
@@ -218,6 +234,89 @@ function bootDesk() {
       if (name) name.textContent = picked.name;
     };
   });
+}
+function fillNav(f) {
+  var groups = packet(f);
+  var openId = new URLSearchParams(location.search).get("folder") || "overview";
+  var caseNav = document.getElementById("case-nav");
+  if (caseNav) {
+    caseNav.innerHTML = '<a class="' + (openId === "overview" ? "on" : "") + '" href="' + BASE + '/desk/">Overview</a>'
+      + groups.map(function (g) {
+        return '<a class="' + (g.id === openId ? "on" : "") + '" href="' + BASE + '/desk/?folder=' + g.id + '">' + g.label + '</a>';
+      }).join("");
+  }
+  var forms = f.track === "non-lucrative"
+    ? [["", "All templates"], ["ex-01", "EX-01"], ["cover", "Cover note"]]
+    : [["", "All templates"], ["visa-form", "Visa form"], ["mi-t", "MI-T"], ["criminal-declaration", "Five-year declaration"], ["remote-letter", "Remote-work letter"], ["cover", "Cover note"]];
+  var prepare = document.getElementById("prepare-nav");
+  if (prepare) {
+    prepare.innerHTML = forms.map(function (pair) {
+      var href = pair[0] ? BASE + "/templates/?form=" + pair[0] : BASE + "/templates/?track=" + f.track;
+      return '<a href="' + href + '">' + pair[1] + '</a>';
+    }).join("");
+  }
+}
+function runReport(f, groups, saved) {
+  var out = document.getElementById("ai-out");
+  out.hidden = false;
+  out.innerHTML = '<p class="gold" style="letter-spacing:.14em;font-size:11px;font-weight:700">READING THE FILE</p><p id="ai-line">Opening the folders.</p>';
+  var lines = ["Counting what is attached.", "Comparing names against the passport rule.", "Checking the clock for this residence.", "Writing what is still open."];
+  var n = 0;
+  var timer = setInterval(function () {
+    n += 1;
+    var line = document.getElementById("ai-line");
+    if (line && lines[n - 1]) line.textContent = lines[n - 1];
+    if (n >= lines.length) {
+      clearInterval(timer);
+      out.innerHTML = reportHtml(f, groups, saved);
+    }
+  }, 500);
+}
+function reportHtml(f, groups, saved) {
+  var missing = [];
+  groups.forEach(function (g) {
+    g.items.forEach(function (item) {
+      if (!saved[item.id] || !saved[item.id].fileName) missing.push(g.label + ": " + item.label);
+    });
+  });
+  var attached = flat(groups).length - missing.length;
+  var watch = f.track === "non-lucrative"
+    ? "Keep in mind: silence at one month is a refusal, and the five-year certificates cannot be swapped for a declaration."
+    : "Keep in mind: the company needs a year of real activity, and the three months with the employer is a separate test.";
+  return '<p class="gold" style="letter-spacing:.14em;font-size:11px;font-weight:700">FILE REPORT · MOCK</p>'
+    + '<p><b>' + (attached === 0 ? "Just opened." : "Moving.") + '</b> ' + attached + ' attached, ' + missing.length + ' still open. Nothing has been sent.</p>'
+    + '<p style="font-size:14px"><b>Still missing</b></p><ul class="guide">' + missing.slice(0, 5).map(function (m) { return '<li>' + m + '</li>'; }).join("") + (missing.length > 5 ? '<li>and ' + (missing.length - 5) + ' more.</li>' : '') + '</ul>'
+    + '<p style="font-size:14px">' + watch + '</p>'
+    + '<p style="font-size:12px;opacity:.6">A mock reading of the packet. It has not seen your scans.</p>';
+}
+function aiNote(f) {
+  if (f.track === "non-lucrative") return "A five-year criminal certificate cannot be reused from another visa. This residence does not take a declaration instead. A name that does not match the passport is the first thing a post rejects.";
+  return "The company register has to show a year of real activity. Three months with the employer is a separate test. A fee copied from an old PDF will not match the amount charged on the day.";
+}
+function guideFor(f, open) {
+  var shared = {
+    identity: ["Match every name to the passport, including middle names.", "Scan all four corners, every page, no glare.", "Bring the original to the appointment."],
+    means: ["Write the period the money covers, not just the balance.", "An app screenshot is not a bank letter."],
+    record: ["One certificate per country you lived in.", "Apostille first, sworn translation behind it."],
+    cover: ["Travel insurance does not count.", "The insurer has to be allowed to operate in Spain."],
+    fees: ["Read the fee on the day you pay it.", "File the sworn translation behind the document it translates."]
+  };
+  var extra = f.track === "non-lucrative"
+    ? { means: ["400% of IPREM for you, 100% more for each family member, times the months."], record: ["Five years. A declaration does not replace the certificates."] }
+    : { work: ["The register date must be at least a year ago.", "The letter needs the role, the pay, and permission to work from Spain."], record: ["Two years of certificates, plus a separate declaration covering five."] };
+  return (extra[open.id] || []).concat(shared[open.id] || ["Work the open folder. The next one waits."]);
+}
+function servicesFor(f) {
+  var rows = [
+    ["consult", "Video consult", "€100", "One hour on this file."],
+    ["review", "File review", "€150", "A person reads what is still missing."],
+    ["apostille", "Apostille", "€40", "Per foreign public document."]
+  ];
+  if (f.track !== "non-lucrative") rows.push(["tie", "TIE appointment", "€75", "Only if the grant exceeds six months."]);
+  else rows.push(["tie", "TIE appointment", "€75", "Within a month of entry."]);
+  return rows.map(function (r) {
+    return '<a class="svc" href="' + BASE + '/checkout/?offer=' + r[0] + '"><span><b>' + r[1] + '</b><small>' + r[3] + '</small></span><b class="gold">' + r[2] + '</b></a>';
+  }).join("");
 }
 function phases(f, attached, total) {
   var steps = ["Eligibility", "Documents", "Payment", "Lodging", "Decision"];
@@ -260,7 +359,8 @@ function card(n, item, saved) {
     + '<p class="muted" style="font-size:13px;margin:6px 0 0">The name is kept. The scan itself is not saved yet, and nothing is sent.</p>'
     + '<label style="display:block;margin-top:8px"><span class="lbl">What is on the document</span><textarea rows="3" placeholder="' + item.ph + '">' + ((saved && saved.text) || "") + '</textarea></label>'
     + '<div class="scan ink" hidden style="margin-top:10px"><div style="display:flex;justify-content:space-between"><b class="gold" style="font-family:Oswald,sans-serif;letter-spacing:.12em;font-size:12px">✦ AI CHECKER</b><b class="gold pct">8%</b></div><div style="height:6px;background:rgba(255,255,255,.15);border-radius:99px;margin-top:8px"><div class="bar" style="height:100%;width:8%;background:var(--gold)"></div></div><p class="looking" style="opacity:.8;font-size:14px"></p></div>'
-    + '<button data-check class="btn" style="margin-top:10px">Run AI checker</button>'
+    + '<button data-check class="btn" style="margin-top:10px">Run AI reading</button>'
+    + '<p class="muted" style="font-size:13px">Dummy. It reads what you typed, not the scan, until a vision key is connected.</p>'
     + (found ? '<ul style="margin:10px 0 0;padding-left:18px">' + found + '</ul>' : "")
     + '</article></li>';
 }
@@ -326,7 +426,12 @@ function formList() {
 function bootTemplates() {
   var params = new URLSearchParams(location.search);
   var open = params.get("form");
-  var list = formList();
+  var track = new URLSearchParams(location.search).get("track") || (file() && file().track) || "";
+  var list = formList().filter(function (f) {
+    if (!track) return true;
+    if (track === "non-lucrative") return f.visa === "Non-lucrative" || f.visa === "Both";
+    return f.visa.indexOf("Digital nomad") === 0 || f.visa === "Both";
+  });
   var current = list.filter(function (f) { return f.id === open; })[0];
   if (!current) {
     templates.innerHTML = '<div class="grid2" style="margin-top:24px;grid-template-columns:1fr 1fr 1fr">' + list.map(function (f) {
@@ -431,9 +536,9 @@ function packet(f) {
   return [
     folder("identity", "Identity", "Who is applying, and the form for this door.", [
       abroad
-        ? doc("form", "National visa form, signed", "The consulate’s own visa form, signed by the person who will telework. EX-01 belongs to the other visa.", "The current national visa form, completed and signed.", "National visa form, signed 12 March 2026",
+        ? doc("form", "National visa form, signed", "The consulate’s own visa form, signed by the person who will telework.", "The current national visa form, completed and signed.", "National visa form, signed 12 March 2026",
             [look("a visa form", ["visa", "visado"]), look("a signature", ["signed", "firmado"])],
-            "The current national visa form, signed. Not EX-01.")
+            "The current national visa form, signed, the same name as the passport.")
         : doc("form", "MI-T, signed", "The holder’s form for the electronic residence. Family members use MI-F, one each.", "MI-T from Plataforma ONE, completed and signed.", "MI-T signed 4 May 2026",
             [look("form MI-T", ["mi-t", "mit"]), look("a signature", ["signed", "firmado"])],
             "MI-T, signed. Family members each have their own MI-F."),

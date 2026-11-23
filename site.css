@@ -83,6 +83,13 @@ footer.site { border-top: 1px solid var(--rule); background: #fff; }
 .folder .count { font-family: Oswald, sans-serif; font-size: 18px; color: var(--ink); }
 .good { background: var(--paper); border-radius: 12px; padding: 10px 12px; font-size: 14px; }
 .trust { border-left: 3px solid var(--ink); padding-left: 12px; font-size: 14px; }
+.rail-ink { background: var(--ink); color: #f7f4f1; border-radius: 22px; padding: 22px; position: sticky; top: 84px; }
+.rail-ink .guide { margin: 8px 0 0; padding-left: 18px; font-size: 14px; }
+.rail-ink .guide li { margin: 6px 0; }
+.svc { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 8px; padding: 12px; border-radius: 14px; background: rgba(255,255,255,.05); text-decoration: none; color: inherit; border: 1px solid rgba(255,196,0,.35); }
+.svc:hover { border-color: var(--gold); }
+.svc b { display: block; }
+.svc small { display: block; opacity: .7; font-size: 12px; }
 .work { padding: 28px 28px 60px; }
 .sheet { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 28px 28px 32px; }
 .sheet h2 { font-size: 22px; margin: 22px 0 8px; }
