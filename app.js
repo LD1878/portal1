@@ -8,6 +8,7 @@ function answers() { return read(ANSWERS) || {}; }
 
 var checkout = document.getElementById("checkout");
 if (checkout) bootPay();
+document.querySelectorAll("[data-doc]").forEach(bootDoc);
 var decide = document.getElementById("decide");
 if (decide) bootDecide();
 var profile = document.getElementById("profile");
@@ -30,12 +31,34 @@ function bootPay() {
   checkout.innerHTML = '<div class="grid2" style="grid-template-columns:1.1fr .9fr"><form class="card" id="pay"><p class="kicker">Checkout</p><h1 style="font-size:40px;margin:8px 0">' + name + '</h1><p class="muted">' + line + '</p>'
     + field("Name on card", "text", "cc-name") + field("Email for the receipt", "email", "email") + field("Card number", "text", "cc-number")
     + '<div class="grid2" style="grid-template-columns:1fr 1fr">' + field("Expiry", "text", "cc-exp") + field("CVC", "text", "cc-csc") + '</div>'
-    + '<button class="btn" style="margin-top:8px;width:100%">Pay ' + price + '</button><p class="muted">Stripe is not connected. This card is not charged. Continuing opens your details.</p></form>'
+    + '<button class="btn" style="margin-top:8px;width:100%">Pay ' + price + '</button>'
+    + skipRow(BASE + "/profile/", "Continue without paying")
+    + '<p class="muted">Stripe is not connected. This card is not charged. The fields stay so the real payment can drop in later.</p></form>'
     + '<aside class="ink"><p class="gold" style="font-family:Oswald,sans-serif;letter-spacing:.14em;font-size:12px">ORDER</p><h2 style="font-size:30px">' + name + '</h2><p class="gold" style="font-family:Oswald,sans-serif;font-size:28px">Due today ' + price + '</p><p style="opacity:.75">Both visas. Your name, the route, and where you will live, then the file.</p></aside></div>';
   document.getElementById("pay").onsubmit = function (e) { e.preventDefault(); location.href = BASE + "/profile/"; };
 }
 function field(label, type, ac) {
-  return '<label style="display:block;margin:10px 0"><span class="lbl">' + label + '</span><input required type="' + type + '" autocomplete="' + ac + '"></label>';
+  return '<label style="display:block;margin:10px 0"><span class="lbl">' + label + '</span><input type="' + type + '" autocomplete="' + ac + '"></label>';
+}
+function skipRow(href, label) {
+  return '<p style="margin:14px 0 0"><a class="btn ghost" href="' + href + '">' + label + '</a></p>';
+}
+function bootDoc(el) {
+  var id = el.getAttribute("data-doc");
+  var saved = answers()[id];
+  var name = (saved && saved.fileName) || "PDF or photo. Nothing is sent yet.";
+  el.innerHTML = '<label class="upload" style="display:flex;align-items:center;gap:10px;margin-top:12px"><input data-file type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/*" style="position:absolute;width:1px;height:1px;opacity:0"><span class="btn ghost">Upload document</span><span class="file-name muted">' + name + '</span></label>';
+  var input = el.querySelector("[data-file]");
+  input.onchange = function () {
+    var picked = input.files && input.files[0];
+    if (!picked) return;
+    var all = answers();
+    var prev = all[id] || {};
+    prev.fileName = picked.name;
+    all[id] = prev;
+    localStorage.setItem(ANSWERS, JSON.stringify(all));
+    el.querySelector(".file-name").textContent = picked.name;
+  };
 }
 
 function bootDecide() {
@@ -55,10 +78,10 @@ function bootDecide() {
       + '</div></fieldset>';
   }
   function out() {
-    if (state.who === "eu") return '<p>This desk does not apply. EU, EEA and Swiss nationals use the Union regime.</p>';
-    if (state.what === "other") return '<p>Entrepreneur, student and arraigo permits are outside this desk.</p>';
-    if (state.what === "means" && state.where === "spain") return '<p>Non-lucrative residence is filed from your country of origin, not from inside Spain.</p>';
-    if (!state.where || (state.what !== "remote" && state.what !== "means")) return "";
+    if (state.who === "eu") return '<p>This desk does not apply. EU, EEA and Swiss nationals use the Union regime.</p>' + skipRow(BASE + "/profile/", "Continue anyway");
+    if (state.what === "other") return '<p>Entrepreneur, student and arraigo permits are outside this desk.</p>' + skipRow(BASE + "/profile/", "Continue anyway");
+    if (state.what === "means" && state.where === "spain") return '<p>Non-lucrative residence is filed from your country of origin, not from inside Spain.</p>' + skipRow(BASE + "/profile/", "Continue anyway");
+    if (!state.where || (state.what !== "remote" && state.what !== "means")) return skipRow(BASE + "/profile/", "Skip and continue");
     return '<aside class="ink"><p class="gold" style="font-family:Oswald,sans-serif;letter-spacing:.14em;font-size:12px">YOUR ROUTE</p><h2 style="font-size:28px">' + routeName(draft()) + '</h2><p>Next, your name and where you are going. Then the documents, in the order a file is built.</p><p><button class="btn gold" id="next">Continue to your details</button></p></aside>';
   }
   function draft() {
@@ -75,8 +98,7 @@ function bootDecide() {
 }
 
 function bootProfile() {
-  var f = file();
-  if (!f) { location.href = BASE + "/decide/"; return; }
+  var f = file() || { track: "digital-nomad", route: "consulate", name: "", email: "", city: "", country: "" };
   profile.innerHTML = '<p class="kicker">After the price · before the file</p>'
     + '<h1 style="font-size:50px;margin-top:8px">Who is moving, and where.</h1>'
     + '<p class="lede">This sits above the file. The desk uses it so every check knows whose documents these are. You can change it later.</p>'
@@ -84,7 +106,9 @@ function bootProfile() {
     + '<p class="kicker">' + routeName(f) + '</p>'
     + field("Your name", "text", "name") + field("Email", "email", "email")
     + '<div class="grid2" style="grid-template-columns:1fr 1fr">' + field("City you are heading to", "text", "address-level2") + field("Country you are filing from", "text", "country-name") + '</div>'
-    + '<button class="btn" style="margin-top:6px">Open my file</button></form>';
+    + '<button class="btn" style="margin-top:6px">Open my file</button>'
+    + skipRow(BASE + "/desk/", "Skip and open the file")
+    + '<p class="muted">The fields stay. You can fill them now or come back. Skipping does not delete what you already typed.</p></form>';
   var inputs = profile.querySelectorAll("input");
   inputs[0].value = f.name || "";
   inputs[1].value = f.email || "";
@@ -102,10 +126,9 @@ function bootProfile() {
 }
 
 function bootDesk() {
-  var f = file();
-  if (!f || !f.name) { location.href = BASE + "/profile/"; return; }
+  var f = file() || { track: "digital-nomad", route: "consulate", name: "", email: "", city: "", country: "" };
   var who = document.getElementById("who");
-  if (who) who.textContent = f.name;
+  if (who) who.textContent = f.name || "Not filled in yet";
   var items = packet(f);
   var saved = answers();
   var aligned = items.filter(function (i) { return saved[i.id] && saved[i.id].verdict === "looks-aligned"; }).length;
@@ -114,7 +137,8 @@ function bootDesk() {
   var complete = pct === 100;
   desk.innerHTML = '<div class="grid2" style="grid-template-columns:minmax(0,1fr) 320px;gap:0">'
     + '<div style="padding-right:20px"><p class="kicker">🇪🇸 Spain · ' + routeName(f) + ' · Main applicant</p>'
-    + '<h1 style="font-size:42px;margin:6px 0">' + f.name + '</h1>'
+    + '<h1 style="font-size:42px;margin:6px 0">' + (f.name || "Your file") + '</h1>'
+    + (f.name ? "" : '<p><a href="' + BASE + '/profile/">Add your name and where you are filing from</a>. The file is already open.</p>')
     + '<p class="muted">Upload each scan. The AI checker reads it against the packet note — names, dates, apostille, formula. It does not lodge the file.</p>'
     + '<ol style="list-style:none;padding:0">' + items.map(function (item, n) { return card(n, item, saved[item.id]); }).join("") + '</ol></div>'
     + '<aside class="ink" style="border-radius:0;min-height:100%">'
@@ -135,6 +159,20 @@ function bootDesk() {
     + (complete ? '<a class="btn on" href="' + BASE + '/checkout/?offer=filing">Add to this file</a>' : '<p style="font-size:13px;margin:0">Needs the €1.000 translation first.</p>')
     + '</div></aside></div>';
   desk.querySelectorAll("[data-check]").forEach(function (b) { b.onclick = function () { run(b); }; });
+  desk.querySelectorAll("[data-file]").forEach(function (input) {
+    input.onchange = function () {
+      var picked = input.files && input.files[0];
+      if (!picked) return;
+      var id = input.closest("article").getAttribute("data-id");
+      var all = answers();
+      var prev = all[id] || {};
+      prev.fileName = picked.name;
+      all[id] = prev;
+      localStorage.setItem(ANSWERS, JSON.stringify(all));
+      var name = input.parentNode.querySelector(".file-name");
+      if (name) name.textContent = picked.name;
+    };
+  });
 }
 function row(k, v) { return "<dt>" + k + "</dt><dd>" + v + "</dd>"; }
 function card(n, item, saved) {
@@ -148,6 +186,7 @@ function card(n, item, saved) {
     + '<p>' + item.what + '</p>'
     + '<p><b>File this.</b> ' + item.file + '</p>'
     + '<p class="muted"><b>The check looks for</b> ' + item.looks.map(function (l) { return l.label.toLowerCase(); }).join(", ") + '.</p>'
+    + '<label class="upload" style="display:flex;align-items:center;gap:10px;margin-top:10px"><input data-file type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/*" style="position:absolute;width:1px;height:1px;opacity:0"><span class="btn ghost">Upload document</span><span class="file-name muted">' + ((saved && saved.fileName) || "PDF or photo. Nothing is sent yet.") + '</span></label>'
     + '<label style="display:block;margin-top:8px"><span class="lbl">What is on the document</span><textarea rows="3" placeholder="' + item.ph + '">' + ((saved && saved.text) || "") + '</textarea></label>'
     + '<div class="scan ink" hidden style="margin-top:10px"><div style="display:flex;justify-content:space-between"><b class="gold" style="font-family:Oswald,sans-serif;letter-spacing:.12em;font-size:12px">✦ AI CHECKER</b><b class="gold pct">8%</b></div><div style="height:6px;background:rgba(255,255,255,.15);border-radius:99px;margin-top:8px"><div class="bar" style="height:100%;width:8%;background:var(--gold)"></div></div><p class="looking" style="opacity:.8;font-size:14px"></p></div>'
     + '<button data-check class="btn" style="margin-top:10px">Run AI checker</button>'
@@ -180,7 +219,8 @@ function run(btn) {
     var verdict = hits === lines.length ? "looks-aligned" : hits ? "check" : "missing";
     var pill = verdict === "looks-aligned" ? "Looks aligned" : verdict === "check" ? "Part missing" : "Does not match";
     var all = answers();
-    all[id] = { text: cardEl.querySelector("textarea").value, verdict: verdict, pill: pill, weight: weight, lines: lines };
+    var prev = all[id] || {};
+    all[id] = { text: cardEl.querySelector("textarea").value, verdict: verdict, pill: pill, weight: weight, lines: lines, fileName: prev.fileName || "" };
     localStorage.setItem(ANSWERS, JSON.stringify(all));
     bootDesk();
     var back = document.getElementById("item-" + id);

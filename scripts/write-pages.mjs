@@ -160,6 +160,7 @@ function answers() { return read(ANSWERS) || {}; }
 
 var checkout = document.getElementById("checkout");
 if (checkout) bootPay();
+document.querySelectorAll("[data-doc]").forEach(bootDoc);
 var decide = document.getElementById("decide");
 if (decide) bootDecide();
 var profile = document.getElementById("profile");
@@ -168,19 +169,48 @@ var desk = document.getElementById("desk");
 if (desk) bootDesk();
 
 function bootPay() {
-  var monthly = new URLSearchParams(location.search).get("offer") === "monthly";
-  var price = monthly ? "€300.00" : "€600.00";
-  var name = monthly ? "Monthly" : "Three months, prepaid";
-  var line = monthly ? "Billed today, then monthly. Three months minimum, €900 in total." : "Paid once. Three months of access. €200 a month.";
+  var offer = new URLSearchParams(location.search).get("offer");
+  var catalog = {
+    monthly: { price: "€300.00", name: "Monthly desk", line: "Consular only. No UGE-CE. Three months minimum." },
+    prepaid: { price: "€600.00", name: "Three months", line: "Paid once. Includes UGE-CE if you are already in Spain." },
+    translation: { price: "€1.000,00", name: "Sworn translations", line: "EN → ES, every document in the case, once the packet is 100%." },
+    filing: { price: "€200.00", name: "We submit the file", line: "Lodging after translation is on the case." }
+  };
+  var picked = catalog[offer] || catalog.prepaid;
+  var price = picked.price;
+  var name = picked.name;
+  var line = picked.line;
   checkout.innerHTML = '<div class="grid2" style="grid-template-columns:1.1fr .9fr"><form class="card" id="pay"><p class="kicker">Checkout</p><h1 style="font-size:40px;margin:8px 0">' + name + '</h1><p class="muted">' + line + '</p>'
     + field("Name on card", "text", "cc-name") + field("Email for the receipt", "email", "email") + field("Card number", "text", "cc-number")
     + '<div class="grid2" style="grid-template-columns:1fr 1fr">' + field("Expiry", "text", "cc-exp") + field("CVC", "text", "cc-csc") + '</div>'
-    + '<button class="btn" style="margin-top:8px;width:100%">Pay ' + price + '</button><p class="muted">Stripe is not connected. This card is not charged. Continuing opens your details.</p></form>'
+    + '<button class="btn" style="margin-top:8px;width:100%">Pay ' + price + '</button>'
+    + skipRow(BASE + "/profile/", "Continue without paying")
+    + '<p class="muted">Stripe is not connected. This card is not charged. The fields stay so the real payment can drop in later.</p></form>'
     + '<aside class="ink"><p class="gold" style="font-family:Oswald,sans-serif;letter-spacing:.14em;font-size:12px">ORDER</p><h2 style="font-size:30px">' + name + '</h2><p class="gold" style="font-family:Oswald,sans-serif;font-size:28px">Due today ' + price + '</p><p style="opacity:.75">Both visas. Your name, the route, and where you will live, then the file.</p></aside></div>';
   document.getElementById("pay").onsubmit = function (e) { e.preventDefault(); location.href = BASE + "/profile/"; };
 }
 function field(label, type, ac) {
-  return '<label style="display:block;margin:10px 0"><span class="lbl">' + label + '</span><input required type="' + type + '" autocomplete="' + ac + '"></label>';
+  return '<label style="display:block;margin:10px 0"><span class="lbl">' + label + '</span><input type="' + type + '" autocomplete="' + ac + '"></label>';
+}
+function skipRow(href, label) {
+  return '<p style="margin:14px 0 0"><a class="btn ghost" href="' + href + '">' + label + '</a></p>';
+}
+function bootDoc(el) {
+  var id = el.getAttribute("data-doc");
+  var saved = answers()[id];
+  var name = (saved && saved.fileName) || "PDF or photo. Nothing is sent yet.";
+  el.innerHTML = '<label class="upload" style="display:flex;align-items:center;gap:10px;margin-top:12px"><input data-file type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/*" style="position:absolute;width:1px;height:1px;opacity:0"><span class="btn ghost">Upload document</span><span class="file-name muted">' + name + '</span></label>';
+  var input = el.querySelector("[data-file]");
+  input.onchange = function () {
+    var picked = input.files && input.files[0];
+    if (!picked) return;
+    var all = answers();
+    var prev = all[id] || {};
+    prev.fileName = picked.name;
+    all[id] = prev;
+    localStorage.setItem(ANSWERS, JSON.stringify(all));
+    el.querySelector(".file-name").textContent = picked.name;
+  };
 }
 
 function bootDecide() {
@@ -200,10 +230,10 @@ function bootDecide() {
       + '</div></fieldset>';
   }
   function out() {
-    if (state.who === "eu") return '<p>This desk does not apply. EU, EEA and Swiss nationals use the Union regime.</p>';
-    if (state.what === "other") return '<p>Entrepreneur, student and arraigo permits are outside this desk.</p>';
-    if (state.what === "means" && state.where === "spain") return '<p>Non-lucrative residence is filed from your country of origin, not from inside Spain.</p>';
-    if (!state.where || (state.what !== "remote" && state.what !== "means")) return "";
+    if (state.who === "eu") return '<p>This desk does not apply. EU, EEA and Swiss nationals use the Union regime.</p>' + skipRow(BASE + "/profile/", "Continue anyway");
+    if (state.what === "other") return '<p>Entrepreneur, student and arraigo permits are outside this desk.</p>' + skipRow(BASE + "/profile/", "Continue anyway");
+    if (state.what === "means" && state.where === "spain") return '<p>Non-lucrative residence is filed from your country of origin, not from inside Spain.</p>' + skipRow(BASE + "/profile/", "Continue anyway");
+    if (!state.where || (state.what !== "remote" && state.what !== "means")) return skipRow(BASE + "/profile/", "Skip and continue");
     return '<aside class="ink"><p class="gold" style="font-family:Oswald,sans-serif;letter-spacing:.14em;font-size:12px">YOUR ROUTE</p><h2 style="font-size:28px">' + routeName(draft()) + '</h2><p>Next, your name and where you are going. Then the documents, in the order a file is built.</p><p><button class="btn gold" id="next">Continue to your details</button></p></aside>';
   }
   function draft() {
@@ -220,8 +250,7 @@ function bootDecide() {
 }
 
 function bootProfile() {
-  var f = file();
-  if (!f) { location.href = BASE + "/decide/"; return; }
+  var f = file() || { track: "digital-nomad", route: "consulate", name: "", email: "", city: "", country: "" };
   profile.innerHTML = '<p class="kicker">After the price · before the file</p>'
     + '<h1 style="font-size:50px;margin-top:8px">Who is moving, and where.</h1>'
     + '<p class="lede">This sits above the file. The desk uses it so every check knows whose documents these are. You can change it later.</p>'
@@ -229,7 +258,9 @@ function bootProfile() {
     + '<p class="kicker">' + routeName(f) + '</p>'
     + field("Your name", "text", "name") + field("Email", "email", "email")
     + '<div class="grid2" style="grid-template-columns:1fr 1fr">' + field("City you are heading to", "text", "address-level2") + field("Country you are filing from", "text", "country-name") + '</div>'
-    + '<button class="btn" style="margin-top:6px">Open my file</button></form>';
+    + '<button class="btn" style="margin-top:6px">Open my file</button>'
+    + skipRow(BASE + "/desk/", "Skip and open the file")
+    + '<p class="muted">The fields stay. You can fill them now or come back. Skipping does not delete what you already typed.</p></form>';
   var inputs = profile.querySelectorAll("input");
   inputs[0].value = f.name || "";
   inputs[1].value = f.email || "";
@@ -247,24 +278,53 @@ function bootProfile() {
 }
 
 function bootDesk() {
-  var f = file();
-  if (!f || !f.name) { location.href = BASE + "/profile/"; return; }
+  var f = file() || { track: "digital-nomad", route: "consulate", name: "", email: "", city: "", country: "" };
+  var who = document.getElementById("who");
+  if (who) who.textContent = f.name || "Not filled in yet";
   var items = packet(f);
   var saved = answers();
   var aligned = items.filter(function (i) { return saved[i.id] && saved[i.id].verdict === "looks-aligned"; }).length;
-  var weight = items.reduce(function (s, i) { return s + (saved[i.id] ? saved[i.id].weight : 0); }, 0);
-  var max = items.length * 3;
-  var pct = Math.round(weight / max * 100);
-  desk.innerHTML = '<div class="grid2"><div><p class="kicker">File order</p><h1 style="font-size:42px;margin:6px 0">Build it in the order it is filed.</h1><p class="lede">Identity first, then the money, then the clean record, then the cover. Each card tells you what the check is looking at.</p><ol style="list-style:none;padding:0">'
-    + items.map(function (item, n) { return card(n, item, saved[item.id]); }).join("") + '</ol></div>'
-    + '<aside class="rail"><section class="person"><p class="kicker">The applicant</p><dl>'
-    + row("Name", f.name) + row("Visa", routeName(f)) + row("Heading to", f.city || "—") + row("Filing from", f.country || "—") + '</dl>'
-    + '<a class="btn ghost" href="' + BASE + '/profile/">Edit details</a></section>'
-    + '<section class="ink"><p class="gold" style="font-family:Oswald,sans-serif;letter-spacing:.14em;font-size:12px">FILE WEIGHT</p>'
-    + '<div style="display:flex;justify-content:space-between;align-items:end"><div><b>' + (pct === 100 ? "Ready to review" : "Still assembling") + '</b><p style="opacity:.7;margin:4px 0 0">' + aligned + " of " + items.length + ' fully aligned</p></div><b class="gold" style="font-size:42px;font-family:Oswald,sans-serif">' + pct + "%</b></div>"
-    + '<div style="height:8px;background:rgba(255,255,255,.15);border-radius:99px;margin-top:10px"><div style="height:100%;width:' + pct + '%;background:var(--gold);border-radius:99px"></div></div>'
-    + '<p style="opacity:.65;font-size:13px">Each document is weighed on what is still missing. A full match is three points. A gap keeps the points it earned.</p></section></aside></div>';
+  var checked = items.filter(function (i) { return saved[i.id]; }).length;
+  var pct = items.length ? Math.round(aligned / items.length * 100) : 0;
+  var complete = pct === 100;
+  desk.innerHTML = '<div class="grid2" style="grid-template-columns:minmax(0,1fr) 320px;gap:0">'
+    + '<div style="padding-right:20px"><p class="kicker">🇪🇸 Spain · ' + routeName(f) + ' · Main applicant</p>'
+    + '<h1 style="font-size:42px;margin:6px 0">' + (f.name || "Your file") + '</h1>'
+    + (f.name ? "" : '<p><a href="' + BASE + '/profile/">Add your name and where you are filing from</a>. The file is already open.</p>')
+    + '<p class="muted">Upload each scan. The AI checker reads it against the packet note — names, dates, apostille, formula. It does not lodge the file.</p>'
+    + '<ol style="list-style:none;padding:0">' + items.map(function (item, n) { return card(n, item, saved[item.id]); }).join("") + '</ol></div>'
+    + '<aside class="ink" style="border-radius:0;min-height:100%">'
+    + '<p class="gold" style="letter-spacing:.16em;font-size:11px;font-weight:700">STATUS</p>'
+    + '<p class="gold" style="font-family:Oswald,sans-serif;font-size:48px;margin:4px 0">' + pct + '%</p>'
+    + '<div style="height:8px;background:rgba(255,255,255,.12);border-radius:99px"><div style="height:100%;width:' + pct + '%;background:var(--gold);border-radius:99px"></div></div>'
+    + '<p style="opacity:.7;font-size:13px">' + aligned + ' aligned · ' + checked + ' checked · ' + (items.length - aligned) + ' open</p>'
+    + '<p class="gold" style="letter-spacing:.16em;font-size:11px;font-weight:700;margin-top:22px">✦ AI CHECKER</p>'
+    + '<p style="opacity:.8;font-size:14px">First pass in about a second. Dummy until a vision key is connected.</p>'
+    + '<ol style="padding-left:18px;font-size:14px;opacity:.9"><li>Document type and legibility</li><li>Names and dates match the packet note</li><li>Issue date inside the validity window</li><li>Apostille or legalisation present</li><li>Sworn translation required or not</li><li>Funds against the current formula</li></ol>'
+    + '<p class="gold" style="letter-spacing:.16em;font-size:11px;font-weight:700;margin-top:22px">FILE NOTES</p>'
+    + '<p style="opacity:.8;font-size:14px">Monthly plans do not include UGE-CE. Prepaid does. Nothing is lodged until you buy the €200 submit add-on.</p>'
+    + '<div style="background:var(--gold);color:var(--ink);border-radius:16px;padding:16px;margin-top:18px">'
+    + '<p style="letter-spacing:.12em;font-size:11px;font-weight:700;margin:0">WHEN THE FILE IS 100%</p>'
+    + '<p style="margin:10px 0 4px"><b>Sworn translations · €1.000</b><br><span style="font-size:13px">EN → ES, every document in this case.</span></p>'
+    + (complete ? '<a class="btn on" href="' + BASE + '/checkout/?offer=translation">Add to this file</a>' : '<p style="font-size:13px;margin:0">Finish every item first.</p>')
+    + '<p style="margin:14px 0 4px"><b>We submit the file · €200</b><br><span style="font-size:13px">Lodging after translation is on the case.</span></p>'
+    + (complete ? '<a class="btn on" href="' + BASE + '/checkout/?offer=filing">Add to this file</a>' : '<p style="font-size:13px;margin:0">Needs the €1.000 translation first.</p>')
+    + '</div></aside></div>';
   desk.querySelectorAll("[data-check]").forEach(function (b) { b.onclick = function () { run(b); }; });
+  desk.querySelectorAll("[data-file]").forEach(function (input) {
+    input.onchange = function () {
+      var picked = input.files && input.files[0];
+      if (!picked) return;
+      var id = input.closest("article").getAttribute("data-id");
+      var all = answers();
+      var prev = all[id] || {};
+      prev.fileName = picked.name;
+      all[id] = prev;
+      localStorage.setItem(ANSWERS, JSON.stringify(all));
+      var name = input.parentNode.querySelector(".file-name");
+      if (name) name.textContent = picked.name;
+    };
+  });
 }
 function row(k, v) { return "<dt>" + k + "</dt><dd>" + v + "</dd>"; }
 function card(n, item, saved) {
@@ -278,9 +338,10 @@ function card(n, item, saved) {
     + '<p>' + item.what + '</p>'
     + '<p><b>File this.</b> ' + item.file + '</p>'
     + '<p class="muted"><b>The check looks for</b> ' + item.looks.map(function (l) { return l.label.toLowerCase(); }).join(", ") + '.</p>'
+    + '<label class="upload" style="display:flex;align-items:center;gap:10px;margin-top:10px"><input data-file type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/*" style="position:absolute;width:1px;height:1px;opacity:0"><span class="btn ghost">Upload document</span><span class="file-name muted">' + ((saved && saved.fileName) || "PDF or photo. Nothing is sent yet.") + '</span></label>'
     + '<label style="display:block;margin-top:8px"><span class="lbl">What is on the document</span><textarea rows="3" placeholder="' + item.ph + '">' + ((saved && saved.text) || "") + '</textarea></label>'
-    + '<div class="scan ink" hidden style="margin-top:10px"><div style="display:flex;justify-content:space-between"><b class="gold" style="font-family:Oswald,sans-serif;letter-spacing:.12em;font-size:12px">READING THIS DOCUMENT</b><b class="gold pct">8%</b></div><div style="height:6px;background:rgba(255,255,255,.15);border-radius:99px;margin-top:8px"><div class="bar" style="height:100%;width:8%;background:var(--gold)"></div></div><p class="looking" style="opacity:.8;font-size:14px"></p></div>'
-    + '<button data-check class="btn" style="margin-top:10px">Check this document</button>'
+    + '<div class="scan ink" hidden style="margin-top:10px"><div style="display:flex;justify-content:space-between"><b class="gold" style="font-family:Oswald,sans-serif;letter-spacing:.12em;font-size:12px">✦ AI CHECKER</b><b class="gold pct">8%</b></div><div style="height:6px;background:rgba(255,255,255,.15);border-radius:99px;margin-top:8px"><div class="bar" style="height:100%;width:8%;background:var(--gold)"></div></div><p class="looking" style="opacity:.8;font-size:14px"></p></div>'
+    + '<button data-check class="btn" style="margin-top:10px">Run AI checker</button>'
     + (found ? '<ul style="margin:10px 0 0;padding-left:18px">' + found + '</ul>' : "")
     + '</article></li>';
 }
@@ -310,7 +371,8 @@ function run(btn) {
     var verdict = hits === lines.length ? "looks-aligned" : hits ? "check" : "missing";
     var pill = verdict === "looks-aligned" ? "Looks aligned" : verdict === "check" ? "Part missing" : "Does not match";
     var all = answers();
-    all[id] = { text: cardEl.querySelector("textarea").value, verdict: verdict, pill: pill, weight: weight, lines: lines };
+    var prev = all[id] || {};
+    all[id] = { text: cardEl.querySelector("textarea").value, verdict: verdict, pill: pill, weight: weight, lines: lines, fileName: prev.fileName || "" };
     localStorage.setItem(ANSWERS, JSON.stringify(all));
     bootDesk();
     var back = document.getElementById("item-" + id);

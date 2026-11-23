@@ -44,6 +44,8 @@ main.page { max-width: 1180px; margin: 0 auto; padding: 40px 22px 80px; }
 .btn.gold { background: var(--gold); color: var(--ink); border-color: var(--gold); }
 .btn.on { background: var(--ink); color: #fff; border-color: var(--ink); }
 .btn.quiet { background: #fff; color: var(--ink); border-color: var(--rule); }
+.upload { position: relative; flex-wrap: wrap; }
+.file-name { font-size: 14px; }
 input, textarea, select { width: 100%; border: 1px solid var(--rule); border-radius: 12px; padding: 12px 14px; font: inherit; background: #fff; color: var(--ink); }
 label .lbl { display: block; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin-bottom: 6px; font-weight: 600; }
 .ink { background: #1c1c1c; color: #f7f4f1; border-radius: 22px; padding: 22px; }
