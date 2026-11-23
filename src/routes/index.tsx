@@ -11,25 +11,29 @@ function Home() {
     <main>
       <section className="mx-auto max-w-[1200px] px-4 pb-8 pt-12 sm:px-6 sm:pt-16">
         <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-oxblood">
-          JUROSpain · Docs as code
+          Immigration, recoded.
         </p>
-        <h1 className="mt-4 max-w-3xl font-display text-5xl leading-[0.95] font-bold tracking-tight sm:text-6xl">
-          Living Visa Codex
+        <h1 className="mt-4 max-w-3xl font-display text-5xl leading-[0.95] font-bold tracking-tight text-ink sm:text-6xl">
+          The smarter way to move to <span className="text-oxblood">Spain.</span>
         </h1>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft">
-          The English operating manual for two Spanish residencies. International
-          telework. Non-lucrative temporary residence. Built as legal architecture
-          for assembling a file — not as commentary.
+          One desk for the digital nomad visa and the non-lucrative visa. The
+          law stays sourced. You upload each document, the desk checks it, and
+          nothing is submitted for you. Access is three months: €300 a month, or
+          €600 paid once.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Button asChild>
-            <Link to="/decide">
-              Open the decision tree
+            <Link to="/desk">
+              Start a file
               <ArrowRight className="size-4" />
             </Link>
           </Button>
           <Button asChild variant="outline">
-            <Link to="/sources">Inspect the sources</Link>
+            <Link to="/plans">Monthly plans</Link>
+          </Button>
+          <Button asChild variant="ghost">
+            <Link to="/decide">Which visa</Link>
           </Button>
         </div>
       </section>

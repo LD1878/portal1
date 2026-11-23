@@ -10,8 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as DecideRouteImport } from './routes/decide'
+import { Route as DeskRouteImport } from './routes/desk'
 import { Route as FormulasRouteImport } from './routes/formulas'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as PlansRouteImport } from './routes/plans'
 import { Route as SourcesRouteImport } from './routes/sources'
 import { Route as DigitalNomadIndexRouteImport } from './routes/digital-nomad/index'
 import { Route as DigitalNomadChecklistRouteImport } from './routes/digital-nomad/checklist'
@@ -22,10 +26,16 @@ import { Route as NonLucrativeIndexRouteImport } from './routes/non-lucrative/in
 import { Route as NonLucrativeChecklistRouteImport } from './routes/non-lucrative/checklist'
 import { Route as NonLucrativeConsulateRouteImport } from './routes/non-lucrative/consulate'
 import { Route as NonLucrativeFamilyRouteImport } from './routes/non-lucrative/family'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DecideRoute = DecideRouteImport.update({
@@ -33,9 +43,24 @@ const DecideRoute = DecideRouteImport.update({
   path: '/decide',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DeskRoute = DeskRouteImport.update({
+  id: '/desk',
+  path: '/desk',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FormulasRoute = FormulasRouteImport.update({
   id: '/formulas',
   path: '/formulas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlansRoute = PlansRouteImport.update({
+  id: '/plans',
+  path: '/plans',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SourcesRoute = SourcesRouteImport.update({
@@ -88,11 +113,20 @@ const NonLucrativeFamilyRoute = NonLucrativeFamilyRouteImport.update({
   path: '/non-lucrative/family',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/checkout': typeof CheckoutRoute
   '/decide': typeof DecideRoute
+  '/desk': typeof DeskRoute
   '/formulas': typeof FormulasRoute
+  '/login': typeof LoginRoute
+  '/plans': typeof PlansRoute
   '/sources': typeof SourcesRoute
   '/digital-nomad/checklist': typeof DigitalNomadChecklistRoute
   '/digital-nomad/consulate': typeof DigitalNomadConsulateRoute
@@ -103,11 +137,16 @@ export interface FileRoutesByFullPath {
   '/non-lucrative/family': typeof NonLucrativeFamilyRoute
   '/digital-nomad/': typeof DigitalNomadIndexRoute
   '/non-lucrative/': typeof NonLucrativeIndexRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/checkout': typeof CheckoutRoute
   '/decide': typeof DecideRoute
+  '/desk': typeof DeskRoute
   '/formulas': typeof FormulasRoute
+  '/login': typeof LoginRoute
+  '/plans': typeof PlansRoute
   '/sources': typeof SourcesRoute
   '/digital-nomad/checklist': typeof DigitalNomadChecklistRoute
   '/digital-nomad/consulate': typeof DigitalNomadConsulateRoute
@@ -118,12 +157,17 @@ export interface FileRoutesByTo {
   '/non-lucrative/family': typeof NonLucrativeFamilyRoute
   '/digital-nomad': typeof DigitalNomadIndexRoute
   '/non-lucrative': typeof NonLucrativeIndexRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/checkout': typeof CheckoutRoute
   '/decide': typeof DecideRoute
+  '/desk': typeof DeskRoute
   '/formulas': typeof FormulasRoute
+  '/login': typeof LoginRoute
+  '/plans': typeof PlansRoute
   '/sources': typeof SourcesRoute
   '/digital-nomad/checklist': typeof DigitalNomadChecklistRoute
   '/digital-nomad/consulate': typeof DigitalNomadConsulateRoute
@@ -134,13 +178,18 @@ export interface FileRoutesById {
   '/non-lucrative/family': typeof NonLucrativeFamilyRoute
   '/digital-nomad/': typeof DigitalNomadIndexRoute
   '/non-lucrative/': typeof NonLucrativeIndexRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/checkout'
     | '/decide'
+    | '/desk'
     | '/formulas'
+    | '/login'
+    | '/plans'
     | '/sources'
     | '/digital-nomad/checklist'
     | '/digital-nomad/consulate'
@@ -151,11 +200,16 @@ export interface FileRouteTypes {
     | '/non-lucrative/family'
     | '/digital-nomad/'
     | '/non-lucrative/'
+    | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/checkout'
     | '/decide'
+    | '/desk'
     | '/formulas'
+    | '/login'
+    | '/plans'
     | '/sources'
     | '/digital-nomad/checklist'
     | '/digital-nomad/consulate'
@@ -166,11 +220,16 @@ export interface FileRouteTypes {
     | '/non-lucrative/family'
     | '/digital-nomad'
     | '/non-lucrative'
+    | '/api/auth/$'
   id:
     | '__root__'
     | '/'
+    | '/checkout'
     | '/decide'
+    | '/desk'
     | '/formulas'
+    | '/login'
+    | '/plans'
     | '/sources'
     | '/digital-nomad/checklist'
     | '/digital-nomad/consulate'
@@ -181,12 +240,17 @@ export interface FileRouteTypes {
     | '/non-lucrative/family'
     | '/digital-nomad/'
     | '/non-lucrative/'
+    | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CheckoutRoute: typeof CheckoutRoute
   DecideRoute: typeof DecideRoute
+  DeskRoute: typeof DeskRoute
   FormulasRoute: typeof FormulasRoute
+  LoginRoute: typeof LoginRoute
+  PlansRoute: typeof PlansRoute
   SourcesRoute: typeof SourcesRoute
   DigitalNomadChecklistRoute: typeof DigitalNomadChecklistRoute
   DigitalNomadConsulateRoute: typeof DigitalNomadConsulateRoute
@@ -197,6 +261,7 @@ export interface RootRouteChildren {
   NonLucrativeFamilyRoute: typeof NonLucrativeFamilyRoute
   DigitalNomadIndexRoute: typeof DigitalNomadIndexRoute
   NonLucrativeIndexRoute: typeof NonLucrativeIndexRoute
+  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -208,6 +273,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/decide': {
       id: '/decide'
       path: '/decide'
@@ -215,11 +287,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DecideRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/desk': {
+      id: '/desk'
+      path: '/desk'
+      fullPath: '/desk'
+      preLoaderRoute: typeof DeskRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/formulas': {
       id: '/formulas'
       path: '/formulas'
       fullPath: '/formulas'
       preLoaderRoute: typeof FormulasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plans': {
+      id: '/plans'
+      path: '/plans'
+      fullPath: '/plans'
+      preLoaderRoute: typeof PlansRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sources': {
@@ -292,13 +385,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NonLucrativeFamilyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CheckoutRoute: CheckoutRoute,
   DecideRoute: DecideRoute,
+  DeskRoute: DeskRoute,
   FormulasRoute: FormulasRoute,
+  LoginRoute: LoginRoute,
+  PlansRoute: PlansRoute,
   SourcesRoute: SourcesRoute,
   DigitalNomadChecklistRoute: DigitalNomadChecklistRoute,
   DigitalNomadConsulateRoute: DigitalNomadConsulateRoute,
@@ -309,6 +413,7 @@ const rootRouteChildren: RootRouteChildren = {
   NonLucrativeFamilyRoute: NonLucrativeFamilyRoute,
   DigitalNomadIndexRoute: DigitalNomadIndexRoute,
   NonLucrativeIndexRoute: NonLucrativeIndexRoute,
+  ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

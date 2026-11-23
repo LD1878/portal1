@@ -4,7 +4,7 @@ import { PreviewHostBridge } from "@/components/preview-host-bridge";
 import { CodexShell } from "@/components/codex/shell";
 import appCss from "../styles.css?url";
 
-const APP_NAME = "JUROSpain Living Visa Codex";
+const APP_NAME = "JUROSpain";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -15,7 +15,7 @@ export const Route = createRootRoute({
       {
         name: "description",
         content:
-          "Source-backed English operating manual for Spain’s international telework residence and non-lucrative temporary residence. Generated from official BOE and procedure records.",
+          "Self-serve desk for Spain’s digital nomad visa and non-lucrative visa. The law stays sourced. Your notes are checked. Nothing is filed for you.",
       },
       { name: "theme-color", content: "#E30613" },
     ],

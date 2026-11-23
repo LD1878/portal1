@@ -3,12 +3,17 @@ import { ChevronDown, Menu, X } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { LEGAL_DISCLAIMER } from "@/lib/codex/types";
 import { Button } from "@/components/ui/button";
+import { SignedIn, SignedOut } from "@/lib/auth/gates";
+import { signOut } from "@/lib/auth/client";
+import { useCurrentUser } from "@/lib/auth/use-current-user";
 import { cn } from "@/lib/utils";
 
 type NavLeaf = {
   to:
     | "/"
     | "/decide"
+    | "/desk"
+    | "/plans"
     | "/digital-nomad"
     | "/digital-nomad/consulate"
     | "/digital-nomad/uge"
@@ -25,8 +30,9 @@ type NavLeaf = {
 type NavItem = NavLeaf & { children?: NavLeaf[] };
 
 const NAV: NavItem[] = [
-  { to: "/", label: "Codex" },
+  { to: "/", label: "Home" },
   { to: "/decide", label: "Decide" },
+  { to: "/desk", label: "Desk" },
   {
     to: "/digital-nomad",
     label: "Digital nomad",
@@ -48,12 +54,50 @@ const NAV: NavItem[] = [
       { to: "/non-lucrative/checklist", label: "Packet" },
     ],
   },
-  { to: "/formulas", label: "Formulas" },
-  { to: "/sources", label: "Sources" },
+  {
+    to: "/sources",
+    label: "Law",
+    children: [
+      { to: "/formulas", label: "Formulas" },
+      { to: "/sources", label: "Sources" },
+    ],
+  },
 ];
+
+function AccountChip() {
+  const user = useCurrentUser();
+  return (
+    <>
+      <SignedOut>
+        <Link
+          to="/login"
+          search={{ next: "/desk" }}
+          className="hidden font-display text-[0.85rem] font-semibold uppercase tracking-[0.08em] text-ink no-underline hover:text-oxblood sm:inline"
+        >
+          Sign in
+        </Link>
+      </SignedOut>
+      <SignedIn>
+        <span className="hidden max-w-32 truncate font-display text-[0.8rem] font-semibold uppercase tracking-[0.06em] text-muted lg:inline">
+          {user?.displayName ?? user?.primaryEmail ?? "Account"}
+        </span>
+        <button
+          type="button"
+          onClick={() => {
+            void signOut().catch(() => undefined);
+          }}
+          className="hidden font-display text-[0.8rem] font-semibold uppercase tracking-[0.06em] text-muted hover:text-oxblood sm:inline"
+        >
+          Sign out
+        </button>
+      </SignedIn>
+    </>
+  );
+}
 
 function isActive(pathname: string, to: string) {
   if (to === "/") return pathname === "/";
+  if (to === "/sources") return pathname === "/sources" || pathname === "/formulas";
   return pathname === to || pathname.startsWith(`${to}/`);
 }
 
@@ -69,7 +113,7 @@ function Wordmark({ compact = false }: { compact?: boolean }) {
       />
       {compact ? null : (
         <span className="hidden border-l border-rule pl-3 font-display text-[11px] font-semibold uppercase tracking-[0.16em] text-muted lg:block">
-          Living Visa Codex
+          File desk
         </span>
       )}
     </Link>
@@ -98,7 +142,7 @@ function DesktopNav({ pathname }: { pathname: string }) {
         return (
           <div
             key={item.to}
-            className="group relative flex items-center py-3"
+            className="group relative flex items-center"
           >
             <Link
               to={item.to}
@@ -142,13 +186,14 @@ export function CodexShell({ children }: { children: ReactNode }) {
       <a href="#main" className="skip-link">
         Skip to content
       </a>
-      <header className="sticky top-0 z-50 border-b-[3px] border-gold bg-paper-elev/98 shadow-[var(--shadow-border)] backdrop-blur-[12px]">
-        <div className="mx-auto flex h-[90px] max-w-[1200px] items-center justify-between gap-4 px-4 sm:px-6">
+      <header className="sticky top-0 z-50 border-b border-rule bg-paper-elev/95 backdrop-blur-[12px]">
+        <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between gap-4 px-4 sm:px-6">
           <Wordmark />
           <DesktopNav pathname={pathname} />
           <div className="flex items-center gap-2">
+            <AccountChip />
             <Button asChild className="hidden lg:inline-flex">
-              <Link to="/decide">Start a file</Link>
+              <Link to="/desk">Start a file</Link>
             </Button>
             <button
               type="button"
@@ -199,7 +244,7 @@ export function CodexShell({ children }: { children: ReactNode }) {
             </ul>
             <div className="mt-4 flex justify-center pb-2">
               <Button asChild>
-                <Link to="/decide" onClick={() => setOpen(false)}>
+                <Link to="/desk" onClick={() => setOpen(false)}>
                   Start a file
                 </Link>
               </Button>
@@ -213,10 +258,10 @@ export function CodexShell({ children }: { children: ReactNode }) {
           <div>
             <Wordmark compact />
             <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted">
-              English operating manual for two Spanish residencies only:
-              international telework (Ley 14/2013) and non-lucrative temporary
-              residence (LO 4/2000 + RD 1155/2024 arts. 61–64). Generated from
-              structured official records. No sales copy in the body of the guide.
+              Self-serve desk for two Spanish residencies: international telework
+              (Ley 14/2013) and non-lucrative temporary residence (LO 4/2000 +
+              RD 1155/2024 arts. 61–64). The sources stay on the Law menu. The desk
+              checks what you upload. It does not lodge the file.
             </p>
             <p className="mt-4 max-w-xl text-xs leading-relaxed text-faint">
               {LEGAL_DISCLAIMER} This publication is not legal advice and is not a
@@ -225,7 +270,7 @@ export function CodexShell({ children }: { children: ReactNode }) {
           </div>
           <div>
             <h3 className="font-display text-lg font-bold uppercase tracking-[0.5px]">
-              Codex
+              The desk
             </h3>
             <ul className="mt-3 space-y-2">
               {NAV.filter((i) => !i.children).map((item) => (
@@ -261,12 +306,11 @@ export function CodexShell({ children }: { children: ReactNode }) {
               File to build?
             </h3>
             <p className="mt-3 text-sm leading-relaxed text-muted">
-              The codex is the operating manual. Engagements are with JUROSpain.
+              The manual is the law. The desk checks what you upload.
+              It does not lodge the file.
             </p>
             <Button asChild className="mt-5">
-              <a href="https://jurospain.com/" target="_blank" rel="noreferrer">
-                JUROSpain
-              </a>
+              <Link to="/plans">See monthly plans</Link>
             </Button>
           </div>
         </div>
