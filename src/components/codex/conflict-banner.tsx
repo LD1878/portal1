@@ -16,7 +16,7 @@ export function ConflictBanner({ conflictId }: { conflictId: string }) {
           <p className="font-display text-[11px] font-semibold uppercase tracking-[0.16em]">
             Not settled
           </p>
-          <h3 className="mt-1 font-display text-lg leading-snug text-ink">
+          <h3 className="mt-1 font-display text-lg leading-snug !text-ink">
             {conflict.title}
           </h3>
           <p className="mt-2 text-sm leading-relaxed text-ink-soft">{conflict.summary}</p>

@@ -39,9 +39,9 @@ function Page() {
             Checklist only
           </Link>
         </Button>
-        <Button asChild variant="ghost">
-          <Link to="/digital-nomad/uge">If already in Spain</Link>
-        </Button>
+        <Link to="/digital-nomad/uge" className="inline-flex min-h-11 items-center px-2 text-sm font-semibold text-ink no-underline hover:text-oxblood">
+          If already in Spain
+        </Link>
       </div>
       <JourneyJump stages={stagesPresent(reqs)} />
       <RequirementsByJourney reqs={reqs} />

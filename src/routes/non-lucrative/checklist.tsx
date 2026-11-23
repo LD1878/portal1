@@ -23,7 +23,7 @@ function Page() {
       <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-oxblood">
         Layer 3 · Checklist-first packet
       </p>
-      <h1 className="mt-3 font-display text-4xl leading-tight">Non-lucrative packets</h1>
+      <h1 className="mt-3 font-display text-4xl leading-tight text-ink">Non-lucrative packets</h1>
       <p className="mt-3 text-sm leading-relaxed text-ink-soft">
         Assemble in file order. Progress stays in this browser.
       </p>

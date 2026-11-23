@@ -23,7 +23,7 @@ export function RequirementCard({ req, index }: { req: Requirement; index?: numb
           </span>
         )}
       </header>
-      <h3 className="mt-2 font-display text-xl leading-snug">{req.title}</h3>
+      <h3 className="mt-2 font-display text-xl leading-snug text-ink">{req.title}</h3>
       {req.legalFormula ? (
         <p className="mt-3 rounded-md bg-paper-inset px-3 py-2 font-mono text-xs leading-relaxed text-ink-soft">
           Formula: {req.legalFormula}

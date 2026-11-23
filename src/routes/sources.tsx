@@ -8,10 +8,10 @@ export const Route = createFileRoute("/sources")({ component: Page });
 function Page() {
   return (
     <main className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-oxblood">
+      <p className="font-sans text-[12px] font-semibold uppercase tracking-[0.18em] text-oxblood">
         Source of truth
       </p>
-      <h1 className="mt-3 font-display text-4xl leading-tight sm:text-5xl">
+      <h1 className="mt-3 font-display text-4xl leading-tight text-ink sm:text-[2.6rem]">
         Every BOE ID and official URL this codex is allowed to speak from.
       </h1>
       <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft">
@@ -27,7 +27,7 @@ function Page() {
               <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-oxblood">
                 {n.boeId}
               </p>
-              <h3 className="mt-1 font-display text-xl leading-snug">{n.title}</h3>
+              <h3 className="mt-1 font-display text-xl leading-snug text-ink">{n.title}</h3>
               <p className="mt-1 text-sm text-muted">
                 {n.department} · published {n.published} · in force from {n.inForceFrom}
                 {n.inForceTo ? ` to ${n.inForceTo}` : ""} · last seen {n.lastSeen}

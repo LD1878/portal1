@@ -2,15 +2,15 @@
 @import "../theme/jurospain.css";
 
 @theme {
-  --color-paper: #fcfcfc;
+  --color-paper: #f7f4f1;
   --color-paper-elev: #ffffff;
-  --color-paper-inset: #f4f4f5;
-  --color-ink: #232323;
+  --color-paper-inset: #f3eee8;
+  --color-ink: #1c1c1c;
   --color-ink-soft: #3f3f46;
   --color-muted: #78716c;
   --color-faint: #a8a29e;
-  --color-rule: #e2e8f0;
-  --color-rule-strong: #cbd5e1;
+  --color-rule: #e8e0d6;
+  --color-rule-strong: #d4cbbf;
   --color-oxblood: #e30613;
   --color-oxblood-deep: #c40410;
   --color-oxblood-soft: #fde8ea;
@@ -21,23 +21,22 @@
   --color-warn-ink: #6b4a12;
   --color-warn-paper: #fff8e6;
   --color-warn-rule: #ffc400;
+  --color-ok-ink: #3f3f46;
+  --color-ok-paper: #f4f1ea;
 
   --font-display: "Oswald", "Arial Narrow", sans-serif;
   --font-sans: "Barlow", "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", "Source Code Pro", ui-monospace, monospace;
 
-  --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 10px;
-  --radius-xl: 14px;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
 
-  --shadow-border:
-    0 2px 6px rgb(0 0 0 / 0.06);
-  --shadow-border-hover:
-    0 6px 12px rgb(0 0 0 / 0.12);
-  --shadow-elev-3:
-    0 10px 20px rgb(0 0 0 / 0.15);
+  --shadow-border: 0 1px 2px rgb(28 28 28 / 0.04), 0 8px 24px rgb(28 28 28 / 0.04);
+  --shadow-border-hover: 0 10px 28px rgb(28 28 28 / 0.08);
+  --shadow-elev-3: 0 16px 40px rgb(28 28 28 / 0.12);
 
   --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -53,11 +52,6 @@
   body {
     font-family: var(--font-sans);
     background-color: var(--color-paper);
-    background-image:
-      linear-gradient(rgb(0 0 0 / 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(0 0 0 / 0.03) 1px, transparent 1px);
-    background-size: 50px 50px;
-    background-position: center top;
     color: var(--color-ink);
     min-height: 100dvh;
     line-height: 1.6;
@@ -71,15 +65,8 @@
     font-weight: 700;
     text-wrap: balance;
     letter-spacing: -0.02em;
-    line-height: 1.2;
-  }
-
-  h1 {
-    color: var(--color-oxblood);
-  }
-
-  h3 {
-    color: var(--color-oxblood);
+    line-height: 1.15;
+    color: var(--color-ink);
   }
 
   p {
@@ -99,15 +86,28 @@
     background: var(--color-gold);
     color: var(--color-ink);
   }
+
+  input,
+  textarea,
+  select {
+    outline: none;
+  }
+
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    border-color: var(--color-oxblood);
+    box-shadow: 0 0 0 3px rgb(227 6 19 / 0.12);
+  }
 }
 
 @layer utilities {
   .paper-grain {
     background-color: var(--color-paper);
     background-image:
-      linear-gradient(rgb(0 0 0 / 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(0 0 0 / 0.03) 1px, transparent 1px);
-    background-size: 50px 50px;
+      linear-gradient(rgb(28 28 28 / 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(28 28 28 / 0.035) 1px, transparent 1px);
+    background-size: 56px 56px;
     background-position: center top;
   }
 
@@ -124,7 +124,7 @@
   }
 
   .hairline-hover:hover {
-    transform: translateY(-4px);
+    transform: translateY(-3px);
     border-color: var(--color-gold);
     box-shadow: var(--shadow-border-hover);
   }
@@ -159,7 +159,7 @@
     background: var(--color-oxblood);
     color: var(--color-on-brand);
     padding: 8px 12px;
-    border-radius: 6px;
+    border-radius: 8px;
     font-family: var(--font-display);
     text-transform: uppercase;
     letter-spacing: 0.04em;

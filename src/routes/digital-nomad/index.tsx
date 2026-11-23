@@ -31,9 +31,9 @@ function DigitalNomadHub() {
         <Button asChild variant="outline">
           <Link to="/digital-nomad/uge">Already in Spain</Link>
         </Button>
-        <Button asChild variant="ghost">
-          <Link to="/digital-nomad/family">Family chapter</Link>
-        </Button>
+        <Link to="/digital-nomad/family" className="inline-flex min-h-11 items-center px-2 text-sm font-semibold text-ink no-underline hover:text-oxblood">
+          Family chapter
+        </Link>
       </div>
       <JourneyJump stages={stagesPresent(reqs)} />
       <RequirementsByJourney reqs={reqs} />

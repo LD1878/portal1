@@ -17,6 +17,13 @@ import { Route as FormulasRouteImport } from './routes/formulas'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PlansRouteImport } from './routes/plans'
 import { Route as SourcesRouteImport } from './routes/sources'
+import { Route as DeskIndexRouteImport } from './routes/desk/index'
+import { Route as DeskCaseIdRouteImport } from './routes/desk/$caseId'
+import { Route as DeskArchiveRouteImport } from './routes/desk/archive'
+import { Route as DeskHelpRouteImport } from './routes/desk/help'
+import { Route as DeskNewRouteImport } from './routes/desk/new'
+import { Route as DeskProductsRouteImport } from './routes/desk/products'
+import { Route as DeskSettingsRouteImport } from './routes/desk/settings'
 import { Route as DigitalNomadIndexRouteImport } from './routes/digital-nomad/index'
 import { Route as DigitalNomadChecklistRouteImport } from './routes/digital-nomad/checklist'
 import { Route as DigitalNomadConsulateRouteImport } from './routes/digital-nomad/consulate'
@@ -67,6 +74,41 @@ const SourcesRoute = SourcesRouteImport.update({
   id: '/sources',
   path: '/sources',
   getParentRoute: () => rootRouteImport,
+} as any)
+const DeskIndexRoute = DeskIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DeskRoute,
+} as any)
+const DeskCaseIdRoute = DeskCaseIdRouteImport.update({
+  id: '/$caseId',
+  path: '/$caseId',
+  getParentRoute: () => DeskRoute,
+} as any)
+const DeskArchiveRoute = DeskArchiveRouteImport.update({
+  id: '/archive',
+  path: '/archive',
+  getParentRoute: () => DeskRoute,
+} as any)
+const DeskHelpRoute = DeskHelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => DeskRoute,
+} as any)
+const DeskNewRoute = DeskNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => DeskRoute,
+} as any)
+const DeskProductsRoute = DeskProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => DeskRoute,
+} as any)
+const DeskSettingsRoute = DeskSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => DeskRoute,
 } as any)
 const DigitalNomadIndexRoute = DigitalNomadIndexRouteImport.update({
   id: '/digital-nomad/',
@@ -123,11 +165,17 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/checkout': typeof CheckoutRoute
   '/decide': typeof DecideRoute
-  '/desk': typeof DeskRoute
+  '/desk': typeof DeskRouteWithChildren
   '/formulas': typeof FormulasRoute
   '/login': typeof LoginRoute
   '/plans': typeof PlansRoute
   '/sources': typeof SourcesRoute
+  '/desk/$caseId': typeof DeskCaseIdRoute
+  '/desk/archive': typeof DeskArchiveRoute
+  '/desk/help': typeof DeskHelpRoute
+  '/desk/new': typeof DeskNewRoute
+  '/desk/products': typeof DeskProductsRoute
+  '/desk/settings': typeof DeskSettingsRoute
   '/digital-nomad/checklist': typeof DigitalNomadChecklistRoute
   '/digital-nomad/consulate': typeof DigitalNomadConsulateRoute
   '/digital-nomad/family': typeof DigitalNomadFamilyRoute
@@ -135,6 +183,7 @@ export interface FileRoutesByFullPath {
   '/non-lucrative/checklist': typeof NonLucrativeChecklistRoute
   '/non-lucrative/consulate': typeof NonLucrativeConsulateRoute
   '/non-lucrative/family': typeof NonLucrativeFamilyRoute
+  '/desk/': typeof DeskIndexRoute
   '/digital-nomad/': typeof DigitalNomadIndexRoute
   '/non-lucrative/': typeof NonLucrativeIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -143,11 +192,16 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/checkout': typeof CheckoutRoute
   '/decide': typeof DecideRoute
-  '/desk': typeof DeskRoute
   '/formulas': typeof FormulasRoute
   '/login': typeof LoginRoute
   '/plans': typeof PlansRoute
   '/sources': typeof SourcesRoute
+  '/desk/$caseId': typeof DeskCaseIdRoute
+  '/desk/archive': typeof DeskArchiveRoute
+  '/desk/help': typeof DeskHelpRoute
+  '/desk/new': typeof DeskNewRoute
+  '/desk/products': typeof DeskProductsRoute
+  '/desk/settings': typeof DeskSettingsRoute
   '/digital-nomad/checklist': typeof DigitalNomadChecklistRoute
   '/digital-nomad/consulate': typeof DigitalNomadConsulateRoute
   '/digital-nomad/family': typeof DigitalNomadFamilyRoute
@@ -155,6 +209,7 @@ export interface FileRoutesByTo {
   '/non-lucrative/checklist': typeof NonLucrativeChecklistRoute
   '/non-lucrative/consulate': typeof NonLucrativeConsulateRoute
   '/non-lucrative/family': typeof NonLucrativeFamilyRoute
+  '/desk': typeof DeskIndexRoute
   '/digital-nomad': typeof DigitalNomadIndexRoute
   '/non-lucrative': typeof NonLucrativeIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -164,11 +219,17 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/checkout': typeof CheckoutRoute
   '/decide': typeof DecideRoute
-  '/desk': typeof DeskRoute
+  '/desk': typeof DeskRouteWithChildren
   '/formulas': typeof FormulasRoute
   '/login': typeof LoginRoute
   '/plans': typeof PlansRoute
   '/sources': typeof SourcesRoute
+  '/desk/$caseId': typeof DeskCaseIdRoute
+  '/desk/archive': typeof DeskArchiveRoute
+  '/desk/help': typeof DeskHelpRoute
+  '/desk/new': typeof DeskNewRoute
+  '/desk/products': typeof DeskProductsRoute
+  '/desk/settings': typeof DeskSettingsRoute
   '/digital-nomad/checklist': typeof DigitalNomadChecklistRoute
   '/digital-nomad/consulate': typeof DigitalNomadConsulateRoute
   '/digital-nomad/family': typeof DigitalNomadFamilyRoute
@@ -176,6 +237,7 @@ export interface FileRoutesById {
   '/non-lucrative/checklist': typeof NonLucrativeChecklistRoute
   '/non-lucrative/consulate': typeof NonLucrativeConsulateRoute
   '/non-lucrative/family': typeof NonLucrativeFamilyRoute
+  '/desk/': typeof DeskIndexRoute
   '/digital-nomad/': typeof DigitalNomadIndexRoute
   '/non-lucrative/': typeof NonLucrativeIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -191,6 +253,12 @@ export interface FileRouteTypes {
     | '/login'
     | '/plans'
     | '/sources'
+    | '/desk/$caseId'
+    | '/desk/archive'
+    | '/desk/help'
+    | '/desk/new'
+    | '/desk/products'
+    | '/desk/settings'
     | '/digital-nomad/checklist'
     | '/digital-nomad/consulate'
     | '/digital-nomad/family'
@@ -198,6 +266,7 @@ export interface FileRouteTypes {
     | '/non-lucrative/checklist'
     | '/non-lucrative/consulate'
     | '/non-lucrative/family'
+    | '/desk/'
     | '/digital-nomad/'
     | '/non-lucrative/'
     | '/api/auth/$'
@@ -206,11 +275,16 @@ export interface FileRouteTypes {
     | '/'
     | '/checkout'
     | '/decide'
-    | '/desk'
     | '/formulas'
     | '/login'
     | '/plans'
     | '/sources'
+    | '/desk/$caseId'
+    | '/desk/archive'
+    | '/desk/help'
+    | '/desk/new'
+    | '/desk/products'
+    | '/desk/settings'
     | '/digital-nomad/checklist'
     | '/digital-nomad/consulate'
     | '/digital-nomad/family'
@@ -218,6 +292,7 @@ export interface FileRouteTypes {
     | '/non-lucrative/checklist'
     | '/non-lucrative/consulate'
     | '/non-lucrative/family'
+    | '/desk'
     | '/digital-nomad'
     | '/non-lucrative'
     | '/api/auth/$'
@@ -231,6 +306,12 @@ export interface FileRouteTypes {
     | '/login'
     | '/plans'
     | '/sources'
+    | '/desk/$caseId'
+    | '/desk/archive'
+    | '/desk/help'
+    | '/desk/new'
+    | '/desk/products'
+    | '/desk/settings'
     | '/digital-nomad/checklist'
     | '/digital-nomad/consulate'
     | '/digital-nomad/family'
@@ -238,6 +319,7 @@ export interface FileRouteTypes {
     | '/non-lucrative/checklist'
     | '/non-lucrative/consulate'
     | '/non-lucrative/family'
+    | '/desk/'
     | '/digital-nomad/'
     | '/non-lucrative/'
     | '/api/auth/$'
@@ -247,7 +329,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CheckoutRoute: typeof CheckoutRoute
   DecideRoute: typeof DecideRoute
-  DeskRoute: typeof DeskRoute
+  DeskRoute: typeof DeskRouteWithChildren
   FormulasRoute: typeof FormulasRoute
   LoginRoute: typeof LoginRoute
   PlansRoute: typeof PlansRoute
@@ -322,6 +404,55 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SourcesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/desk/': {
+      id: '/desk/'
+      path: '/'
+      fullPath: '/desk/'
+      preLoaderRoute: typeof DeskIndexRouteImport
+      parentRoute: typeof DeskRoute
+    }
+    '/desk/$caseId': {
+      id: '/desk/$caseId'
+      path: '/$caseId'
+      fullPath: '/desk/$caseId'
+      preLoaderRoute: typeof DeskCaseIdRouteImport
+      parentRoute: typeof DeskRoute
+    }
+    '/desk/archive': {
+      id: '/desk/archive'
+      path: '/archive'
+      fullPath: '/desk/archive'
+      preLoaderRoute: typeof DeskArchiveRouteImport
+      parentRoute: typeof DeskRoute
+    }
+    '/desk/help': {
+      id: '/desk/help'
+      path: '/help'
+      fullPath: '/desk/help'
+      preLoaderRoute: typeof DeskHelpRouteImport
+      parentRoute: typeof DeskRoute
+    }
+    '/desk/new': {
+      id: '/desk/new'
+      path: '/new'
+      fullPath: '/desk/new'
+      preLoaderRoute: typeof DeskNewRouteImport
+      parentRoute: typeof DeskRoute
+    }
+    '/desk/products': {
+      id: '/desk/products'
+      path: '/products'
+      fullPath: '/desk/products'
+      preLoaderRoute: typeof DeskProductsRouteImport
+      parentRoute: typeof DeskRoute
+    }
+    '/desk/settings': {
+      id: '/desk/settings'
+      path: '/settings'
+      fullPath: '/desk/settings'
+      preLoaderRoute: typeof DeskSettingsRouteImport
+      parentRoute: typeof DeskRoute
+    }
     '/digital-nomad/': {
       id: '/digital-nomad/'
       path: '/digital-nomad'
@@ -395,11 +526,33 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface DeskRouteChildren {
+  DeskCaseIdRoute: typeof DeskCaseIdRoute
+  DeskArchiveRoute: typeof DeskArchiveRoute
+  DeskHelpRoute: typeof DeskHelpRoute
+  DeskNewRoute: typeof DeskNewRoute
+  DeskProductsRoute: typeof DeskProductsRoute
+  DeskSettingsRoute: typeof DeskSettingsRoute
+  DeskIndexRoute: typeof DeskIndexRoute
+}
+
+const DeskRouteChildren: DeskRouteChildren = {
+  DeskCaseIdRoute: DeskCaseIdRoute,
+  DeskArchiveRoute: DeskArchiveRoute,
+  DeskHelpRoute: DeskHelpRoute,
+  DeskNewRoute: DeskNewRoute,
+  DeskProductsRoute: DeskProductsRoute,
+  DeskSettingsRoute: DeskSettingsRoute,
+  DeskIndexRoute: DeskIndexRoute,
+}
+
+const DeskRouteWithChildren = DeskRoute._addFileChildren(DeskRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CheckoutRoute: CheckoutRoute,
   DecideRoute: DecideRoute,
-  DeskRoute: DeskRoute,
+  DeskRoute: DeskRouteWithChildren,
   FormulasRoute: FormulasRoute,
   LoginRoute: LoginRoute,
   PlansRoute: PlansRoute,

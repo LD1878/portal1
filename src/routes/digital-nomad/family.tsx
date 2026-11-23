@@ -28,9 +28,9 @@ function Page() {
         <Button asChild variant="outline">
           <Link to="/digital-nomad/consulate">Attach to consular visa</Link>
         </Button>
-        <Button asChild variant="ghost">
-          <Link to="/digital-nomad/uge">Attach to UGE-CE file</Link>
-        </Button>
+        <Link to="/digital-nomad/uge" className="inline-flex min-h-11 items-center px-2 text-sm font-semibold text-ink no-underline hover:text-oxblood">
+          Attach to UGE-CE file
+        </Link>
       </div>
       <div id="who" className="mt-10 space-y-4 scroll-mt-24">
         {reqs.map((r, i) => (

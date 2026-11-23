@@ -23,7 +23,7 @@ function Page() {
       <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-oxblood">
         Layer 3 · Checklist-first packet
       </p>
-      <h1 className="mt-3 font-display text-4xl leading-tight">Digital nomad packets</h1>
+      <h1 className="mt-3 font-display text-4xl leading-tight text-ink">Digital nomad packets</h1>
       <p className="mt-3 text-sm leading-relaxed text-ink-soft">
         Tick items as you assemble the file. Progress stays in this browser. The
         packet is generated from requirement records, not from hand-written law.

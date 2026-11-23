@@ -155,8 +155,8 @@ export function DecisionTree() {
               <Button
                 key={l.to}
                 asChild
-                variant="outline"
-                className="border-on-brand bg-paper-elev text-oxblood hover:bg-paper hover:text-oxblood"
+                variant="quiet"
+                className="border-on-brand/20 bg-white text-oxblood hover:bg-paper"
               >
                 <Link to={l.to}>{l.label}</Link>
               </Button>

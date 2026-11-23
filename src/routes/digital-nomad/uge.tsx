@@ -35,7 +35,7 @@ function Page() {
             Checklist only
           </Link>
         </Button>
-        <Button asChild variant="ghost">
+        <Button asChild variant="quiet">
           <Link to="/digital-nomad/consulate">If you are still abroad</Link>
         </Button>
       </div>

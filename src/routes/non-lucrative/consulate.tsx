@@ -34,7 +34,7 @@ function Page() {
             Checklist only
           </Link>
         </Button>
-        <Button asChild variant="ghost">
+        <Button asChild variant="quiet">
           <Link to="/non-lucrative/family">Family annex</Link>
         </Button>
       </div>

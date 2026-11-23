@@ -26,7 +26,7 @@ export function GuideLayout({
   return (
     <div className="mx-auto grid max-w-[1200px] gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[220px_minmax(0,1fr)]">
       <aside className="lg:sticky lg:top-28 lg:self-start">
-        <p className="font-display text-[11px] font-semibold uppercase tracking-[0.16em] text-faint">
+        <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">
           {kicker}
         </p>
         <nav className="mt-4 hidden flex-col gap-1 lg:flex" aria-label="On this route">
@@ -48,7 +48,7 @@ export function GuideLayout({
         </Link>
       </aside>
       <div>
-        <h1 className="font-display text-4xl leading-[1.1] font-bold tracking-tight sm:text-5xl">
+        <h1 className="font-display text-4xl leading-[1.1] font-bold tracking-tight text-ink sm:text-[2.6rem]">
           {title}
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft">{lede}</p>

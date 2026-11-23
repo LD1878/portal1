@@ -63,10 +63,10 @@ function LoginPage() {
   return (
     <main className="mx-auto grid max-w-[1100px] gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
       <section>
-        <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-oxblood">
+        <p className="font-sans text-[12px] font-semibold uppercase tracking-[0.18em] text-oxblood">
           Your file, on your login
         </p>
-        <h1 className="mt-3 max-w-xl font-display text-5xl leading-[0.95] font-bold tracking-tight">
+        <h1 className="mt-3 max-w-xl font-display text-5xl leading-[0.95] font-bold tracking-tight text-ink">
           Start the desk.
         </h1>
         <p className="mt-5 max-w-lg text-lg leading-relaxed text-ink-soft">
@@ -115,8 +115,8 @@ function LoginPage() {
             onClick={() => setMode("up")}
             className={
               mode === "up"
-                ? "min-h-11 flex-1 rounded-md bg-oxblood font-display text-sm font-semibold uppercase tracking-[0.08em] text-on-brand"
-                : "min-h-11 flex-1 rounded-md font-display text-sm font-semibold uppercase tracking-[0.08em] text-ink"
+                ? "min-h-11 flex-1 rounded-full bg-oxblood font-sans text-sm font-semibold uppercase tracking-[0.06em] text-on-brand"
+                : "min-h-11 flex-1 rounded-full font-sans text-sm font-semibold uppercase tracking-[0.06em] text-ink"
             }
           >
             Create account
@@ -126,8 +126,8 @@ function LoginPage() {
             onClick={() => setMode("in")}
             className={
               mode === "in"
-                ? "min-h-11 flex-1 rounded-md bg-oxblood font-display text-sm font-semibold uppercase tracking-[0.08em] text-on-brand"
-                : "min-h-11 flex-1 rounded-md font-display text-sm font-semibold uppercase tracking-[0.08em] text-ink"
+                ? "min-h-11 flex-1 rounded-full bg-oxblood font-sans text-sm font-semibold uppercase tracking-[0.06em] text-on-brand"
+                : "min-h-11 flex-1 rounded-full font-sans text-sm font-semibold uppercase tracking-[0.06em] text-ink"
             }
           >
             Sign in

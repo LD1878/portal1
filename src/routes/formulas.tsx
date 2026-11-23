@@ -15,10 +15,10 @@ function Page() {
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
-      <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-oxblood">
+      <p className="font-sans text-[12px] font-semibold uppercase tracking-[0.18em] text-oxblood">
         Money · formulas only
       </p>
-      <h1 className="mt-3 font-display text-4xl leading-tight sm:text-5xl">
+      <h1 className="mt-3 font-display text-4xl leading-tight text-ink sm:text-[2.6rem]">
         The statute is a percentage of an index.
       </h1>
       <p className="mt-4 text-base leading-relaxed text-ink-soft">
