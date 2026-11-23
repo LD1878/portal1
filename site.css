@@ -64,7 +64,7 @@ footer.site { border-top: 1px solid var(--rule); background: #fff; }
 .foot a:hover { color: var(--red); }
 .shell { display: grid; min-height: 100dvh; }
 @media (min-width: 980px) { .shell { grid-template-columns: 248px 1fr; } }
-.side { background: #fff; border-right: 1px solid var(--rule); padding: 18px 12px; display: none; flex-direction: column; }
+.side { background: #fff; border-right: 1px solid var(--rule); padding: 18px 12px; display: flex; flex-direction: column; }
 @media (min-width: 980px) { .side { display: flex; } }
 .side a { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px; border-radius: 999px; color: var(--ink); text-decoration: none; font-weight: 600; font-size: 14px; }
 .side a.on { background: var(--paper); color: var(--ink); }
@@ -89,9 +89,21 @@ footer.site { border-top: 1px solid var(--rule); background: #fff; }
 .sheet .row2 { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
 .sign { margin-top: 28px; display: flex; justify-content: space-between; gap: 24px; align-items: end; }
 .sign .line { border-bottom: 1px solid var(--ink); min-width: 220px; height: 36px; }
+.side .group { margin: 16px 14px 6px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); font-weight: 700; }
+.stage { min-height: 100dvh; display: grid; place-items: center; padding: 40px 20px; background: var(--ink); color: #fff; }
+.stage .card { width: min(560px, 100%); }
+.build { width: min(460px, 100%); text-align: left; }
+.build h1 { color: #fff; font-size: 42px; }
+.build li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.12); font-size: 15px; }
+.build li.on { color: var(--gold); }
+.barline { height: 4px; background: rgba(255,255,255,.12); border-radius: 99px; margin: 18px 0; overflow: hidden; }
+.barline i { display: block; height: 100%; width: 0; background: var(--gold); transition: width .4s ease; }
 @media (max-width: 900px) {
   nav.top, .cta { display: none; }
   .grid2, .sheet .row2 { grid-template-columns: 1fr !important; }
+  .shell { grid-template-columns: 1fr; }
+  .side { border-right: 0; border-bottom: 1px solid var(--rule); }
+  .side nav { flex-direction: row !important; flex-wrap: wrap; }
 }
 @media print {
   .goldbar, header.site, footer.site, .no-print { display: none !important; }

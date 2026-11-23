@@ -15,7 +15,7 @@ function chromeNav(here) {
     + '<a href="' + BASE + '/formulas/">Formulas</a>'
     + '<a href="' + BASE + '/sources/">Sources</a></div></span>'
     + '</nav>'
-    + '<a class="cta" href="' + BASE + '/desk/">Open the desk</a>'
+    + '<a class="cta" href="' + BASE + '/app/">Open the app</a>'
     + '</div></header>';
 }
 function chromeFoot() {

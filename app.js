@@ -17,7 +17,43 @@ var desk = document.getElementById("desk");
 if (desk) bootDesk();
 var templates = document.getElementById("templates");
 if (templates) bootTemplates();
+var app = document.getElementById("app");
+if (app) bootApp();
+var welcome = document.getElementById("welcome");
+if (welcome) bootWelcome();
 
+function bootApp() {
+  var params = new URLSearchParams(location.search);
+  var step = params.get("step") || "visa";
+  if (step === "visa") {
+    app.innerHTML = stage("Start a file", "Which residence are you filing?",
+      '<div style="display:grid;gap:10px"><a class="btn" href="' + BASE + '/app/?step=pay&track=digital-nomad">Digital nomad</a><a class="btn ghost" href="' + BASE + '/app/?step=pay&track=non-lucrative">Non-lucrative</a></div>'
+      + '<p class="muted" style="margin-top:14px">Digital nomad is remote work for companies outside Spain. Non-lucrative is residence without working, filed from your country.</p>');
+    return;
+  }
+  var track = params.get("track") === "non-lucrative" ? "non-lucrative" : "digital-nomad";
+  localStorage.setItem(CASE, JSON.stringify(Object.assign(file() || {}, { track: track, route: "consulate" })));
+  location.href = BASE + "/checkout/?offer=prepaid";
+}
+function bootWelcome() {
+  var steps = ["Reading the visa you picked", "Opening the folders for that residence", "Setting aside the forms you will fill", "Preparing your file"];
+  welcome.innerHTML = '<div class="stage"><div class="build"><p class="kicker" style="color:var(--gold)">Building your file</p><h1>One moment.</h1><div class="barline"><i id="build-bar"></i></div><ol id="build-steps" style="list-style:none;padding:0;margin:0">'
+    + steps.map(function (s) { return '<li>' + s + '<span>···</span></li>'; }).join("") + '</ol></div></div>';
+  var items = welcome.querySelectorAll("li");
+  var n = 0;
+  var timer = setInterval(function () {
+    if (n < items.length) items[n].className = "on";
+    n += 1;
+    document.getElementById("build-bar").style.width = Math.min(100, n * 25) + "%";
+    if (n > items.length) {
+      clearInterval(timer);
+      setTimeout(function () { location.href = BASE + "/login/?next=intake"; }, 600);
+    }
+  }, 700);
+}
+function stage(kicker, title, body) {
+  return '<div class="stage"><div class="card"><p class="kicker">' + kicker + '</p><h1 style="font-size:36px;margin:8px 0 16px">' + title + '</h1>' + body + '</div></div>';
+}
 function bootPay() {
   var offer = new URLSearchParams(location.search).get("offer");
   var catalog = {
@@ -38,10 +74,15 @@ function bootPay() {
     + field("Name on card", "text", "cc-name") + field("Email for the receipt", "email", "email") + field("Card number", "text", "cc-number")
     + '<div class="grid2" style="grid-template-columns:1fr 1fr">' + field("Expiry", "text", "cc-exp") + field("CVC", "text", "cc-csc") + '</div>'
     + '<button class="btn" style="margin-top:8px;width:100%">Pay ' + price + '</button>'
-    + skipRow(BASE + "/profile/", "Continue without paying")
+    + skipRow(BASE + "/welcome/", "Continue without paying")
     + '<p class="muted">Stripe is not connected. This card is not charged. The fields stay so the real payment can drop in later.</p></form>'
     + '<aside class="ink"><p class="gold" style="font-family:Oswald,sans-serif;letter-spacing:.14em;font-size:12px">ORDER</p><h2 style="font-size:30px">' + name + '</h2><p class="gold" style="font-family:Oswald,sans-serif;font-size:28px">Due today ' + price + '</p><p style="opacity:.75">Both visas. Your name, the route, and where you will live, then the file.</p></aside></div>';
-  document.getElementById("pay").onsubmit = function (e) { e.preventDefault(); location.href = BASE + "/profile/"; };
+  document.getElementById("pay").onsubmit = function (e) {
+    e.preventDefault();
+    var email = checkout.querySelector("input[autocomplete=email]");
+    if (email && email.value) localStorage.setItem("jurospain-email", email.value.trim());
+    location.href = BASE + "/welcome/";
+  };
 }
 function field(label, type, ac) {
   return '<label style="display:block;margin:10px 0"><span class="lbl">' + label + '</span><input type="' + type + '" autocomplete="' + ac + '"></label>';
@@ -105,19 +146,21 @@ function bootDecide() {
 
 function bootProfile() {
   var f = file() || { track: "digital-nomad", route: "consulate", name: "", email: "", city: "", country: "" };
-  profile.innerHTML = '<p class="kicker">After the price · before the file</p>'
-    + '<h1 style="font-size:50px;margin-top:8px">Who is moving, and where.</h1>'
-    + '<p class="lede">This sits above the file. The desk uses it so every check knows whose documents these are. You can change it later.</p>'
+  var intake = new URLSearchParams(location.search).get("intake") === "1";
+  profile.innerHTML = '<p class="kicker">' + (intake ? "Your file is ready" : "After the price · before the file") + '</p>'
+    + '<h1 style="font-size:50px;margin-top:8px">' + (intake ? "Tell us who this file is for." : "Who is moving, and where.") + '</h1>'
+    + '<p class="lede">' + (intake ? "Five answers and the folders open. You can change any of them later." : "This sits above the file. The desk uses it so every check knows whose documents these are. You can change it later.") + '</p>'
     + '<form class="card" id="who" style="max-width:640px;margin-top:18px">'
     + '<p class="kicker">' + routeName(f) + '</p>'
     + field("Your name", "text", "name") + field("Email", "email", "email")
     + '<div class="grid2" style="grid-template-columns:1fr 1fr">' + field("City you are heading to", "text", "address-level2") + field("Country you are filing from", "text", "country-name") + '</div>'
-    + '<button class="btn" style="margin-top:6px">Open my file</button>'
+    + (intake ? '<label style="display:block;margin:10px 0"><span class="lbl">Family coming with you</span><select data-k="family"><option value="no">Just me</option><option value="yes">Yes, family members</option></select></label>' : "")
+    + '<button class="btn" style="margin-top:6px">' + (intake ? "Open my file" : "Save") + '</button>'
     + skipRow(BASE + "/desk/", "Skip and open the file")
     + '<p class="muted">The fields stay. You can fill them now or come back. Skipping does not delete what you already typed.</p></form>';
   var inputs = profile.querySelectorAll("input");
   inputs[0].value = f.name || "";
-  inputs[1].value = f.email || "";
+  inputs[1].value = f.email || localStorage.getItem("jurospain-email") || "";
   inputs[2].value = f.city || "";
   inputs[3].value = f.country || "";
   profile.querySelector("form").onsubmit = function (e) {
@@ -126,6 +169,8 @@ function bootProfile() {
     f.email = inputs[1].value.trim();
     f.city = inputs[2].value.trim();
     f.country = inputs[3].value.trim();
+    var family = profile.querySelector("[data-k=family]");
+    if (family) f.family = family.value;
     localStorage.setItem(CASE, JSON.stringify(f));
     location.href = BASE + "/desk/";
   };
@@ -144,7 +189,7 @@ function bootDesk() {
   desk.innerHTML = '<div class="grid2" style="grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start">'
     + '<div><p class="kicker">🇪🇸 Spain · ' + routeName(f) + '</p>'
     + '<h1 style="font-size:42px;margin:6px 0">' + (f.name || "Your file") + '</h1>'
-    + '<p class="muted">Documents. ' + attached + ' of ' + items.length + ' attached. Nothing has been sent.</p>'
+    + '<p class="muted">Documents. ' + attached + ' of ' + items.length + ' attached. Nothing has been sent.' + (f.family === "yes" ? " Family is on this file." : "") + '</p>'
     + '<p class="no-print" style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn ' + (f.track === "digital-nomad" ? "on" : "ghost") + '" href="' + BASE + '/desk/?track=digital-nomad">Digital nomad</a><a class="btn ' + (f.track === "non-lucrative" ? "on" : "ghost") + '" href="' + BASE + '/desk/?track=non-lucrative">Non-lucrative</a></p>'
     + phases(f, attached, items.length)
     + '<div class="folders">' + groups.map(function (g) { return folderRow(g, saved, g.id === open.id); }).join("") + '</div>'

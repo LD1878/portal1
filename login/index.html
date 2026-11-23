@@ -67,8 +67,16 @@ footer { border-top:1px solid var(--rule); padding:32px 20px; color:var(--muted)
   <label><span>Email</span><input name="email" type="email"></label>
   <label style="display:block;margin-top:10px"><span>Password</span><input name="password" type="password" minlength="8"></label>
   <button class="btn" style="width:100%;margin-top:16px;justify-content:center">Continue</button>
-  <p style="margin:14px 0 0"><a class="btn ghost" href="/portal1/desk/" style="width:100%">Continue without signing in</a></p>
+  <p style="margin:14px 0 0"><a class="btn ghost" id="skip-login" href="/portal1/profile/?intake=1" style="width:100%">Continue without signing in</a></p>
   <p style="color:#78716c;font-size:14px">The fields stay. Sign-in is not connected yet, so neither button asks you to fill them.</p>
 </form></main><footer>JUROSpain file desk. The sources stay under Law. The desk checks what you upload and does not lodge the file. Not legal advice.</footer>
 <script src="/portal1/app.js"></script>
+<script>
+var next = new URLSearchParams(location.search).get("next");
+if (next === "intake") document.getElementById("skip-login").href = "/portal1/profile/?intake=1";
+document.getElementById("login").onsubmit = function (e) {
+  e.preventDefault();
+  location.href = "/portal1/profile/?intake=1";
+};
+</script>
 </body></html>
