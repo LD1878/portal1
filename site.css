@@ -90,7 +90,7 @@ footer.site { border-top: 1px solid var(--rule); background: #fff; }
 .svc:hover { border-color: var(--gold); }
 .svc b { display: block; }
 .svc small { display: block; opacity: .7; font-size: 12px; }
-.work { padding: 28px 28px 60px; }
+.work { padding: 28px 28px 60px; max-width: 1100px; }
 .sheet { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 28px 28px 32px; }
 .sheet h2 { font-size: 22px; margin: 22px 0 8px; }
 .sheet .row2 { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }

@@ -3,54 +3,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="/portal1/site.css">
-<style>header{background:#fff} .btn{border-radius:999px} .card{border-radius:14px} .bar{height:64px} nav{font-family:Barlow,sans-serif;text-transform:none;letter-spacing:0;font-size:14px;font-weight:600}</style>
-<style>
-:root { --ink:#232323; --soft:#3f3f46; --muted:#78716c; --faint:#a8a29e; --red:#e30613; --red-deep:#c40410; --gold:#ffc400; --paper:#f7f4ef; --rule:#e4ddd2; }
-* { box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body { margin:0; font-family:Barlow,"Segoe UI",sans-serif; color:var(--ink); background:var(--paper);
-  background-image:linear-gradient(rgb(35 35 35 / .035) 1px, transparent 1px), linear-gradient(90deg, rgb(35 35 35 / .035) 1px, transparent 1px);
-  background-size:48px 48px; line-height:1.6; }
-h1,h2,h3 { font-family:Oswald,"Arial Narrow",sans-serif; letter-spacing:-.02em; margin:0; line-height:1.08; }
-a { color:var(--red); }
-header { position:sticky; top:0; z-index:20; background:#fff; border-bottom:1px solid var(--rule); }
-.bar { max-width:1140px; margin:0 auto; height:68px; display:flex; align-items:center; gap:20px; padding:0 22px; }
-.logo { height:34px; }
-nav { display:flex; gap:18px; align-items:center; font-family:Oswald,sans-serif; font-size:15px; letter-spacing:.05em; text-transform:uppercase; }
-nav a { color:var(--ink); text-decoration:none; }
-nav a:hover, nav .here { color:var(--red); }
-.drop { position:relative; padding:20px 0; }
-.drop > div { display:none; position:absolute; top:100%; left:0; min-width:210px; background:#fff; border:1px solid var(--rule); border-radius:10px; padding:6px 0; box-shadow:0 12px 28px rgb(0 0 0 / .1); }
-.drop:hover > div, .drop:focus-within > div { display:block; }
-.drop div a { display:block; padding:11px 16px; text-transform:none; letter-spacing:0; font-family:Barlow,sans-serif; }
-.cta { margin-left:auto; background:var(--red); color:#fff !important; text-decoration:none; font-family:Oswald,sans-serif; letter-spacing:.05em; text-transform:uppercase; padding:11px 18px; border-radius:8px; font-weight:700; }
-main { max-width:1140px; margin:0 auto; padding:40px 22px 100px; }
-.kicker { font-family:Oswald,sans-serif; color:var(--red); letter-spacing:.16em; text-transform:uppercase; font-size:13px; font-weight:600; }
-.lede { max-width:680px; font-size:18px; color:var(--soft); }
-.card { background:#fff; border:1px solid var(--rule); border-radius:14px; padding:24px; box-shadow:0 1px 0 rgb(255 255 255 / .8), 0 8px 24px rgb(35 35 35 / .04); }
-.btn { display:inline-flex; align-items:center; justify-content:center; min-height:46px; padding:0 18px; background:var(--red); color:#fff; border:2px solid var(--red); border-radius:8px; font-family:Oswald,sans-serif; letter-spacing:.04em; text-transform:uppercase; font-weight:700; text-decoration:none; cursor:pointer; }
-.btn:hover { background:var(--red-deep); border-color:var(--red-deep); }
-.btn.ghost { background:#fff; color:var(--ink); border-color:var(--ink); }
-.btn.ghost:hover { background:var(--ink); color:#fff; }
-.btn.gold { background:var(--gold); color:var(--ink); border-color:var(--gold); }
-.btn.gold:hover { background:#e0ac00; }
-.btn.on { background:var(--ink); color:#fff; border-color:var(--ink); }
-input,textarea,select { width:100%; border:1px solid var(--rule); border-radius:8px; padding:12px 14px; font:inherit; background:#fff; color:var(--ink); }
-label .lbl { display:block; font-family:Oswald,sans-serif; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); margin-bottom:6px; }
-.ink { background:#1c1c1c; color:#f7f4ef; border-radius:14px; padding:22px; }
-.gold { color:var(--gold); }
-.muted { color:var(--muted); }
-.grid2 { display:grid; gap:16px; grid-template-columns:1.4fr .8fr; align-items:start; }
-@media (max-width:900px) { .grid2 { grid-template-columns:1fr; } .rail { position:static !important; } }
-footer { border-top:1px solid var(--rule); color:var(--muted); font-size:13px; max-width:1140px; margin:0 auto; padding:28px 22px 48px; }
-.rail { position:sticky; top:84px; display:flex; flex-direction:column; gap:12px; }
-.person { background:#fff; border:1px solid var(--rule); border-radius:14px; padding:18px 18px 8px; }
-.person dt { font-family:Oswald,sans-serif; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); }
-.person dd { margin:2px 0 12px; font-size:16px; }
-.pill { border-radius:999px; padding:4px 10px; font-family:Oswald,sans-serif; font-size:11px; letter-spacing:.08em; text-transform:uppercase; background:#f3eee6; color:var(--ink); }
-.miss { color:var(--red); font-weight:600; }
-.ok { color:#1c1c1c; }
-</style></head><body>
+
+</head><body>
 <div class="shell">
 <aside class="side">
 <a href="/portal1/desk/"><img class="logo" src="/portal1/logo.png" alt="JUROSpain"></a>
@@ -71,7 +25,7 @@ footer { border-top:1px solid var(--rule); color:var(--muted); font-size:13px; m
 </nav>
 <p class="group">Account</p>
 <nav style="display:flex;flex-direction:column;gap:2px">
-<a href="/portal1/plans/">Services</a>
+<a href="/portal1/services/">Add-ons</a>
 <a href="/portal1/profile/">Your details</a>
 </nav>
 </aside>
@@ -79,15 +33,26 @@ footer { border-top:1px solid var(--rule); color:var(--muted); font-size:13px; m
 
 <main>
 <p class="kicker">Source of truth</p>
-<h1 style="font-size:44px;margin-top:8px">The records this desk is allowed to speak from.</h1>
-<ul>
-<li><b>BOE-A-2013-10074</b> — Ley 14/2013, international telework, articles 74 bis to 74 quinquies.</li>
-<li><b>BOE-A-2022-22128</b> — Ley 28/2022, the amendment that created that chapter.</li>
-<li><b>BOE-A-2024-24099</b> — RD 1155/2024, non-lucrative residence, articles 61 to 64.</li>
-<li><b>BOE-A-2026-3815</b> — the SMI index. An index, not the visa.</li>
-<li><b>IPREM</b> — the non-lucrative index, published with the budget law.</li>
-</ul>
-<p>Consolidated text is informative. The gazette is the binding publication. A fee is read on the day you pay.</p></main>
+<h1 style="font-size:clamp(36px,5vw,52px);margin-top:8px">The law, from the gazette. Nothing else.</h1>
+<p class="lede">Every sentence on this desk is taken from the Boletín Oficial del Estado or from a page published by the ministry that runs the procedure. A blog, a forum, a Facebook group, and an old consular PDF are not sources. They are not read, and they are not quoted.</p>
+
+<div class="grid2" style="margin-top:28px;grid-template-columns:1fr 1fr 1fr">
+  <article class="card"><p class="kicker">Watched</p><h2 style="font-size:26px;margin:8px 0">Every weekday</h2><p>A watcher reads the official records each weekday. When the gazette moves, the record here moves with it. The English is reviewed before it changes. Nothing is rewritten in silence.</p></article>
+  <article class="card"><p class="kicker">Two sources</p><h2 style="font-size:26px;margin:8px 0">Shown, not picked</h2><p>Where two official texts disagree, the page shows both and does not choose. The monthly reading of the minimum wage is one of those. A fee is read on the day you pay it, never copied from an old PDF.</p></article>
+  <article class="card"><p class="kicker">Repealed</p><h2 style="font-size:26px;margin:8px 0">Not published</h2><p>Text that is no longer in force is not shown. Consolidated text on the BOE site is informative. The gazette publication is the one that binds.</p></article>
+</div>
+
+<h2 style="font-size:32px;margin:40px 0 12px">What this desk is allowed to speak from</h2>
+<div class="card">
+  <p><b>BOE-A-2013-10074</b> — Ley 14/2013, international telework, articles 74 bis to 74 quinquies, and article 62.</p>
+  <p><b>BOE-A-2022-21739</b> — Ley 28/2022, the amendment that created that chapter.</p>
+  <p><b>BOE-A-2024-24099</b> — RD 1155/2024, non-lucrative residence, articles 61 to 64.</p>
+  <p><b>BOE-A-2000-544</b> — Ley Orgánica 4/2000, the law those articles regulate.</p>
+  <p><b>BOE-A-2026-3815</b> — the minimum wage for 2026. An index, not the visa.</p>
+  <p style="margin-bottom:0"><b>BOE-A-2022-22128</b> — the budget law that sets IPREM. An index, not the visa.</p>
+</div>
+<p class="muted" style="margin-top:14px">The joint instruction of the two ministries, the UGE digital-nomad FAQ, and the ministry sheets for the forms and the fees are official procedure pages. They supply the form number, the fee code, and the deadline. They do not amend the statute.</p>
+</main>
 
 <script src="/portal1/app.js"></script>
 </div></div>

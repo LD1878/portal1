@@ -61,7 +61,11 @@ function stage(kicker, title, body) {
   return '<div class="stage"><div class="card"><p class="kicker">' + kicker + '</p><h1 style="font-size:36px;margin:8px 0 16px">' + title + '</h1>' + body + '</div></div>';
 }
 function bootService() {
-  var id = new URLSearchParams(location.search).get("service") || "consult";
+  var id = new URLSearchParams(location.search).get("service");
+  if (!id) {
+    service.innerHTML = '<p class="kicker">Add-ons</p><h1 style="font-size:46px;margin:6px 0 8px">Add to the file, when you want.</h1><p class="lede">None of these are included in the desk. Each one has its own payment, and none of them is an approval.</p><div class="grid2" style="grid-template-columns:1fr 1fr;margin-top:18px">' + serviceCards() + '</div>';
+    return;
+  }
   var pages = {
     consult: ["Video consult", "€100", "One hour, on a video call.", "You bring the file, even if nothing is uploaded. The person on the call walks the route you picked: which door, which documents, and what the consulate or UGE-CE will actually ask for. It is a conversation. Nothing is lodged, and it is not an approval.", ["Scheduled after you pay.", "Your file open on the call.", "Does not include translation, apostille, or lodging."]],
     review: ["File review", "€150", "A person reads the assembled file.", "Before you lodge, someone reads every item against the packet and writes what is still missing, in the order a post would notice it. The AI reading does not do this. A review is a list, not a grant.", ["One pass over the file you have built.", "Written notes on what is missing.", "You still lodge it yourself, unless you add lodging."]],
@@ -230,7 +234,7 @@ function bootDesk() {
     + '<div id="ai-out" hidden style="margin-top:14px"></div>'
     + '<p style="font-size:13px;opacity:.6;margin-top:14px">Kept here: your typed notes and the file name. Not kept yet: the scan. Sent to no one until you buy lodging.</p>'
     + '</aside></div>'
-    + '<section style="grid-column:1 / -1;margin-top:8px"><p class="kicker">Add to this file</p><h2 style="font-size:28px;margin:4px 0 12px">Services, when you want them</h2><div class="grid2" style="grid-template-columns:repeat(4,1fr)">' + serviceCards() + '</div></section></div>';
+    + '<section style="grid-column:1 / -1;margin-top:8px"><p class="kicker">Add to this file</p><h2 style="font-size:28px;margin:4px 0 12px">Add-ons, when you want them</h2><div class="grid2" style="grid-template-columns:repeat(4,1fr)">' + serviceCards() + '</div></section></div>';
   fillNav(f);
   var report = document.getElementById("ai-report");
   if (report) report.onclick = function () { runReport(f, groups, saved); };
@@ -323,12 +327,12 @@ function guideFor(f, open) {
 }
 function serviceCards() {
   return [
-    ["consult", "Video consult", "€100", "One hour on a call, before you spend money on documents."],
-    ["review", "File review", "€150", "A person reads the assembled file and writes what is missing."],
-    ["apostille", "Apostille", "€40", "Per foreign public document, arranged before the sworn translation."],
-    ["tie", "TIE appointment", "€75", "The police card, booked after you land."]
+    ["consult", "Video consult", "€100", "One hour on a call, before you spend money on documents.", "Which door, which documents, and what the post will actually ask for. A conversation, not a filing.", "Book the hour"],
+    ["review", "File review", "€150", "A person reads the assembled file and writes what is missing.", "In the order a consulate would notice it. The AI reading does not do this.", "Have it read"],
+    ["apostille", "Apostille", "€40", "Per foreign public document, arranged before the sworn translation.", "Hague apostille, or consular legalisation where the Convention does not apply.", "Arrange it"],
+    ["tie", "TIE appointment", "€75", "The police card, booked after you land.", "The visa is not the card. Digital nomad only if the grant exceeds six months.", "Book the cita"]
   ].map(function (r) {
-    return '<a class="card" href="' + BASE + '/services/?service=' + r[0] + '" style="text-decoration:none;color:inherit"><p class="kicker">' + r[2] + '</p><h3 style="font-size:22px;margin:6px 0">' + r[1] + '</h3><p class="muted">' + r[3] + '</p></a>';
+    return '<article class="card" style="display:flex;flex-direction:column"><p class="kicker">' + r[2] + '</p><h3 style="font-size:24px;margin:6px 0">' + r[1] + '</h3><p>' + r[3] + '</p><p class="muted" style="font-size:14px">' + r[4] + '</p><a class="btn" style="margin-top:auto" href="' + BASE + '/services/?service=' + r[0] + '">' + r[5] + '</a></article>';
   }).join("");
 }
 function servicesFor(f) {

@@ -22,7 +22,7 @@ function chromeFoot() {
   return '<footer class="site"><div class="foot">'
     + '<div><a href="' + BASE + '/"><img class="logo" src="' + BASE + '/logo.png" alt="JUROSpain"></a>'
     + '<p class="muted" style="margin-top:14px">Self-serve desk for two Spanish residencies. A scan stays in your file and is not sent to a consulate, UGE-CE, or anyone else until you buy lodging. You can delete it.</p></div>'
-    + '<div><h3>The desk</h3><a href="' + BASE + '/desk/">Your file</a><a href="' + BASE + '/templates/">Templates</a><a href="' + BASE + '/digital-nomad/">Digital nomad</a><a href="' + BASE + '/non-lucrative/">Non-lucrative</a><a href="' + BASE + '/plans/">Services</a></div>'
-    + '<div><h3>Build a file</h3><p class="muted">Three months of desk access. The sources stay free.</p><p><a class="btn" href="' + BASE + '/plans/">See services</a></p></div>'
+    + '<div><h3>The desk</h3><a href="' + BASE + '/desk/">Your file</a><a href="' + BASE + '/templates/">Templates</a><a href="' + BASE + '/digital-nomad/">Digital nomad</a><a href="' + BASE + '/non-lucrative/">Non-lucrative</a><a href="' + BASE + '/services/">Add-ons</a></div>'
+    + '<div><h3>Build a file</h3><p class="muted">Three months of desk access. The sources stay free.</p><p><a class="btn" href="' + BASE + '/services/">See add-ons</a></p></div>'
     + '</div></footer>';
 }
