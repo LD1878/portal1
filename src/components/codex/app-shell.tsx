@@ -20,7 +20,7 @@ import { cn } from "@/lib/utils";
 const NAV = [
   { to: "/desk" as const, label: "Applications", icon: FolderKanban, exact: true },
   { to: "/desk/new" as const, label: "New application", icon: FilePlus },
-  { to: "/desk/products" as const, label: "Products", icon: Package },
+  { to: "/desk/products" as const, label: "Services", icon: Package },
   { to: "/desk/settings" as const, label: "Settings", icon: Settings },
   { to: "/desk/help" as const, label: "Help", icon: CircleHelp },
   { to: "/desk/archive" as const, label: "Archive", icon: Archive },

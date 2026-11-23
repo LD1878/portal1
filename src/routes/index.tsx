@@ -33,7 +33,7 @@ function Home() {
             </Button>
           </div>
           <p className="mt-4 text-sm text-muted">
-            Three months: €300 a month, or €600 paid once.{" "}
+            Desk from €300 a month. UGE-CE is on prepaid, not monthly.{" "}
             <Link to="/plans" className="font-semibold text-oxblood no-underline hover:underline">
               See plans
             </Link>

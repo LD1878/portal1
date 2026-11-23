@@ -1,35 +1,29 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { saveAccess, type OfferId } from "@/lib/account/checkout";
+import { saveAccess, saveAddon } from "@/lib/account/checkout";
+import { offerById } from "@/lib/account/plans";
 
+const CHECKOUT_IDS = ["monthly", "prepaid", "translation", "filing"] as const;
+type CheckoutId = (typeof CHECKOUT_IDS)[number];
 
 export const Route = createFileRoute("/checkout")({
-  validateSearch: (raw: Record<string, unknown>): { offer: OfferId } => ({
-    offer: raw.offer === "monthly" ? "monthly" : "prepaid",
+  validateSearch: (raw: Record<string, unknown>): { offer: CheckoutId } => ({
+    offer: CHECKOUT_IDS.includes(raw.offer as CheckoutId) ? (raw.offer as CheckoutId) : "prepaid",
   }),
   component: CheckoutPage,
 });
 
-const COPY = {
-  prepaid: {
-    name: "Three months",
-    price: "€600",
-    line: "Paid once. Access for three months.",
-    due: "€600.00",
-  },
-  monthly: {
-    name: "Monthly",
-    price: "€300",
-    line: "Billed monthly. Three months minimum, €900 in total.",
-    due: "€300.00",
-  },
-} as const;
-
 function CheckoutPage() {
   const { offer } = Route.useSearch();
   const navigate = useNavigate();
-  const plan = COPY[offer];
+  const listed = offerById(offer);
+  const plan = {
+    name: listed?.name ?? "Three months",
+    price: listed?.price ?? "€600",
+    line: listed?.blurb ?? "",
+    due: listed?.id === "monthly" ? "€300.00" : listed?.id === "translation" ? "€1.000,00" : listed?.id === "filing" ? "€200.00" : "€600.00",
+  };
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
@@ -49,7 +43,8 @@ function CheckoutPage() {
     }
     setPending(true);
     window.setTimeout(() => {
-      saveAccess({ offer, startedAt: new Date().toISOString(), email: email.trim() });
+      if (offer === "translation" || offer === "filing") saveAddon(offer);
+      else saveAccess({ offer, startedAt: new Date().toISOString(), email: email.trim() });
       setPending(false);
       setDone(true);
     }, 900);

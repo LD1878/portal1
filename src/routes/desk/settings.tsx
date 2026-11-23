@@ -30,7 +30,7 @@ function SettingsPage() {
           <p className="font-display text-xl text-ink">Plans</p>
           <p className="mt-2 text-sm text-muted">Desk access is three months. The sources stay free.</p>
           <Button asChild className="mt-4">
-            <Link to="/desk/products">See products</Link>
+            <Link to="/desk/products">See services</Link>
           </Button>
         </section>
       </div>
